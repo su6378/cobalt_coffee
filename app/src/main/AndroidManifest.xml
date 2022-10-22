@@ -13,7 +13,21 @@
         android:theme="@style/Theme.CobaltCoffee"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".register.RegisterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".start.StartActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

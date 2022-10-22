@@ -2,20 +2,15 @@ package com.ssafy.cobaltcoffee.splash
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.ssafy.cobaltcoffee.MainActivity
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivitySplashBinding
+import com.ssafy.cobaltcoffee.start.StartActivity
 
 
 class SplashActivity : AppCompatActivity() {
@@ -36,12 +31,12 @@ class SplashActivity : AppCompatActivity() {
         moveToNext()
     }
 
-    //다음 스플래시 화면으로 이동
+    //다음 화면으로 이동
     private fun moveToNext(){
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
+            val intent = Intent(this@SplashActivity, StartActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(0,0)
+            overridePendingTransition(R.anim.slide_up_enter,R.anim.slide_up_exit)
             finish()
         },3000L) //3초 동안 지속
     }
