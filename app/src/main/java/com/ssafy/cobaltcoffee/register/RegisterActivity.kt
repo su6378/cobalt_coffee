@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -11,11 +12,14 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegisterBinding
 import java.util.regex.Pattern
 
+private const val TAG = "RegisterActivity_코발트"
+
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
 
     // 이메일 정규식
-    val emailValidation = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    val emailValidation =
+        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
 
     //체크해야하는 항목들
     private var emailCheck = false
@@ -39,7 +43,6 @@ class RegisterActivity : AppCompatActivity() {
             nextPage()
         }
 
-
         initCbTitle() //체크박스 타이틀 및 내용 적용
 
         //전체 동의
@@ -47,6 +50,40 @@ class RegisterActivity : AppCompatActivity() {
             if (binding.registerAllCb.isChecked == true) allCheck(true)
             else allCheck(false)
             nextPage()
+        }
+
+        //각 항목 체크 시
+        binding.apply {
+            cobaltLinear.checkbox.setOnClickListener {
+                cobaltCheck = cobaltLinear.checkbox.isChecked
+                nextPage()
+                isAllCheck()
+            }
+            personalInfoLinear.checkbox.setOnClickListener {
+                personalInfoCheck = personalInfoLinear.checkbox.isChecked
+                nextPage()
+                isAllCheck()
+            }
+            locationLinear.checkbox.setOnClickListener {
+                locationCheck = locationLinear.checkbox.isChecked
+                nextPage()
+                isAllCheck()
+            }
+            marketingLinear.checkbox.setOnClickListener {
+                marketingCheck = marketingLinear.checkbox.isChecked
+                nextPage()
+                isAllCheck()
+            }
+            adLinear.checkbox.setOnClickListener {
+                adCheck = adLinear.checkbox.isChecked
+                nextPage()
+                isAllCheck()
+            }
+        }
+
+        //다음 페이지
+        binding.registerNextBtn.setOnClickListener {
+
         }
     }
 
@@ -87,11 +124,17 @@ class RegisterActivity : AppCompatActivity() {
             if (e) {
                 binding.registerTl.error = null
                 binding.registerTl.helperText = "사용가능한 이메일 입니다."
-                binding.registerTl.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@RegisterActivity,R.color.cobalt)))
+                binding.registerTl.setHelperTextColor(
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            this@RegisterActivity,
+                            R.color.cobalt
+                        )
+                    )
+                )
                 emailCheck = true
 
-            }
-             else {
+            } else {
                 binding.registerTl.error = "이메일 형식이 올바르지 않습니다."
                 emailCheck = false
             }
@@ -114,7 +157,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     //전체 동의 버튼 클릭 시
-    private fun allCheck(check : Boolean) {
+    private fun allCheck(check: Boolean) {
         binding.apply {
             cobaltLinear.checkbox.isChecked = check
             personalInfoLinear.checkbox.isChecked = check
@@ -124,23 +167,26 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    //전체 체크가 되어있다면 전체 동의 체크박스 체크 표시
+    private fun isAllCheck() {
+        binding.registerAllCb.isChecked = cobaltCheck == true && personalInfoCheck == true && locationCheck == true && marketingCheck == true && adCheck == true
+    }
+
     //약관 부분 동의되어 있는 항목 boolean 값 갱신 및 필수 항목 체크 여부 확인
-    private fun checkUserAgree(): Boolean{
+    private fun checkUserAgree(): Boolean {
         //체크항목 갱신하기
-        binding.apply {
-            cobaltCheck = cobaltLinear.checkbox.isChecked
-            personalInfoCheck = personalInfoLinear.checkbox.isChecked
-            locationCheck = locationLinear.checkbox.isChecked
-            marketingCheck = marketingLinear.checkbox.isChecked
-            adCheck = adLinear.checkbox.isChecked
-        }
+        cobaltCheck = binding.cobaltLinear.checkbox.isChecked
+        personalInfoCheck = binding.personalInfoLinear.checkbox.isChecked
+        locationCheck = binding.locationLinear.checkbox.isChecked
+        marketingCheck = binding.marketingLinear.checkbox.isChecked
+        adCheck = binding.adLinear.checkbox.isChecked
 
         //필수항목 체크 여부 확인
         return cobaltCheck && personalInfoCheck
     }
 
     //다음 페이지로 넘어갈 수 있는지 확인
-    private fun nextPage(){
-        binding.registerNextBtn.isEnabled = emailCheck == true && checkUserAgree()
+    private fun nextPage() {
+        binding.registerNextBtn.isEnabled = checkUserAgree() && emailCheck == true
     }
 }
