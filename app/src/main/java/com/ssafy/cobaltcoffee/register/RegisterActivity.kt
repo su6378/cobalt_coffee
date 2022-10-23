@@ -1,15 +1,30 @@
 package com.ssafy.cobaltcoffee.register
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegisterBinding
+import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+
+    // 이메일 정규식
+    val emailValidation = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+
+    //체크해야하는 항목들
+    private var emailCheck = false
+    private var cobaltCheck = false
+    private var personalInfoCheck = false
+    private var locationCheck = false
+    private var marketingCheck = false
+    private var adCheck = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -17,12 +32,21 @@ class RegisterActivity : AppCompatActivity() {
 
         initTb() //툴바 적용
 
+        //이메일
+        //firebaseAuth = FirebaseAuth.getInstance()
+        binding.registerEmailEt.addTextChangedListener {
+            emailValidation()
+            nextPage()
+        }
+
+
         initCbTitle() //체크박스 타이틀 및 내용 적용
 
         //전체 동의
         binding.registerAllCb.setOnClickListener {
             if (binding.registerAllCb.isChecked == true) allCheck(true)
             else allCheck(false)
+            nextPage()
         }
     }
 
@@ -46,6 +70,32 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //이메일 유효성 체크 메소드
+    private fun emailValidation() {
+        var email = binding.registerEmailEt.text.toString().trim() //공백제거
+        val e = Pattern.matches(emailValidation, email)
+
+        //이메일이 비어있는 경우
+        if (email.isEmpty()) {
+            binding.registerTl.error = "이메일을 입력하세요."
+            emailCheck = false
+            return
+        } else {
+            //이메일 형태가 정상일 경우
+            if (e) {
+                binding.registerTl.error = null
+                binding.registerTl.helperText = "사용가능한 이메일 입니다."
+                binding.registerTl.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@RegisterActivity,R.color.cobalt)))
+                emailCheck = true
+
+            }
+             else {
+                binding.registerTl.error = "이메일 형식이 올바르지 않습니다."
+                emailCheck = false
+            }
+        }
     }
 
     //체크박스 약관 타이틀 적용
@@ -72,5 +122,25 @@ class RegisterActivity : AppCompatActivity() {
             marketingLinear.checkbox.isChecked = check
             adLinear.checkbox.isChecked = check
         }
+    }
+
+    //약관 부분 동의되어 있는 항목 boolean 값 갱신 및 필수 항목 체크 여부 확인
+    private fun checkUserAgree(): Boolean{
+        //체크항목 갱신하기
+        binding.apply {
+            cobaltCheck = cobaltLinear.checkbox.isChecked
+            personalInfoCheck = personalInfoLinear.checkbox.isChecked
+            locationCheck = locationLinear.checkbox.isChecked
+            marketingCheck = marketingLinear.checkbox.isChecked
+            adCheck = adLinear.checkbox.isChecked
+        }
+
+        //필수항목 체크 여부 확인
+        return cobaltCheck && personalInfoCheck
+    }
+
+    //다음 페이지로 넘어갈 수 있는지 확인
+    private fun nextPage(){
+        binding.registerNextBtn.isEnabled = emailCheck == true && checkUserAgree()
     }
 }
