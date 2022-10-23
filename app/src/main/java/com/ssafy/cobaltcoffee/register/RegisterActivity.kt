@@ -1,5 +1,6 @@
 package com.ssafy.cobaltcoffee.register
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegisterBinding
+import com.ssafy.cobaltcoffee.dto.User
 import java.util.regex.Pattern
 
 private const val TAG = "RegisterActivity_코발트"
@@ -83,7 +85,11 @@ class RegisterActivity : AppCompatActivity() {
 
         //다음 페이지
         binding.registerNextBtn.setOnClickListener {
-
+            val intent = Intent(this@RegisterActivity,RegisterActivity2::class.java)
+            val email = binding.registerEmailEt.text.toString().trim()
+            intent.putExtra("userInfo",User(email,"","","",0,""))
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_none)
         }
     }
 
@@ -124,14 +130,7 @@ class RegisterActivity : AppCompatActivity() {
             if (e) {
                 binding.registerTl.error = null
                 binding.registerTl.helperText = "사용가능한 이메일 입니다."
-                binding.registerTl.setHelperTextColor(
-                    ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            this@RegisterActivity,
-                            R.color.cobalt
-                        )
-                    )
-                )
+                binding.registerTl.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@RegisterActivity, R.color.cobalt)))
                 emailCheck = true
 
             } else {
