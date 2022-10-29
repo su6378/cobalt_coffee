@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CobaltCoffee"
         tools:targetApi="31">
+
+        <!--회원가입-->
         <activity
             android:name=".register.RegisterActivity2"
             android:exported="false">
@@ -26,6 +30,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <service
+            android:name=".service.UserService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".start.StartActivity"
             android:exported="false">
