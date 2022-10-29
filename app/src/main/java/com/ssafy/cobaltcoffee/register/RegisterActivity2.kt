@@ -111,8 +111,8 @@ class RegisterActivity2 : AppCompatActivity() {
                 //유저정보 삽입
                 insert(user)
 
-                initDB()
-                database.child(user.name).setValue(user)
+//                initDB()
+//                database.child(user.name).setValue(user)
             }
         }
     }

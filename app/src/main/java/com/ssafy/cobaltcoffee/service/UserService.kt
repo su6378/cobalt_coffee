@@ -27,10 +27,9 @@ class UserService : Service() {
         return mBinder
     }
 
-    //물품 등록
+    //유저 등록
     fun insert(user: User) {
         myRef.child(user.name).setValue(user)
-        Log.d(TAG, "insert: $user")
     }
 //    //특정 물품 조회
 //    fun selectMask(id: Int): Mask {
