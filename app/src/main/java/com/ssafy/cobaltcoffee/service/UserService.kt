@@ -2,22 +2,22 @@ package com.ssafy.cobaltcoffee.service
 
 import android.app.Service
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.ssafy.cobaltcoffee.dto.User
-import java.util.*
+
 
 private const val TAG = "UserService_코발트"
 class UserService : Service() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var myRef : DatabaseReference
+    var isDuplicate = false
+
     override fun onCreate() {
         super.onCreate()
         database = Firebase.database("https://cobaltcoffee-61052-default-rtdb.asia-southeast1.firebasedatabase.app")
@@ -29,12 +29,27 @@ class UserService : Service() {
 
     //유저 등록
     fun insert(user: User) {
-        myRef.child(user.name).setValue(user)
+        val id = user.id.replace('.',',')
+        myRef.child(id).setValue(user)
     }
-//    //특정 물품 조회
-//    fun selectMask(id: Int): Mask {
-//       return maskDao.selectMask(id)
-//    }
+
+    //아이디 중복 체크
+    fun duplicateCheck(id: String): Boolean {
+        var userId = ""
+        if (id.contains("."))  userId = id.replace('.',',')
+
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    isDuplicate = userId == snapshot.key
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                
+            }
+        })
+       return isDuplicate
+    }
 //
 //    //물품 조회
 //    fun selectAllMask(): ArrayList<Mask> {

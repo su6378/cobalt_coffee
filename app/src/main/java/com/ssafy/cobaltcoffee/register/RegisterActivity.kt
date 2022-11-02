@@ -1,10 +1,13 @@
 package com.ssafy.cobaltcoffee.register
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -12,6 +15,10 @@ import androidx.core.widget.addTextChangedListener
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegisterBinding
 import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.service.UserService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 private const val TAG = "RegisterActivity_코발트"
@@ -30,6 +37,23 @@ class RegisterActivity : AppCompatActivity() {
     private var locationCheck = false
     private var marketingCheck = false
     private var adCheck = false
+
+    //서비스
+    private lateinit var userService: UserService
+    private var isBound = false
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as UserService.MyLocalBinder
+            userService = binder.getService()
+            isBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isBound = false
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +117,21 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    //onStart에서 binding
+    override fun onStart() {
+        super.onStart()
+        val intent = Intent(this, UserService::class.java)
+
+        //intent, 성공하면 callback?,
+        bindService(intent, connection, BIND_AUTO_CREATE)
+    }
+
+    //onStop 에서 unbinding
+    override fun onStop() {
+        super.onStop()
+        unbindService(connection)
+    }
+
     //툴바 적용하기
     private fun initTb() {
         binding.apply {
@@ -115,6 +154,18 @@ class RegisterActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //유저 조회
+    private fun duplicateCheck(id : String) : Boolean{
+        //서비스가 연결되어 있다면 삽입
+        if (isBound){
+            if(userService.duplicateCheck(id)){
+                return false
+            }
+            return true
+        }
+       return true
+    }
+
     //이메일 유효성 체크 메소드
     private fun emailValidation() {
         var email = binding.registerEmailEt.text.toString().trim() //공백제거
@@ -128,11 +179,17 @@ class RegisterActivity : AppCompatActivity() {
         } else {
             //이메일 형태가 정상일 경우
             if (e) {
-                binding.registerTl.error = null
-                binding.registerTl.helperText = "사용가능한 이메일 입니다."
-                binding.registerTl.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@RegisterActivity, R.color.cobalt)))
-                emailCheck = true
-
+                CoroutineScope(Dispatchers.Main).launch {
+                    if(duplicateCheck(email)){
+                        binding.registerTl.error = null
+                        binding.registerTl.helperText = "사용가능한 이메일 입니다."
+                        binding.registerTl.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@RegisterActivity, R.color.cobalt)))
+                        emailCheck = true
+                    }else{
+                        binding.registerTl.error = "이미 사용중인 이메일입니다."
+                        emailCheck = false
+                    }
+                }
             } else {
                 binding.registerTl.error = "이메일 형식이 올바르지 않습니다."
                 emailCheck = false

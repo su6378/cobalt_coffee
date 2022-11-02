@@ -18,6 +18,9 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegister2Binding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.service.UserService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 private const val TAG = "RegisterActivity2_코발트"
@@ -109,10 +112,9 @@ class RegisterActivity2 : AppCompatActivity() {
                 user.nickname = nicknameEt.text?.trim().toString()
 
                 //유저정보 삽입
-                insert(user)
-
-//                initDB()
-//                database.child(user.name).setValue(user)
+                CoroutineScope(Dispatchers.IO).launch {
+                    insert(user)
+                }
             }
         }
     }
@@ -160,14 +162,8 @@ class RegisterActivity2 : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
     }
 
-    //파이어베이스 초기화
-    private fun initDB(){
-        database = Firebase.database.getReference("user")
-    }
-
     //DB 삽입
     private fun insert(user : User){
-
         //서비스가 연결되어 있다면 삽입
         if (isBound){
             Log.d(TAG, "insert: 서비스 연결")
