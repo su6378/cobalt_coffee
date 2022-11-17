@@ -57,7 +57,6 @@ class RegisterActivity : AppCompatActivity() {
         //firebaseAuth = FirebaseAuth.getInstance()
         binding.registerEmailEt.addTextChangedListener {
             emailValidation()
-            nextPage()
         }
 
         initCbTitle() //체크박스 타이틀 및 내용 적용
@@ -154,6 +153,7 @@ class RegisterActivity : AppCompatActivity() {
                 emailCheck = false
             }
         }
+        nextPage()
     }
 
     //체크박스 약관 타이틀 적용
@@ -212,6 +212,7 @@ class RegisterActivity : AppCompatActivity() {
             if (result) {
                 binding.registerTl.error = "이미 사용중인 이메일입니다."
                 emailCheck = false
+                nextPage()
             }else{
                 binding.registerTl.error = null
                 binding.registerTl.helperText = "사용가능한 이메일 입니다."
@@ -221,6 +222,7 @@ class RegisterActivity : AppCompatActivity() {
                     )
                 )
                 emailCheck = true
+                nextPage()
             }
         }
 

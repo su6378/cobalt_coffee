@@ -1,11 +1,10 @@
 package com.ssafy.cobaltcoffee.repository
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.smartstore.util.RetrofitCallback
-import com.ssafy.smartstore.util.RetrofitUtil
+import com.ssafy.cobaltcoffee.util.RetrofitUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
