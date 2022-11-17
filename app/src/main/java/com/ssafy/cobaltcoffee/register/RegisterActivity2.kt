@@ -1,19 +1,22 @@
 package com.ssafy.cobaltcoffee.register
 
+import android.content.Intent
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegister2Binding
 import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.smartstore.util.RetrofitCallback
 import java.util.regex.Pattern
+
 
 private const val TAG = "RegisterActivity2_코발트"
 
@@ -160,6 +163,10 @@ class RegisterActivity2 : AppCompatActivity() {
             if (result) {
                 Snackbar.make(binding.root,"회원가입 되었습니다..", Snackbar.LENGTH_SHORT).show()
                 // 로그인 시 user정보 sp에 저장
+
+                val intent = Intent(this@RegisterActivity2, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }else{
                 Snackbar.make(binding.root,"회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
             }
