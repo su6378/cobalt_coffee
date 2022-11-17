@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
+import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityRegister2Binding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.HomeActivity
@@ -23,7 +24,7 @@ private const val TAG = "RegisterActivity2_코발트"
 class RegisterActivity2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegister2Binding
-
+    private lateinit var user : User
     //비밀번호
     private var passwordCheck = false
     //비밀번호 확인
@@ -37,7 +38,7 @@ class RegisterActivity2 : AppCompatActivity() {
         setContentView(binding.root)
 
         //이전 페이지에서 넘겨받은 유저 정보
-        val user = intent.getSerializableExtra("userInfo") as User
+        user = intent.getSerializableExtra("userInfo") as User
 
         initTb() //툴바 적용
 
@@ -163,7 +164,8 @@ class RegisterActivity2 : AppCompatActivity() {
             if (result) {
                 Snackbar.make(binding.root,"회원가입 되었습니다..", Snackbar.LENGTH_SHORT).show()
                 // 로그인 시 user정보 sp에 저장
-
+                ApplicationClass.sharedPreferencesUtil.addUser(user)
+                //홈 액티비티로 이동
                 val intent = Intent(this@RegisterActivity2, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
