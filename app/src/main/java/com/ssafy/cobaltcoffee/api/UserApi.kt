@@ -1,10 +1,10 @@
-package com.ssafy.cobaltcoffee.service
+package com.ssafy.cobaltcoffee.api
 
 import com.ssafy.cobaltcoffee.dto.User
 import retrofit2.Call
 import retrofit2.http.*
 
-interface UserService {
+interface UserApi {
     // 사용자 정보를 추가한다.
     @POST("rest/user")
     fun insert(@Body body: User): Call<Boolean>

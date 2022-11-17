@@ -18,6 +18,7 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegister2Binding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.service.UserService
+import com.ssafy.smartstore.util.RetrofitUtil.Companion.userService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,23 +41,6 @@ class RegisterActivity2 : AppCompatActivity() {
 
     //파이어베이스
     private lateinit var database: DatabaseReference
-
-    //서비스
-    private lateinit var userService: UserService
-    private var isBound = false
-
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as UserService.MyLocalBinder
-            userService = binder.getService()
-            isBound = true
-        }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            isBound = false
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,29 +93,12 @@ class RegisterActivity2 : AppCompatActivity() {
             registerBtn.setOnClickListener {
                 user.pw = passwordEt.text?.trim().toString()
                 user.name = nameEt.text?.trim().toString()
-                user.nickname = nicknameEt.text?.trim().toString()
-
                 //유저정보 삽입
                 CoroutineScope(Dispatchers.IO).launch {
                     insert(user)
                 }
             }
         }
-    }
-
-    //onStart에서 binding
-    override fun onStart() {
-        super.onStart()
-        val intent = Intent(this, UserService::class.java)
-
-        //intent, 성공하면 callback?,
-        bindService(intent, connection, BIND_AUTO_CREATE)
-    }
-
-    //onStop 에서 unbinding
-    override fun onStop() {
-        super.onStop()
-        unbindService(connection)
     }
 
     //툴바 적용하기
@@ -165,10 +132,7 @@ class RegisterActivity2 : AppCompatActivity() {
     //DB 삽입
     private fun insert(user : User){
         //서비스가 연결되어 있다면 삽입
-        if (isBound){
-            Log.d(TAG, "insert: 서비스 연결")
-            userService.insert(user)
-        }
+
     }
 
     //비밀번호 유효성 체크 메소드

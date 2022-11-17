@@ -10,12 +10,17 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegisterBinding
 import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.service.UserService
+import com.ssafy.smartstore.util.RetrofitCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,22 +43,8 @@ class RegisterActivity : AppCompatActivity() {
     private var marketingCheck = false
     private var adCheck = false
 
-    //서비스
-    private lateinit var userService: UserService
-    private var isBound = false
-
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as UserService.MyLocalBinder
-            userService = binder.getService()
-            isBound = true
-        }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            isBound = false
-        }
-
-    }
+    //아이디 중복체크
+    var checkedId = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,27 +100,12 @@ class RegisterActivity : AppCompatActivity() {
 
         //다음 페이지
         binding.registerNextBtn.setOnClickListener {
-            val intent = Intent(this@RegisterActivity,RegisterActivity2::class.java)
+            val intent = Intent(this@RegisterActivity, RegisterActivity2::class.java)
             val email = binding.registerEmailEt.text.toString().trim()
-            intent.putExtra("userInfo",User(email,"","",""))
+            intent.putExtra("userInfo", User(email, "", "", 0))
             startActivity(intent)
             overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_none)
         }
-    }
-
-    //onStart에서 binding
-    override fun onStart() {
-        super.onStart()
-        val intent = Intent(this, UserService::class.java)
-
-        //intent, 성공하면 callback?,
-        bindService(intent, connection, BIND_AUTO_CREATE)
-    }
-
-    //onStop 에서 unbinding
-    override fun onStop() {
-        super.onStop()
-        unbindService(connection)
     }
 
     //툴바 적용하기
@@ -155,22 +131,15 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     //유저 조회
-    private fun duplicateCheck(id : String) : Boolean{
-        //서비스가 연결되어 있다면 삽입
-        if (isBound){
-            if(userService.duplicateCheck(id)){
-                return false
-            }
-            return true
-        }
-       return true
+    private fun duplicateCheck(id: String){
+        UserRepository.get().duplicateCheck(id,DuplicateCallback())
     }
 
     //이메일 유효성 체크 메소드
     private fun emailValidation() {
         var email = binding.registerEmailEt.text.toString().trim() //공백제거
         val e = Pattern.matches(emailValidation, email)
-
+//        Log.d(TAG, "이메일: $email")
         //이메일이 비어있는 경우
         if (email.isEmpty()) {
             binding.registerTl.error = "이메일을 입력하세요."
@@ -179,17 +148,7 @@ class RegisterActivity : AppCompatActivity() {
         } else {
             //이메일 형태가 정상일 경우
             if (e) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    if(duplicateCheck(email)){
-                        binding.registerTl.error = null
-                        binding.registerTl.helperText = "사용가능한 이메일 입니다."
-                        binding.registerTl.setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(this@RegisterActivity, R.color.cobalt)))
-                        emailCheck = true
-                    }else{
-                        binding.registerTl.error = "이미 사용중인 이메일입니다."
-                        emailCheck = false
-                    }
-                }
+                duplicateCheck(email)
             } else {
                 binding.registerTl.error = "이메일 형식이 올바르지 않습니다."
                 emailCheck = false
@@ -225,7 +184,8 @@ class RegisterActivity : AppCompatActivity() {
 
     //전체 체크가 되어있다면 전체 동의 체크박스 체크 표시
     private fun isAllCheck() {
-        binding.registerAllCb.isChecked = cobaltCheck == true && personalInfoCheck == true && locationCheck == true && marketingCheck == true && adCheck == true
+        binding.registerAllCb.isChecked =
+            cobaltCheck == true && personalInfoCheck == true && locationCheck == true && marketingCheck == true && adCheck == true
     }
 
     //약관 부분 동의되어 있는 항목 boolean 값 갱신 및 필수 항목 체크 여부 확인
@@ -244,5 +204,32 @@ class RegisterActivity : AppCompatActivity() {
     //다음 페이지로 넘어갈 수 있는지 확인
     private fun nextPage() {
         binding.registerNextBtn.isEnabled = checkUserAgree() && emailCheck == true
+    }
+
+    inner class DuplicateCallback: RetrofitCallback<Boolean> {
+        override fun onSuccess( code: Int, result: Boolean) {
+            checkedId = !result
+            if (result) {
+                binding.registerTl.error = "이미 사용중인 이메일입니다."
+                emailCheck = false
+            }else{
+                binding.registerTl.error = null
+                binding.registerTl.helperText = "사용가능한 이메일 입니다."
+                binding.registerTl.setHelperTextColor(
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(this@RegisterActivity, R.color.cobalt)
+                    )
+                )
+                emailCheck = true
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }
