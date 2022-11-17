@@ -15,11 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/white"
+            android:elevation="0dp"
             app:collapsedTitleGravity="center"
             app:collapsedTitleTextAppearance="@style/CollapsingToolbar.Collapsed.Title"
+            app:collapsedTitleTextColor="@color/white"
             app:expandedTitleGravity="left|bottom"
             app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
+            app:expandedTitleTextColor="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="Other">
 
@@ -28,42 +30,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:gravity="center_vertical"
-                app:title="Other"
-                app:layout_collapseMode="pin">
+                app:layout_collapseMode="pin"
+                app:title="Other">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:visibility="invisible"
-                    android:src="@drawable/ic_notification" />
+                    android:src="@drawable/ic_notification"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:visibility="invisible"
-                    android:src="@drawable/ic_setting" />
+                    android:src="@drawable/ic_setting"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_setting" />
+                    android:src="@drawable/ic_setting"
+                    app:tint="@color/white" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_notification" />
+                    android:src="@drawable/ic_notification"
+                    app:tint="@color/white" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:background="@color/lightGray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
@@ -71,29 +74,296 @@
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-
+            <LinearLayout
+                android:id="@+id/nickname_ll"
                 android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:text="TextView" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/other_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="코틀린"
+                    android:textColor="@color/cobalt"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/other_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=" 님"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
-
+                android:id="@+id/other_tv2"
                 android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:text="TextView" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="환영합니다!"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/nickname_ll" />
+
+            <View
+                android:id="@+id/other_baseline"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/lineColor"
+                app:layout_constraintTop_toBottomOf="@id/other_tv2" />
+
+            <LinearLayout
+                android:id="@+id/stamp_coupon_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/other_baseline">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/other_tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:text="현재 등급 : "
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/other_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/quicksand_semibold"
+                        android:text="Blue"
+                        android:textColor="@color/blue"
+                        android:textSize="20sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_tv3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/other_stamp_image"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/ic_cup"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/cobalt" />
+
+                    <TextView
+                        android:id="@+id/other_tv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/quicksand_semibold"
+                        android:text="스탬프"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_stamp_image"
+                        app:layout_constraintTop_toTopOf="@id/other_stamp_image" />
+
+                    <TextView
+                        android:id="@+id/other_stampCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:text="1"
+                        android:textColor="@color/cobalt"
+                        android:textSize="20sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_stamp_image"
+                        app:layout_constraintTop_toBottomOf="@id/other_tv4" />
+
+                    <TextView
+                        android:id="@+id/other_unitCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/quicksand_semibold"
+                        android:text="/10"
+                        android:textSize="20sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_stampCount"
+                        app:layout_constraintTop_toBottomOf="@id/other_tv4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/lineColor"
+                    app:layout_constraintTop_toBottomOf="@id/other_tv2" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/other_coupon_image"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/ic_coupon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/cobalt" />
+
+                    <TextView
+                        android:id="@+id/other_tv5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/quicksand_semibold"
+                        android:text="쿠폰"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_coupon_image"
+                        app:layout_constraintTop_toTopOf="@id/other_coupon_image" />
+
+                    <TextView
+                        android:id="@+id/other_tv6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:text="X"
+                        android:textColor="@color/cobalt"
+                        android:textSize="20sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_coupon_image"
+                        app:layout_constraintTop_toBottomOf="@id/other_tv5" />
+
+                    <TextView
+                        android:id="@+id/other_couponCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:text="1"
+                        android:textColor="@color/cobalt"
+                        android:textSize="20sp"
+                        app:layout_constraintLeft_toRightOf="@id/other_tv6"
+                        app:layout_constraintTop_toBottomOf="@id/other_tv5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/other_baseline2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor"
+                app:layout_constraintTop_toBottomOf="@id/stamp_coupon_ll" />
 
             <TextView
-
+                android:id="@+id/other_tv7"
                 android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:text="TextView" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
+                android:paddingVertical="10dp"
+                android:paddingLeft="20dp"
+                android:text="Order"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/other_baseline2" />
+
+            <LinearLayout
+                android:id="@+id/order_ll"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/other_tv7">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/other_basket_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp">
+
+                    <ImageView
+                        android:id="@+id/other_basketImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/ic_basket"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/cobalt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/quicksand_regular"
+                        android:text="장바구니"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@id/other_basketImg"
+                        app:layout_constraintLeft_toRightOf="@id/other_basketImg"
+                        app:layout_constraintTop_toTopOf="@id/other_basketImg" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/other_history_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp">
+
+                    <ImageView
+                        android:id="@+id/other_historyImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/ic_history"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/cobalt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/quicksand_regular"
+                        android:text="주문내역"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@id/other_historyImg"
+                        app:layout_constraintLeft_toRightOf="@id/other_historyImg"
+                        app:layout_constraintTop_toTopOf="@id/other_historyImg" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

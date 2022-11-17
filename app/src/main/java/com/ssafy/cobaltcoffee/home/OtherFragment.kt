@@ -27,8 +27,5 @@ class OtherFragment : Fragment() {
     private fun init() {
 
 
-
-
-
     }
 }
