@@ -12,8 +12,8 @@
         android:title="@string/order"
         />
     <item
-        android:id="@+id/pay_fragment"
-        android:icon="@drawable/ic_pay"
-        android:title="@string/pay"
+        android:id="@+id/other_fragment"
+        android:icon="@drawable/ic_other"
+        android:title="@string/other"
         />
 </menu>

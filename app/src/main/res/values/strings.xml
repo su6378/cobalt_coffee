@@ -4,10 +4,8 @@
     <string name="register_info2">- 회원가입을 하시면 코발트커피의 약관을 동의한것으로 간주됩니다.</string>
     <string name="register_info3">* 선택 사항에 동의하지 않으셔도 가입 및 서비스 이용이 가능하나, 동의하지 않을 경우 제공가능한 알림이나 편의사항등이 제한될 수 있습니다.</string>
     <string name="register_info4">- 출시 이전의 버전의 특성 상 예상치 못한 오류가 발생할 수 있으니, 중요한 데이터는 반드시 백업해 주세요. 발견된 오류는 추후 개선 버전에 반영될 예정입니다.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="home">홈</string>
     <string name="order">주문</string>
-    <string name="pay">결제</string>
+    <string name="other">기타</string>
 </resources>

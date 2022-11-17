@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ssafy.cobaltcoffee.databinding.FragmentPayBinding
+import com.ssafy.cobaltcoffee.databinding.FragmentOtherBinding
 
-class PayFragment : Fragment() {
+class OtherFragment : Fragment() {
     private lateinit var homeActivity: HomeActivity
-    private lateinit var binding: FragmentPayBinding
+    private lateinit var binding: FragmentOtherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +19,7 @@ class PayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPayBinding.inflate(inflater, container, false)
+        binding = FragmentOtherBinding.inflate(inflater, container, false)
         init()
         return binding.root
     }
