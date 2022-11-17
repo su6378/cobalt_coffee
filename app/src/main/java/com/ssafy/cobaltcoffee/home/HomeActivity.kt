@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
+
+const val HOME_FRAGMENT = 0
+const val ORDER_FRAGMENT = 1
+const val PAY_FRAGMENT = 2
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -26,6 +29,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun InitializeLayout() {
         initTb()
+        initNavigation()
     }
 
     // 툴바 적용
@@ -36,6 +40,40 @@ class HomeActivity : AppCompatActivity() {
             supportActionBar?.setDisplayShowTitleEnabled(false)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu)
             registerToolBar.toolbarTitle.text = "코발트 커피"
+        }
+    }
+
+    private fun initNavigation() {
+        binding.mainInclude.apply {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.home_frame, HomeFragment()).commit()
+            bottomNavigationView.setOnItemSelectedListener  {
+                navigationSelected(it)
+            }
+        }
+    }
+
+    private fun navigationSelected(item: MenuItem): Boolean {
+        binding.mainInclude.apply {
+            val checked = item.setChecked(true)
+            when (checked.itemId) {
+                R.id.home_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.home_frame, HomeFragment()).commit()
+                    true
+                }
+                R.id.order_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.home_frame, OrderFragment()).commit()
+                    true
+                }
+                R.id.pay_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.home_frame, PayFragment()).commit()
+                    true
+                }
+            }
+            return false
         }
     }
 

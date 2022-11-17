@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/home_fragment"
         android:icon="@drawable/ic_home"
-        android:title="@string/home_fragment"
+        android:title="@string/home"
         />
     <item
-        android:id="@+id/orderFragment"
+        android:id="@+id/order_fragment"
         android:icon="@drawable/ic_order"
-        android:title="@string/order_fragment"
+        android:title="@string/order"
         />
     <item
-        android:id="@+id/payFragment"
+        android:id="@+id/pay_fragment"
         android:icon="@drawable/ic_pay"
-        android:title="@string/pay_fragment"
+        android:title="@string/pay"
         />
 </menu>
