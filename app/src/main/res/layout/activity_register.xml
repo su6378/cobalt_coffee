@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".register.RegisterActivity">
+
+    <include
+        android:id="@+id/register_toolBar"
+        layout="@layout/layout_include_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/register_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="이메일을 입력해 주세요."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/register_toolBar" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_tl"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/register_tv">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_emailEt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="이메일" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/register_allCb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:buttonTint="@color/cobalt"
+        android:text="전체동의"
+        app:layout_constraintLeft_toLeftOf="@id/register_tl"
+        app:layout_constraintTop_toBottomOf="@id/register_tl" />
+
+    <View
+        android:id="@+id/register_dv"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@android:drawable/divider_horizontal_bright"
+        app:layout_constraintTop_toBottomOf="@id/register_allCb" />
+
+    <LinearLayout
+        android:id="@+id/register_ckLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/register_dv">
+
+        <include
+            android:id="@+id/cobalt_linear"
+            layout="@layout/layout_include_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/personalInfo_linear"
+            layout="@layout/layout_include_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/location_linear"
+            layout="@layout/layout_include_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/marketing_linear"
+            layout="@layout/layout_include_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/ad_linear"
+            layout="@layout/layout_include_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/register_tv2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/register_info"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/register_ckLinear"
+        app:layout_constraintRight_toRightOf="@id/register_ckLinear"
+        app:layout_constraintTop_toBottomOf="@id/register_ckLinear" />
+
+    <TextView
+        android:id="@+id/register_tv3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/register_info2"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/register_ckLinear"
+        app:layout_constraintRight_toRightOf="@id/register_ckLinear"
+        app:layout_constraintTop_toBottomOf="@id/register_tv2" />
+
+    <TextView
+        android:id="@+id/register_tv4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/register_info3"
+        android:textColor="@color/darkGray"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_tv3" />
+
+    <Button
+        android:id="@+id/register_nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:enabled="false"
+        android:paddingVertical="10dp"
+        android:text="다음"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_tv4" />
+</androidx.constraintlayout.widget.ConstraintLayout>

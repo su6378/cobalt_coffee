@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "600561935801",
+    "project_id": "cobaltcoffee-61052",
+    "storage_bucket": "cobaltcoffee-61052.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600561935801:android:7f53fde8e9a8d854904268",
+        "android_client_info": {
+          "package_name": "com.ssafy.cobaltcoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600561935801-6qrgkmg72ttr5pntnq9tpdcehs5387pt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ssafy.cobaltcoffee",
+            "certificate_hash": "896a7a563f89ee5c44a8b4bd4d3effa479affeb9"
+          }
+        },
+        {
+          "client_id": "600561935801-6sdr83s5o7od87h4pad8tmdrr1a80735.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD4ZrGkn24IgHB-cW_9R16kzFc3tbAHPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600561935801-6sdr83s5o7od87h4pad8tmdrr1a80735.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
