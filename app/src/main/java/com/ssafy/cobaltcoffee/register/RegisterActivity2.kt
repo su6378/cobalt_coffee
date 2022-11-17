@@ -171,6 +171,7 @@ class RegisterActivity2 : AppCompatActivity() {
                 startActivity(intent)
             }else{
                 Snackbar.make(binding.root,"회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+                //gd
             }
         }
 
