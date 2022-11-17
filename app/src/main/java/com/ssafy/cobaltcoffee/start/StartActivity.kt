@@ -3,8 +3,6 @@ package com.ssafy.cobaltcoffee.start
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ssafy.cobaltcoffee.MainActivity
-import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.cobaltcoffee.databinding.ActivityStartBinding
 import com.ssafy.cobaltcoffee.home.HomeActivity

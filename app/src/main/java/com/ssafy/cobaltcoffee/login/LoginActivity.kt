@@ -5,14 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.ssafy.cobaltcoffee.MainActivity
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityLoginBinding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.register.RegisterActivity
 import com.ssafy.cobaltcoffee.repository.UserRepository
-import com.ssafy.cobaltcoffee.service.UserService
 import com.ssafy.smartstore.util.RetrofitCallback
 
 private const val TAG = "LoginActivity_코발트"

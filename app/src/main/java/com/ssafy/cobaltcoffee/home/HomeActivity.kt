@@ -27,19 +27,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun InitializeLayout() {
-        initTb()
         initNavigation()
-    }
-
-    // 툴바 적용
-    private fun initTb() {
-        binding.apply {
-            setSupportActionBar(registerToolBar.toolbar)
-            //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayShowTitleEnabled(false)
-            //supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-            registerToolBar.toolbarTitle.text = "코발트 커피"
-        }
     }
 
     private fun initNavigation() {
