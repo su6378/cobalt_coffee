@@ -12,5 +12,8 @@
     <color name="darkGray">#323232</color>
     <color name="lightGray">#F7F7F7</color>
     <color name="blue">#0080FF</color>
+    <color name="layoutColor">#F7F7F7</color>
     <color name="lineColor">#E5E5E5</color>
+    <color name="lineColor2">#DDDDDD</color>
+    <color name="lineColor3">#F6F6F6</color>
 </resources>
