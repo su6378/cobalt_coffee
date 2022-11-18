@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".setting.SettingActivity">
 
-    <include
-        android:id="@+id/setting_toolBar"
-        layout="@layout/layout_include_toolbar"
+    <FrameLayout
+        android:id="@+id/frame_layout_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

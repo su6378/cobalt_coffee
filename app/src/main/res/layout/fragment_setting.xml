@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".setting.SettingFragment">
+
+    <include
+        android:id="@+id/setting_toolBar"
+        layout="@layout/layout_include_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/setting_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lineColor"
+        android:padding="10dp"
+        android:text="개인정보"
+        app:layout_constraintTop_toBottomOf="@id/setting_toolBar" />
+
+    <TextView
+        android:id="@+id/setting_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text=""
+        android:textColor="@color/cobalt"
+        app:layout_constraintTop_toBottomOf="@id/setting_tv" />
+
+    <TextView
+        android:id="@+id/nickname_changeTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="10dp"
+        android:text="닉네임 변경"
+        app:layout_constraintTop_toBottomOf="@id/setting_id" />
+
+    <TextView
+        android:id="@+id/password_changeTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="비밀번호 변경"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/nickname_changeTv" />
+
+    <TextView
+        android:id="@+id/logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="로그아웃"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/password_changeTv" />
+
+    <View
+        android:id="@+id/setting_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor"
+        app:layout_constraintTop_toBottomOf="@id/logout_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

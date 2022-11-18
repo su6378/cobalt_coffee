@@ -68,6 +68,7 @@ class OtherFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        init()
     }
 
     //로그아웃 다이얼로그 생성
@@ -81,6 +82,7 @@ class OtherFragment : Fragment() {
 
     private fun init() {
         getUserInfo()
+        initUser()
     }
 
     //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
