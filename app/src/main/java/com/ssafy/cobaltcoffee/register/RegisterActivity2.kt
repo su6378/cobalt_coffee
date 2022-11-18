@@ -72,7 +72,6 @@ class RegisterActivity2 : AppCompatActivity() {
             registerBtn.setOnClickListener {
                 user.pw = passwordEt.text?.trim().toString()
                 user.name = nicknameEt.text?.trim().toString()
-                Log.d(TAG, "유저정보: $user")
                 //유저정보 삽입
                 registerUser(user)
             }

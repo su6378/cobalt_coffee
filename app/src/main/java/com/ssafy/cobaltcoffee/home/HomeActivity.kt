@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
+import com.ssafy.cobaltcoffee.setting.SettingActivity
 import com.ssafy.cobaltcoffee.start.StartActivity
 
 const val HOME_FRAGMENT = 0
@@ -85,4 +86,11 @@ class HomeActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent)
     }
+
+    //설정 페이지로 이동
+    fun moveSettingPage() {
+        startActivity(Intent(this, SettingActivity::class.java))
+        overridePendingTransition(0,0)
+    }
+
 }

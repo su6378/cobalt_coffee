@@ -31,14 +31,29 @@ class OtherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //로그아웃 버튼 클릭 시 dialog 생성
-        binding.orderLogout.setOnClickListener {
-            val dialog = LogoutDialog(requireActivity() as AppCompatActivity)
-            dialog.setOnOKClickedListener {
-                homeActivity.logout()
+
+        binding.apply {
+            //설정 버튼 클릭 시
+            otherSettingBtn.setOnClickListener {
+                homeActivity.moveSettingPage()
             }
-            dialog.show("로그아웃 하시겠습니까?")
+
+            //로그아웃 버튼 클릭 시 dialog 생성
+            otherLogout.setOnClickListener {
+                showDialog()
+            }
         }
+
+
+    }
+
+    //로그아웃 다이얼로그 생성
+    private fun showDialog(){
+        val dialog = LogoutDialog(requireActivity() as AppCompatActivity)
+        dialog.setOnOKClickedListener {
+            homeActivity.logout()
+        }
+        dialog.show("로그아웃 하시겠습니까?")
     }
 
     private fun init() {

@@ -48,6 +48,7 @@
                     android:visibility="invisible" />
 
                 <ImageView
+                    android:id="@+id/other_settingBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -370,7 +371,7 @@
                 app:layout_constraintTop_toBottomOf="@id/order_ll" />
 
             <TextView
-                android:id="@+id/order_logout"
+                android:id="@+id/other_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -383,9 +384,9 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                app:layout_constraintLeft_toLeftOf="@id/order_logout"
-                app:layout_constraintRight_toRightOf="@id/order_logout"
-                app:layout_constraintTop_toBottomOf="@id/order_logout"
+                app:layout_constraintLeft_toLeftOf="@id/other_logout"
+                app:layout_constraintRight_toRightOf="@id/other_logout"
+                app:layout_constraintTop_toBottomOf="@id/other_logout"
                 android:background="@color/lineColor"/>
 
 

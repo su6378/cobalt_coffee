@@ -17,10 +17,11 @@ class ApplicationClass : Application() {
     companion object{
         // ipconfig를 통해 ip확인하기
         // 핸드폰으로 접속은 같은 인터넷으로 연결 되어있어야함 (유,무선)
-        const val SERVER_URL = "http://mobile-pjt.sample.ssafy.io/"
-        const val MENU_IMGS_URL = "${SERVER_URL}imgs/menu/"
-        const val GRADE_URL = "${SERVER_URL}imgs/grade/"
-        const val IMGS_URL = "${SERVER_URL}imgs/"
+        const val SERVER_URL = "http://43.200.104.181:9999/"
+        const val IMG_URL = "http://43.200.104.181/"
+        const val MENU_IMGS_URL = "${IMG_URL}imgs/menu/"
+        const val GRADE_URL = "${IMG_URL}imgs/grade/"
+        const val IMGS_URL = "${IMG_URL}imgs/"
 
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
         lateinit var retrofit: Retrofit
