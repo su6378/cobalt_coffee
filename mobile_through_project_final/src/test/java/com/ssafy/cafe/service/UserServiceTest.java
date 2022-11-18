@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2021. 6. 23.
  */
 class UserServiceTest extends AbstractServiceTest {
-    private User testUser = new User("test", "test", "test", 0);
+    private User testUser = new User("test", "test", "test", 0, false, false, false);
 
     @Test
     @Order(1)

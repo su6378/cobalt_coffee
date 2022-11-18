@@ -14,15 +14,29 @@ public class User {
     private String pass;
     private Integer stamps;
     private List<Stamp> stampList = new ArrayList<>();
+    private boolean isPush;
+    private boolean isLocation;
+    private boolean isMarketing;
     
     
     @Builder
-    public User(String id, String name, String pass, Integer stamps) {
+    public User(
+        String id
+        ,String name
+        ,String pass
+        ,Integer stamps
+        ,boolean isPush
+        ,boolean isLocation
+        ,boolean isMarketing
+    ) {
         super();
         this.id = id;
         this.name = name;
         this.pass = pass;
         this.stamps = stamps;
+        this.isPush = isPush;
+        this.isLocation = isLocation;
+        this.isMarketing = isMarketing;
     }
     
     public User(String id, String name, String pass) {

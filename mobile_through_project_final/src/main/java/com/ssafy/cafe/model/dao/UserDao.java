@@ -34,6 +34,11 @@ public interface UserDao {
     int delete(String userId);
     List<User> selectAll(); 
     
+    /**
+     * 사용자 정보를 갱신한다.
+     * @param user
+     * @return
+     */
     int update(User user);
     
     

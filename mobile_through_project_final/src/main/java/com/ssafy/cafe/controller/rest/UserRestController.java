@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,13 @@ public class UserRestController {
     @ApiOperation(value = "사용자 정보를 추가한다. 성공하면 true를 리턴한다. ", response = Boolean.class)
     public Boolean insert(@RequestBody User user) {
         uService.join(user);
+        return true;
+    }
+    
+    @PutMapping
+    @ApiOperation(value = "사용자 정보를 갱신한다. 성공하면 true를 리턴한다. ", response = Boolean.class)
+    public Boolean update(@RequestBody User user) {
+        uService.update(user);
         return true;
     }
 

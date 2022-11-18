@@ -10,6 +10,13 @@ public interface UserService {
      * @param user
      */
     public void join(User user);
+    
+    /**
+     * id에 해당하는 사용자 정보를 갱신한다.
+     * 
+     * @param user
+     */
+    public void update(User user);
 
     /**
      * id, pass에 해당하는 User 정보를 반환한다.
