@@ -16,8 +16,11 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentSettingBinding
 import com.ssafy.cobaltcoffee.dialog.LogoutDialog
+import com.ssafy.cobaltcoffee.dialog.MarketingDialog
 import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val TAG = "SettingFragment_코발트"
 class SettingFragment : Fragment() {
@@ -57,7 +60,11 @@ class SettingFragment : Fragment() {
             }
             //로그아웃 클릭
             logoutBtn.setOnClickListener {
-                showDialog()
+                showLogoutDialog()
+            }
+            //마케팅 활용 동의 클릭
+            settingMarketingCl.setOnClickListener{
+                showMarketingDialog()
             }
         }
     }
@@ -66,8 +73,10 @@ class SettingFragment : Fragment() {
     private fun init(){
         initTb()
         //아이디 초기화
-        Log.d(TAG, "아이디:${userViewModel.currentUser} ")
         binding.settingId.text = userViewModel.currentUser.id
+        //토글버튼 터치 불가능하게 만들기
+        binding.settingLocationSb.isEnabled = false
+        binding.settingMarketngSb.isEnabled = false
     }
 
     //툴바 적용하기
@@ -93,11 +102,46 @@ class SettingFragment : Fragment() {
     }
 
     //로그아웃 다이얼로그 생성
-    private fun showDialog(){
+    private fun showLogoutDialog(){
         val dialog = LogoutDialog(requireActivity() as AppCompatActivity)
         dialog.setOnOKClickedListener {
             settingActivity.logout()
         }
         dialog.show("로그아웃 하시겠습니까?")
+    }
+
+    //마케팅정보 동의 다이얼로그 생성
+    private fun showMarketingDialog(){
+        val dialog = MarketingDialog(requireActivity() as AppCompatActivity)
+        dialog.setOnOKClickedListener {
+            //변수 설정
+            binding.settingMarketngSb.isChecked = !binding.settingMarketngSb.isChecked
+            binding.settingMarketngSb.isEnabled = false
+        }
+
+        binding.settingMarketngSb.isEnabled = true
+        val currentTime = getCurrentTime()
+        if(!binding.settingMarketngSb.isChecked) { //동의를 한다면
+            dialog.show("${currentTime}에\n${resources.getString(R.string.marketingAgree)}")
+        }else{
+            dialog.show("${currentTime}에\n${resources.getString(R.string.marketingDisagree)}")
+        }
+
+    }
+
+    //현재 시간 가져오기
+    fun getCurrentTime() : String{
+        // 현재시간을 가져오기
+        val long_now = System.currentTimeMillis()
+
+        // 현재 시간을 Date 타입으로 변환
+        val t_date = Date(long_now)
+
+        // 날짜, 시간을 가져오고 싶은 형태 선언
+        val t_dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 kk:mm", Locale("ko", "KR"))
+
+        // 현재 시간을 dateFormat 에 선언한 형태의 String 으로 변환
+        val str_date = t_dateFormat.format(t_date)
+        return str_date
     }
 }

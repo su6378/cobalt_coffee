@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".setting.SettingFragment">
 
     <include
@@ -65,10 +65,10 @@
         android:id="@+id/password_changeTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:padding="10dp"
         android:text="비밀번호 변경"
         android:textColor="@color/black"
-        android:background="?attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/setting_line3" />
 
     <View
@@ -82,10 +82,10 @@
         android:id="@+id/logout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:padding="10dp"
         android:text="로그아웃"
         android:textColor="@color/black"
-        android:background="?attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/setting_line4" />
 
     <View
@@ -107,40 +107,44 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/setting_locationCl"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/setting_tv2"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/setting_tv2">
 
         <TextView
             android:id="@+id/setting_tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textColor="@color/black"
-            android:text="위치 정보 사용 (선택)"
             android:background="?attr/selectableItemBackground"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:text="위치 정보 사용 (선택)"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/setting_tv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="매장 찾기, 코발트오더에 필요한 회원 위치정보를 사용합니다."
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="매장 찾기, 코발트오더에 필요한 회원 위치정보를 사용합니다."
-            android:background="?attr/selectableItemBackground"
-            app:layout_constraintTop_toBottomOf="@id/setting_tv3"/>
+            app:layout_constraintTop_toBottomOf="@id/setting_tv3" />
 
         <com.suke.widget.SwitchButton
             android:id="@+id/setting_locationSb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:sb_show_indicator="false"
+            android:layout_marginEnd="10dp"
+            app:sb_checked="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:sb_background="@color/lineColor2"
+            app:sb_checked_color="@color/cobalt"
+            app:sb_show_indicator="false" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,7 +152,131 @@
         android:id="@+id/setting_line6"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/lineColor2"
+        android:background="@color/lineColor3"
         app:layout_constraintTop_toBottomOf="@id/setting_locationCl" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_locationCl2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/setting_locationCl">
+
+        <TextView
+            android:id="@+id/setting_tv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="?attr/selectableItemBackground"
+            android:text="위치기반서비스 약관보기"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/lineColor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/setting_line7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor3"
+        app:layout_constraintTop_toBottomOf="@id/setting_locationCl2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_marketingCl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/setting_line7">
+
+        <TextView
+            android:id="@+id/setting_tv6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="마케팅 활용 동의 설정 (선택)"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/setting_tv7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="이벤트, 쿠폰 등의 혜택을 받습니다."
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_tv6" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/setting_marketngSb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:sb_checked="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sb_background="@color/lineColor2"
+            app:sb_checked_color="@color/cobalt"
+            app:sb_show_indicator="false" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/setting_line8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor3"
+        app:layout_constraintTop_toBottomOf="@id/setting_marketingCl" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_locationCl4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/setting_line8">
+
+        <TextView
+            android:id="@+id/setting_tv8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="?attr/selectableItemBackground"
+            android:text="광고성 정보 수신 동의 약관보기"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/lineColor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/setting_line9"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor3"
+        app:layout_constraintTop_toBottomOf="@id/setting_locationCl2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

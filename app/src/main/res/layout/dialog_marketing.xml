@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:paddingVertical="10dp"
+        android:text="마케팅 수신동의 설정"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor2"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="center"
+        android:padding="30dp"
+        android:paddingVertical="10dp"
+        android:text="내용"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/line" />
+
+    <com.github.nikartm.button.FitButton
+        android:id="@+id/okBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:textSize="18sp"
+        app:fb_backgroundColor="@color/cobalt"
+        app:fb_text="확인"
+        app:fb_textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
