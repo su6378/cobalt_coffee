@@ -35,6 +35,12 @@ class SettingFragment : Fragment() {
         settingActivity = context as SettingActivity
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //프래그먼트에서 툴바사용시 등록
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,13 +56,13 @@ class SettingFragment : Fragment() {
 
         binding.apply {
 
-            //닉네임 변경 클릭
+            //닉네임 변경 페이지 이동
             nicknameChangeTv.setOnClickListener{
-
+                settingActivity.openFragment(1)
             }
-            //비밀번호 변경 클릭
+            //비밀번호 변경 페이지 이동
             passwordChangeTv.setOnClickListener {
-
+                settingActivity.openFragment(2)
             }
             //로그아웃 클릭
             logoutBtn.setOnClickListener {
@@ -71,7 +77,8 @@ class SettingFragment : Fragment() {
 
     //화면 초기화
     private fun init(){
-        initTb()
+        //툴바 타이틀 변경
+        settingActivity.changeTitle("설정")
         //아이디 초기화
         binding.settingId.text = userViewModel.currentUser.id
         //토글버튼 터치 불가능하게 만들기
@@ -79,26 +86,12 @@ class SettingFragment : Fragment() {
         binding.settingMarketngSb.isEnabled = false
     }
 
-    //툴바 적용하기
-    private fun initTb() {
-        binding.apply {
-            val actionBar = settingActivity.actionBar
-            actionBar?.setDisplayHomeAsUpEnabled(true)
-            actionBar?.setDisplayShowTitleEnabled(false)
-            actionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-            actionBar?.title = "설정"
-        }
-    }
-
 
     //뒤로가기 버튼 클릭 시
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Log.d(TAG, "onOptionsItemSelected: 클릭됨!!")
-                settingActivity.moveHomeActivity()
                 settingActivity.onBackPressed()
-
                 return true
             }
         }

@@ -17,23 +17,24 @@ import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
 private const val TAG = "SettingActivity_코발트"
+
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
-    private lateinit var userData : User
-    private val userViewModel : UserViewModel by viewModels()
+    private lateinit var userData: User
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       init()
+        init()
 
 
     }
 
-    private fun init(){
+    private fun init() {
         //이전 액티비티에서 데이터받아오기
         userData = intent.getSerializableExtra("user") as User
 
@@ -57,7 +58,7 @@ class SettingActivity : AppCompatActivity() {
         }
     }
 
-    fun openFragment(index:Int, key:String, value:Int){
+    fun openFragment(index: Int, key: String, value: Int) {
         moveFragment(index, key, value)
     }
 
@@ -65,24 +66,24 @@ class SettingActivity : AppCompatActivity() {
         moveFragment(index, "", 0)
     }
 
-    private fun moveFragment(index:Int, key:String, value:Int){
+    private fun moveFragment(index: Int, key: String, value: Int) {
         val transaction = supportFragmentManager.beginTransaction()
-        when(index){
+        when (index) {
             0 -> transaction.replace(R.id.frame_layout_setting, SettingFragment())
                 .addToBackStack(null)
             //닉네임 변경
-//            1 -> transaction.replace(R.id.frame_layout_setting, ShoppingListFragment())
-//                .addToBackStack(null)
-//            //비밀번호 변경
-//            2 -> transaction.replace(R.id.frame_layout_setting, OrderDetailFragment.newInstance(key, value))
-//                .addToBackStack(null)
+            1 -> transaction.replace(R.id.frame_layout_setting, ChangeNameFragment())
+                .addToBackStack(null)
+            //비밀번호 변경
+            2 -> transaction.replace(R.id.frame_layout_setting, ChangePwFragment())
+                .addToBackStack(null)
             //로그아웃
             3 -> logout()
         }
         transaction.commit()
     }
 
-    fun logout(){
+    fun logout() {
         //preference 지우기
         ApplicationClass.sharedPreferencesUtil.deleteUser()
         //화면이동
@@ -92,12 +93,17 @@ class SettingActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun moveHomeActivity(){
+    fun moveHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
-        overridePendingTransition(0,0)
+        overridePendingTransition(0, 0)
+    }
+
+    //툴바 타이틀 변경
+    fun changeTitle(title: String) {
+        binding.settingToolBar.toolbarTitle.text = title
     }
 
 }

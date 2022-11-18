@@ -312,7 +312,7 @@
                         android:id="@+id/other_basketImg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="19dp"
                         android:src="@drawable/ic_shopping"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -322,7 +322,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="21dp"
                         android:fontFamily="@font/quicksand_regular"
                         android:text="장바구니"
                         android:textColor="@color/black"

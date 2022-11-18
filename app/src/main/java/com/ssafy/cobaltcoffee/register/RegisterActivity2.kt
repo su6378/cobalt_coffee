@@ -45,11 +45,11 @@ class RegisterActivity2 : AppCompatActivity() {
         //비밀번호 체크
         binding.passwordEt.addTextChangedListener {
             checkPassword()
-            registerCheck()
             //비밀번호 확인 입력칸이 비어있지않다면 체크 메소드 실행
             if (binding.passConfirmEt.text!!.isNotEmpty()){
                 checkConfirm(binding.passConfirmEt.text?.trim().toString())
             }
+            registerCheck()
         }
         //비밀번호 확인 체크
         binding.passConfirmEt.addTextChangedListener {

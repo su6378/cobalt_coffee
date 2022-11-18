@@ -78,6 +78,6 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.1.0'
     implementation "androidx.fragment:fragment-ktx:1.4.1"
 
+    //SwitchButton
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
-
 }
