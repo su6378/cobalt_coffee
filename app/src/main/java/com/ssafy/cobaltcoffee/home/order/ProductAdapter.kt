@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.dto.Product
 
@@ -24,9 +24,14 @@ class ProductAdapter (val context: Context, val products: ArrayList<Product>): B
 
         val tvProductName: TextView = view.findViewById<TextView>(R.id.product_name)
         val tvProductPrice: TextView = view.findViewById<TextView>(R.id.product_price)
+        val tagNew: ImageView = view.findViewById<ImageView>(R.id.tag_new)
+        val tagBest: ImageView = view.findViewById<ImageView>(R.id.tag_best)
 
         tvProductName.text = item.name
         tvProductPrice.text = item.price.toString() + "원"
+
+        if (!item.isNew) tagNew.visibility = View.GONE
+        if (!item.isBest) tagBest.visibility = View.GONE
 
         return view
     }

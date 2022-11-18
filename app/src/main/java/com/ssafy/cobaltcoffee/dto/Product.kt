@@ -5,7 +5,9 @@ class Product(
     val name: String,
     val type: String,
     val price: Int,
-    val image: String
+    val image: String,
+    val isNew: Boolean,
+    val isBest: Boolean
 ) {
-    constructor(): this(0, "", "", 0, "")
+    constructor(): this(0, "", "", 0, "", false, false)
 }

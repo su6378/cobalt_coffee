@@ -51,80 +51,62 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/btn_order"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="@color/cobalt"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_backgroundColor="@color/cobalt"
+                app:fb_borderColor="@color/white"
+                app:fb_borderWidth="0dp"
+                app:fb_cornerRadius="20dp"
+                app:fb_fontFamilyRes="@font/jejugothic"
+                app:fb_rippleColor="@color/white"
+                app:fb_shape="rectangle"
+                app:fb_icon="@drawable/ic_coffee"
+                app:fb_iconHeight="100dp"
+                app:fb_iconWidth="100dp"
+                app:fb_iconPosition="top"
+                app:fb_iconColor="@color/white"
+                app:fb_text="주문하기"
+                app:fb_textColor="@color/white"
+                app:fb_textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_cart"
                 app:layout_constraintHorizontal_bias="0.577"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5">
+                app:layout_constraintVertical_bias="0.5" />
 
-                <ImageView
-                    android:id="@+id/iv_coffee"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_coffee"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_coffee"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
-
-                <TextView
-                    android:id="@+id/tv_coffee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="주문하기"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_coffee" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/btn_cart"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="@color/cobalt"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_backgroundColor="@color/white"
+                app:fb_borderColor="@color/cobalt"
+                app:fb_borderWidth="4dp"
+                app:fb_cornerRadius="20dp"
+                app:fb_fontFamilyRes="@font/jejugothic"
+                app:fb_rippleColor="@color/cobalt"
+                app:fb_shape="rectangle"
+                app:fb_icon="@drawable/ic_cart"
+                app:fb_iconHeight="100dp"
+                app:fb_iconWidth="100dp"
+                app:fb_iconPosition="top"
+                app:fb_iconColor="@color/cobalt"
+                app:fb_text="장바구니"
+                app:fb_textColor="@color/cobalt"
+                app:fb_textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_order"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5">
-
-                <ImageView
-                    android:id="@+id/iv_cart"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_cart"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_cart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
-
-                <TextView
-                    android:id="@+id/tv_cart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="장바구니"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_cart" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintVertical_bias="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

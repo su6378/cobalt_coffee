@@ -35,8 +35,13 @@ class MenuFragment(productType: Int) : Fragment() {
         val productList: ArrayList<Product> = arrayListOf()
         val productTypes: ArrayList<String> = arrayListOf("과자", "음료", "차")
         productList.apply {
-            for (i in 1 .. 30) {
-                this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"drink.png"))
+            for (i in 0 .. 30) {
+                when (i % 3) {
+                    0 -> this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"drink.png", false, false))
+                    1 -> this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"drink.png", true, false))
+                    2 -> this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"drink.png", false, true))
+                }
+
             }
         }
 

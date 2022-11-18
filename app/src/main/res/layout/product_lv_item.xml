@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/tag_best"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/tag_best"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/tag_new"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/tag_new"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +35,8 @@
 
         <ImageView
             android:id="@+id/product_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/drink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(상품 이름)"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/product_price"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(상품 가격)"
-                android:textSize="20sp"
+                android:textSize="16sp"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
