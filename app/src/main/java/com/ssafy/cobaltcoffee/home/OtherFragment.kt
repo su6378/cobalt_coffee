@@ -87,8 +87,13 @@ class OtherFragment : Fragment() {
 
     //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
     private fun getUserInfo(){
-        val user = ApplicationClass.sharedPreferencesUtil.getUser()
-        UserRepository.get().getInfo(user.id,GetUserInfoCallback())
+        Log.d(TAG, "getUserInfo: ${userViewModel.userId}")
+        if (userViewModel.userId.isEmpty()){
+            val user = ApplicationClass.sharedPreferencesUtil.getUser()
+            UserRepository.get().getInfo(user.id,GetUserInfoCallback())
+        }else{
+            UserRepository.get().getInfo(userViewModel.userId,GetUserInfoCallback())
+        }
     }
 
     //유저 정보 초기화

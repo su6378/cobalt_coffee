@@ -47,14 +47,17 @@ class LoginActivity : AppCompatActivity() {
     // 로그인 기능
     private fun login(loginId: String, loginPass: String) {
         val user = User(loginId, loginPass)
-        Log.d(TAG, "user: $user $loginId $loginPass")
         UserRepository.get().login(user, LoginCallback())
     }
     //홈으로 이동
     private fun moveHome(){
         val intent = Intent(this, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        //자동 로그인 체크 안할시 아이디 값 넘겨주기
+        if (!autoLoginChecked){
+            intent.putExtra("userId",binding.loginEmailEt.text.toString().trim())
+        }
         startActivity(intent)
     }
     //비밀번호 찾기 페이지 이동

@@ -137,6 +137,7 @@
             android:id="@+id/setting_locationSb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:sb_show_indicator="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

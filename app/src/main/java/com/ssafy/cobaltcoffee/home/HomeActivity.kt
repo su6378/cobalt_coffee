@@ -31,13 +31,13 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         init()
     }
 
     private fun init() {
         InitializeLayout()  // UI 드로우
         setFunction()       // 기능 설정
+        initUser()
     }
 
     private fun InitializeLayout() {
@@ -86,6 +86,14 @@ class HomeActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    //자동로그인 체크 여부에 따른 유저 초기화
+    private fun initUser(){
+        val user = ApplicationClass.sharedPreferencesUtil.getUser()
+        if (user.id.isEmpty()){ //sp에 저장된 객체가 없으면 id값은 이전 액티비티에서 받은 인텐트 값으로 초기화
+            val data = intent.getStringExtra("userId")!!
+            userViewModel.userId = data
+        }
+    }
 
     fun logout(){
         //preference 지우기

@@ -5,4 +5,5 @@ import com.ssafy.cobaltcoffee.dto.User
 
 class UserViewModel : ViewModel() {
     var currentUser = User()
+    var userId = ""
 }
