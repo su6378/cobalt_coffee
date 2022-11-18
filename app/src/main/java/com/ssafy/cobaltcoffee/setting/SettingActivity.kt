@@ -28,15 +28,33 @@ class SettingActivity : AppCompatActivity() {
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+       init()
+
+
+    }
+
+    private fun init(){
         //이전 액티비티에서 데이터받아오기
         userData = intent.getSerializableExtra("user") as User
 
         //현재 사용자 초기화
         userViewModel.currentUser = userData
 
-        //시작 프래그먼트 세팅
-        openFragment(0)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout_setting, SettingFragment())
+            .commit()
 
+        initTb()
+    }
+
+    //툴바 적용하기
+    private fun initTb() {
+        binding.apply {
+            setSupportActionBar(settingToolBar.toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+        }
     }
 
     fun openFragment(index:Int, key:String, value:Int){
@@ -75,7 +93,10 @@ class SettingActivity : AppCompatActivity() {
     }
 
     fun moveHomeActivity(){
-        finish()
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
         overridePendingTransition(0,0)
     }
 

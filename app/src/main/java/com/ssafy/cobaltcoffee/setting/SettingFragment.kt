@@ -82,11 +82,11 @@ class SettingFragment : Fragment() {
     //툴바 적용하기
     private fun initTb() {
         binding.apply {
-            settingActivity.setSupportActionBar(settingToolBar.toolbar)
-            settingActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            settingActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
-            settingActivity.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-            settingToolBar.toolbarTitle.text = "설정"
+            val actionBar = settingActivity.actionBar
+            actionBar?.setDisplayHomeAsUpEnabled(true)
+            actionBar?.setDisplayShowTitleEnabled(false)
+            actionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+            actionBar?.title = "설정"
         }
     }
 
@@ -95,7 +95,11 @@ class SettingFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                Log.d(TAG, "onOptionsItemSelected: 클릭됨!!")
                 settingActivity.moveHomeActivity()
+                settingActivity.onBackPressed()
+
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
