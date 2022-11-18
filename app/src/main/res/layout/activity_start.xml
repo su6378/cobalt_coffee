@@ -14,14 +14,13 @@
         android:src="@drawable/ic_logo"
         app:layout_constraintBottom_toTopOf="@id/start_tv"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/start_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:text="코발트 커피에 오신것을 환영합니다."
@@ -47,7 +46,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <com.github.nikartm.button.FitButton
         android:id="@+id/login_Btn"

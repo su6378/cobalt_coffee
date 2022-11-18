@@ -1,10 +1,13 @@
 package com.ssafy.cobaltcoffee.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import com.ssafy.cobaltcoffee.R
+import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
+import com.ssafy.cobaltcoffee.start.StartActivity
 
 const val HOME_FRAGMENT = 0
 const val ORDER_FRAGMENT = 1
@@ -70,5 +73,16 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+    fun logout(){
+        //preference 지우기
+        ApplicationClass.sharedPreferencesUtil.deleteUser()
+
+        //화면이동
+        val intent = Intent(this, StartActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent)
     }
 }
