@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -16,9 +17,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.FragmentChangePwBinding
 import com.ssafy.cobaltcoffee.databinding.FragmentSettingBinding
+import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
+import com.ssafy.smartstore.util.RetrofitCallback
 import java.util.regex.Pattern
 
+private const val TAG = "ChangePwFragment_코발트"
 class ChangePwFragment : Fragment() {
 
     private lateinit var binding: FragmentChangePwBinding
@@ -75,13 +79,7 @@ class ChangePwFragment : Fragment() {
 
             //변경하기
             changeBtn.setOnClickListener {
-                userViewModel.currentUser.pw = passwordEt.text.toString().trim()
-                //유저정보 변경
-                val snack = Snackbar.make(it, "닉네임이 변경되었습니다.", Snackbar.LENGTH_SHORT)
-                snack.setTextColor(Color.WHITE)	// 텍스트 컬러
-                snack.setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.blue))	// 배경 컬러
-                snack.animationMode = Snackbar.ANIMATION_MODE_FADE	// 애니메이션
-                snack.show()
+                updateUser()
             }
         }
     }
@@ -165,5 +163,41 @@ class ChangePwFragment : Fragment() {
     //변경하기 버튼 활성화
     private fun changeCheck() {
         binding.changeBtn.isEnabled = passwordCheck && pwConfirmCheck
+    }
+
+    //회원정보 수정
+    private fun updateUser() {
+        userViewModel.currentUser.pw = binding.passwordEt.text.toString().trim()
+        //유저정보 변경
+        UserRepository.get().update(userViewModel.currentUser, UpdateCallback())
+    }
+
+    //회원수정 콜백
+    inner class UpdateCallback : RetrofitCallback<Boolean> {
+        override fun onSuccess(code: Int, result: Boolean) {
+            if (result) {
+                //snackbar
+                val snack = Snackbar.make(binding.root, "비밀번호가 변경되었습니다.", Snackbar.LENGTH_SHORT)
+                snack.setTextColor(Color.WHITE)    // 텍스트 컬러
+                snack.setBackgroundTint(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.blue
+                    )
+                )    // 배경 컬러
+                snack.animationMode = Snackbar.ANIMATION_MODE_FADE    // 애니메이션
+                snack.show()
+            } else {
+                Snackbar.make(binding.root, "비밀번호 변경에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "서버 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }

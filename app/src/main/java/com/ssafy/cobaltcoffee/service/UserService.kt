@@ -20,4 +20,8 @@ interface UserService {
     // 로그인 처리 후 성공적으로 로그인 되었다면 loginId라는 쿠키를 내려준다.
     @POST("rest/user/login")
     fun login(@Body body: User): Call<User>
+
+    // 사용자 정보를 갱신한다.
+    @PUT("rest/user")
+    fun update(@Body body: User) : Call<Boolean>
 }

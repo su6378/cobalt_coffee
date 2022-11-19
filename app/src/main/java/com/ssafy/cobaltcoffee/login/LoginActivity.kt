@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             }
             //비밀번호 찾기 페이지 이동
             searchPwTv.setOnClickListener{
-
+                moveFindPw()
             }
             //회원가입 페이지 이동
             registerTv.setOnClickListener {
@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
     //비밀번호 찾기 페이지 이동
-//    private fun movePw() = startActivity(Intent(this,RegisterActivity::class.java))
+    private fun moveFindPw() = startActivity(Intent(this,FindPasswordActivity::class.java))
 
     //회원가입 페이지 이동
     private fun moveRegister() = startActivity(Intent(this,RegisterActivity::class.java))

@@ -54,7 +54,6 @@ class RegisterActivity : AppCompatActivity() {
         initTb() //툴바 적용
 
         //이메일
-        //firebaseAuth = FirebaseAuth.getInstance()
         binding.registerEmailEt.addTextChangedListener {
             emailValidation()
         }

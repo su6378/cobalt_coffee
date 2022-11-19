@@ -184,9 +184,7 @@ class RegisterActivity2 : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     moveHome()
-                    Log.d(TAG, "loginAuth: 로그인 성공")
                 }else{
-                    Log.d(TAG, "loginAuth: Auth 로그인에 실패하였습니다. ")
                 }
             }
     }
@@ -198,14 +196,11 @@ class RegisterActivity2 : AppCompatActivity() {
 
         //lottie animation 종료
         finishLoadingIGB()
-
         //홈 액티비티로 이동
         val intent = Intent(this@RegisterActivity2, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
-
-
 
     //회원가입 콜백
     inner class RegisterCallback: RetrofitCallback<Boolean> {
@@ -215,7 +210,6 @@ class RegisterActivity2 : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(user.id,user.pw)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful){
-                            Log.d(TAG, "onSuccess: Auth 계정 등록")
                             loginAuth()
                         }else{
                             val snack = Snackbar.make(binding.root, "이미 존재하는 계정입니다.",Snackbar.LENGTH_SHORT)

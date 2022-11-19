@@ -87,7 +87,26 @@ class UserRepository(context: Context) {
             override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                 callback.onError(t)
             }
+        })
+    }
 
+    //회원정보 수정
+    fun update(user : User, callback: RetrofitCallback<Boolean>){
+        RetrofitUtil.userService.update(user).enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                callback.onError(t)
+            }
         })
     }
 

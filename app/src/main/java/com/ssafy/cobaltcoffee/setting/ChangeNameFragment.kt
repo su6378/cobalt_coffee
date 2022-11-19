@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -15,9 +16,12 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.FragmentChangeNameBinding
+import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
+import com.ssafy.smartstore.util.RetrofitCallback
 
-
+private const val TAG = "ChangeNameFragment_코발트"
 class ChangeNameFragment : Fragment() {
     private lateinit var binding: FragmentChangeNameBinding
     private lateinit var settingActivity: SettingActivity
@@ -55,19 +59,13 @@ class ChangeNameFragment : Fragment() {
 
             //닉네임 확인 체크
             nicknameEt.addTextChangedListener {
-                checkNickname(nicknameEt.text.toString().trim())
+                checkNickname()
                 changeCheck()
             }
 
             //변경하기
             changeBtn.setOnClickListener {
-                userViewModel.currentUser.name = nicknameEt.text.toString().trim()
-                //유저정보 변경
-                val snack = Snackbar.make(it, "닉네임이 변경되었습니다.",Snackbar.LENGTH_SHORT)
-                snack.setTextColor(Color.WHITE)	// 텍스트 컬러
-                snack.setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.blue))	// 배경 컬러
-                snack.animationMode = Snackbar.ANIMATION_MODE_FADE	// 애니메이션
-                snack.show()
+                updateUser()
             }
         }
     }
@@ -95,7 +93,7 @@ class ChangeNameFragment : Fragment() {
     }
 
     //닉네임 확인 메소드
-    private fun checkNickname(nicknameConfirm: String) {
+    private fun checkNickname() {
         binding.apply {
             val nickname = nicknameEt.text.toString().trim()
             if (nickname == userViewModel.currentUser.name) {
@@ -116,5 +114,36 @@ class ChangeNameFragment : Fragment() {
     //변경하기 버튼 활성화
     private fun changeCheck() {
         binding.changeBtn.isEnabled = nicknameCheck
+    }
+
+    //회원정보 수정
+    private fun updateUser(){
+        userViewModel.currentUser.name = binding.nicknameEt.text.toString().trim()
+        //유저정보 변경
+        UserRepository.get().update(userViewModel.currentUser,UpdateCallback())
+    }
+
+    //회원수정 콜백
+    inner class UpdateCallback: RetrofitCallback<Boolean> {
+        override fun onSuccess( code: Int, result: Boolean) {
+            if (result) {
+                //snackbar
+                val snack = Snackbar.make(binding.root, "닉네임이 변경되었습니다.",Snackbar.LENGTH_SHORT)
+                snack.setTextColor(Color.WHITE)	// 텍스트 컬러
+                snack.setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.blue))	// 배경 컬러
+                snack.animationMode = Snackbar.ANIMATION_MODE_FADE	// 애니메이션
+                snack.show()
+            }else{
+                Snackbar.make(binding.root,"닉네임 변경에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "서버 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }
