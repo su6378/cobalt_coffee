@@ -1,5 +1,6 @@
 package com.ssafy.cobaltcoffee.register
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -9,6 +10,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.forms.sti.progresslitieigb.ProgressLoadingIGB
+import com.forms.sti.progresslitieigb.finishLoadingIGB
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -116,13 +119,13 @@ class RegisterActivity2 : AppCompatActivity() {
     //회원정보 삽입
     private fun registerUser(){
         //로딩창 생성 Lottie
-
-//        ProgressLoadingIGB.startLoadingIGB(this){
-//            message = "잠시만 기다려주세요."
-//            srcLottieJson = R.raw.skin_care
-//            hight = 500 // Optional
-//            width = 500 // Optional
-//        }
+        ProgressLoadingIGB.startLoadingIGB(this){
+            message = "잠시만 기다려주세요."
+            srcLottieJson = R.raw.loading_register
+            hight = 500 // Optional
+            width = 500 // Optional
+            sizeTextMessage = 14f
+        }
         UserRepository.get().insert(user,RegisterCallback())
     }
 
@@ -192,6 +195,10 @@ class RegisterActivity2 : AppCompatActivity() {
     private fun moveHome(){
         // 로그인 시 user정보 sp에 저장
         ApplicationClass.sharedPreferencesUtil.addUser(user)
+
+        //lottie animation 종료
+        finishLoadingIGB()
+
         //홈 액티비티로 이동
         val intent = Intent(this@RegisterActivity2, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -204,21 +211,20 @@ class RegisterActivity2 : AppCompatActivity() {
     inner class RegisterCallback: RetrofitCallback<Boolean> {
         override fun onSuccess( code: Int, result: Boolean) {
             if (result) {
-//                //FireAuth에 계정 등록
-//                auth.createUserWithEmailAndPassword(user.id,user.pw)
-//                    .addOnCompleteListener { task ->
-//                        if (task.isSuccessful){
-//                            Log.d(TAG, "onSuccess: Auth 계정 등록")
-//                            loginAuth()
-//                        }else{
-//                            val snack = Snackbar.make(binding.root, "이미 존재하는 계정입니다.",Snackbar.LENGTH_SHORT)
-//                            snack.setTextColor(Color.WHITE)	// 텍스트 컬러
-//                            snack.setBackgroundTint(ContextCompat.getColor(this@RegisterActivity2,R.color.blue))	// 배경 컬러
-//                            snack.animationMode = Snackbar.ANIMATION_MODE_FADE	// 애니메이션
-//                            snack.show()
-//                        }
-//                    }
-                moveHome()
+                //FireAuth에 계정 등록
+                auth.createUserWithEmailAndPassword(user.id,user.pw)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful){
+                            Log.d(TAG, "onSuccess: Auth 계정 등록")
+                            loginAuth()
+                        }else{
+                            val snack = Snackbar.make(binding.root, "이미 존재하는 계정입니다.",Snackbar.LENGTH_SHORT)
+                            snack.setTextColor(Color.WHITE)	// 텍스트 컬러
+                            snack.setBackgroundTint(ContextCompat.getColor(this@RegisterActivity2,R.color.blue))	// 배경 컬러
+                            snack.animationMode = Snackbar.ANIMATION_MODE_FADE	// 애니메이션
+                            snack.show()
+                        }
+                    }
             }else{
                 Snackbar.make(binding.root,"회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
             }

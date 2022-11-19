@@ -51,6 +51,7 @@ dependencies {
 
     //lottie
     implementation 'com.airbnb.android:lottie:5.2.0'
+    implementation 'com.github.LordSaac:ProgressLottieIGB:v1.0.2'
 
     //fitButton
     implementation 'io.github.nikartm:fit-button:2.0.0'
