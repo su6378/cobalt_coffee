@@ -7,13 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="cobalt">#1E3AD9</color>
     <color name="statusBar">#FF5722</color>
     <color name="darkGray">#323232</color>
     <color name="lightGray">#F7F7F7</color>
-    <color name="blue">#0080FF</color>
     <color name="layoutColor">#F7F7F7</color>
     <color name="lineColor">#E5E5E5</color>
     <color name="lineColor2">#DDDDDD</color>
     <color name="lineColor3">#F6F6F6</color>
+    <color name="blue">#0080FF</color>
+    <color name="bronze">#C49C48</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="gold">#FFD700</color>
+    <color name="cobalt">#1E3AD9</color>
 </resources>
