@@ -163,14 +163,12 @@ public class UserRestController {
     @PostConstruct
     public void setup() {
         levels = new ArrayList<>();
-        levels.add(new Level("씨앗", 10, 50, "seeds.png"));
-        levels.add(new Level("꽃", 15, 125, "flower.png"));
-        levels.add(new Level("열매", 20, 225, "coffee_fruit.png"));
-        levels.add(new Level("커피콩", 25, 350, "coffee_beans.png"));
-        levels.add(new Level("커피나무", Integer.MAX_VALUE, Integer.MAX_VALUE, "coffee_tree.png"));
+        levels.add(new Level("BLUE", 10, 50, "seeds.png"));
+        levels.add(new Level("BRONZE", 15, 125, "flower.png"));
+        levels.add(new Level("SILVER", 20, 225, "coffee_fruit.png"));
+        levels.add(new Level("GOLD", 25, 350, "coffee_beans.png"));
+        levels.add(new Level("VIP", Integer.MAX_VALUE, Integer.MAX_VALUE, "coffee_tree.png"));
     }
-
-
 
     class Level {
         private String title;
