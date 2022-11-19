@@ -24,7 +24,7 @@ import com.ssafy.cafe.model.service.UserService;
 // @Transactional
 public abstract class AbstractServiceTest {
 
-    public static User user = new User("id 01", "name 01", "pass 01", 0, false, false, false);
+    public static User user = new User("id 01", "name 01", "pass 01", 0, false, false, false, false);
 
     /*
     public static UserService userService;

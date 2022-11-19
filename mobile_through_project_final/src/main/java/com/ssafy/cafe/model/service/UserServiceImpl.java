@@ -32,10 +32,26 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         userDao.update(user);
     }
+    
+    @Override
+    public void pushUpdate(User user) {
+        userDao.updatePush(user);
+    }
+
+    @Override
+    public void locationUpdate(User user) {
+        userDao.updateLocation(user);
+        
+    }
+
+    @Override
+    public void marketingUpdate(User user) {
+        userDao.updateMarketing(user);
+    }
 
     @Override
     public User login(String id, String pass) {
-        User user = userDao.select(id);
+        User user = userDao.login(id);
         if (user != null && user.getPass().equals(pass)) {
             return user;
         } else {
@@ -45,12 +61,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void leave(String id) {
-        userDao.delete(id);
+        userDao.updateLeave(id);
     }
 
     @Override
     public boolean isUsedId(String id) {
-        return userDao.select(id)!=null;
+        return userDao.select(id) != null;
     }
     
     @Override

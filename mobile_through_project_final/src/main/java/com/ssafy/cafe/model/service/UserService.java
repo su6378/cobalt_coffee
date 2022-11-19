@@ -17,6 +17,27 @@ public interface UserService {
      * @param user
      */
     public void update(User user);
+    
+    /**
+     * id에 해당하는 사용자의 푸쉬알림 여부를 갱신한다.
+     * 
+     * @param user
+     */
+    public void pushUpdate(User user);
+    
+    /**
+     * id에 해당하는 사용자의 위치정보 활용여부를 갱신한다.
+     * 
+     * @param user
+     */
+    public void locationUpdate(User user);
+    
+    /**
+     * id에 해당하는 마케팅활용 동의여부를 갱신한다.
+     * 
+     * @param user
+     */
+    public void marketingUpdate(User user);
 
     /**
      * id, pass에 해당하는 User 정보를 반환한다.

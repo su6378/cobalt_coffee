@@ -38,15 +38,51 @@
 		WHERE id = #{id}
 	</update>
 	
+	<update id="updatePush" parameterType="User">
+		UPDATE t_user
+		SET
+		    is_push = #{isPush}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateLocation" parameterType="User">
+		UPDATE t_user
+		SET
+		    is_location = #{isLocation}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateMarketing" parameterType="User">
+		UPDATE t_user
+		SET
+		    is_marketing = #{isMarketing}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateLeave" parameterType="string">
+		UPDATE t_user
+		SET
+		    is_leave = 1
+		WHERE id = #{userId}
+	</update>
 	
 	<delete id="delete" parameterType="string">
 		DELETE FROM t_user
 		WHERE id = #{id}
 	</delete>
+	
 	<select id="select" parameterType="string" resultType="User">
 		SELECT * FROM t_user
 		WHERE id = #{id}
 	</select>
+	
+	<select id="login" parameterType="string" resultType="User">
+		SELECT * FROM t_user
+		WHERE id = #{id}
+		AND is_leave = 0
+		
+	</select>
+	
 	<select id="selectAll" resultType="User">
 		SELECT * FROM t_user
 	</select>

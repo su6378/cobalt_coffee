@@ -17,6 +17,7 @@ public class User {
     private boolean isPush;
     private boolean isLocation;
     private boolean isMarketing;
+    private boolean isLeave;
     
     
     @Builder
@@ -28,6 +29,7 @@ public class User {
         ,boolean isPush
         ,boolean isLocation
         ,boolean isMarketing
+        ,boolean isLeave
     ) {
         super();
         this.id = id;
@@ -37,6 +39,7 @@ public class User {
         this.isPush = isPush;
         this.isLocation = isLocation;
         this.isMarketing = isMarketing;
+        this.isLeave = isLeave;
     }
     
     public User(String id, String name, String pass) {
