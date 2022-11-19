@@ -60,6 +60,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
 
+    //FirebaseAuth
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
     //retrofit
     // https://github.com/square/retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

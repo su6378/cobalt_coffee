@@ -101,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerNextBtn.setOnClickListener {
             val intent = Intent(this@RegisterActivity, RegisterActivity2::class.java)
             val email = binding.registerEmailEt.text.toString().trim()
-            intent.putExtra("userInfo", User(email, "", "", 0))
+            intent.putExtra("userInfo", User(email, "", "", 0,adCheck,locationCheck,marketingCheck))
             startActivity(intent)
             overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_none)
         }
@@ -138,7 +138,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun emailValidation() {
         var email = binding.registerEmailEt.text.toString().trim() //공백제거
         val e = Pattern.matches(emailValidation, email)
-//        Log.d(TAG, "이메일: $email")
         //이메일이 비어있는 경우
         if (email.isEmpty()) {
             binding.registerTl.error = "이메일을 입력하세요."
