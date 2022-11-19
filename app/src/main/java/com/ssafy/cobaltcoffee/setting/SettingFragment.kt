@@ -1,38 +1,32 @@
 package com.ssafy.cobaltcoffee.setting
 
-import android.app.Notification
-import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
-import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentSettingBinding
 import com.ssafy.cobaltcoffee.dialog.LogoutDialog
 import com.ssafy.cobaltcoffee.dialog.MarketingDialog
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.UserRepository
-import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import com.ssafy.smartstore.util.RetrofitCallback
 import java.text.SimpleDateFormat
@@ -68,7 +62,7 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        init()
+        updateUser()
 
         binding.apply {
 
@@ -88,6 +82,12 @@ class SettingFragment : Fragment() {
             settingPushCl.setOnClickListener{
                 presentNotificationSetting(requireContext())
             }
+            //위치권한 클릭
+            settingLocationCl.setOnClickListener {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.parse("package:" + activity!!.packageName)
+                activity!!.startActivity(intent)
+            }
             //마케팅 활용 동의 클릭
             settingMarketingCl.setOnClickListener{
                 showMarketingDialog()
@@ -101,6 +101,16 @@ class SettingFragment : Fragment() {
     }
 
 
+    //뒤로가기 버튼 클릭 시
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                settingActivity.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     //화면 초기화
     private fun init(){
@@ -112,17 +122,13 @@ class SettingFragment : Fragment() {
         getUser(userViewModel.currentUser.id)
     }
 
-
-    //뒤로가기 버튼 클릭 시
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                settingActivity.onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
+    //위치권한 체크
+    private fun locationPmCheck(){
+        // 권한 체크해서 권한이 있을 때
+        userViewModel.currentUser.isLocation = (ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
     }
+
 
     //로그아웃 다이얼로그 생성
     private fun showLogoutDialog(){
@@ -212,7 +218,6 @@ class SettingFragment : Fragment() {
             userViewModel.currentUser = Gson().fromJson(jsonString["user"].toString(), object: TypeToken<User>(){}.type)
 
             binding.apply {
-                Log.d(TAG, "onSuccess: ${userViewModel.currentUser.isPush}")
                 settingPushSb.isChecked = userViewModel.currentUser.isPush
                 settingLocationSb.isChecked = userViewModel.currentUser.isLocation
                 settingMarketngSb.isChecked = userViewModel.currentUser.isMarketing
@@ -233,14 +238,20 @@ class SettingFragment : Fragment() {
 
     //회원정보 수정
     private fun updateUser() {
+
         //푸쉬 알림
         userViewModel.currentUser.isPush = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+
+        //위치 권한 boolean값 갱신
+        locationPmCheck()
+        Log.d(TAG, "updateUser: ${userViewModel.currentUser.isLocation}")
         //토글버튼 터치 불가능하게 만들기
         binding.apply {
             settingPushSb.isEnabled = true
             settingLocationSb.isEnabled = true
             settingMarketngSb.isEnabled = true
         }
+
         //유저정보 변경
         UserRepository.get().update(userViewModel.currentUser, UpdateCallback())
     }
