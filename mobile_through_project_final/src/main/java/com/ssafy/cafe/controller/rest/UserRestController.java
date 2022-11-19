@@ -54,28 +54,28 @@ public class UserRestController {
         return true;
     }
     
-    @PutMapping
+    @PutMapping("/push")
     @ApiOperation(value = "사용자의 푸쉬알림 동의여부를 갱신한다. 성공하면 true를 리턴한다. ", response = Boolean.class)
     public Boolean pushUpdate(@RequestBody User user) {
         uService.pushUpdate(user);
         return true;
     }
     
-    @PutMapping
+    @PutMapping("/location")
     @ApiOperation(value = "사용자의 위치정보 활용여부를 갱신한다. 성공하면 true를 리턴한다. ", response = Boolean.class)
     public Boolean locationUpdate(@RequestBody User user) {
         uService.locationUpdate(user);
         return true;
     }
     
-    @PutMapping
+    @PutMapping("/marketing")
     @ApiOperation(value = "사용자의 마케팅 활용여부를 갱신한다. 성공하면 true를 리턴한다. ", response = Boolean.class)
     public Boolean marketingUpdate(@RequestBody User user) {
         uService.marketingUpdate(user);
         return true;
     }
     
-    @PutMapping
+    @PutMapping("/leave")
     @ApiOperation(value = "사용자의 탈퇴여부를 갱신한다. 성공하면 true를 리턴한다. ", response = Boolean.class)
     public Boolean leaveUpdate(String id) {
         uService.leave(id);
