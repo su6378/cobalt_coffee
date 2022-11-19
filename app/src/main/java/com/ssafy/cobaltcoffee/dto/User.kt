@@ -1,5 +1,6 @@
 package com.ssafy.cobaltcoffee.dto
 
+import androidx.lifecycle.LiveData
 import com.google.gson.annotations.SerializedName
 
 data class User(

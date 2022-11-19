@@ -99,17 +99,59 @@
         app:layout_constraintTop_toBottomOf="@id/setting_line5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_pushCl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/setting_tv2">
+
+        <TextView
+            android:id="@+id/setting_tv9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Push 알림"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/setting_tv10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="스탬프 적립 및 쿠폰 발행 정보 등을 알림 받습니다."
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_tv9" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/setting_pushSb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sb_background="@color/lineColor2"
+            app:sb_checked_color="@color/cobalt"
+            app:sb_show_indicator="false" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/setting_locationCl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/setting_tv2">
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/setting_pushCl">
 
         <TextView
             android:id="@+id/setting_tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="?attr/selectableItemBackground"
             android:text="위치 정보 사용 (선택)"
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -120,7 +162,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="?attr/selectableItemBackground"
             android:text="매장 찾기, 코발트오더에 필요한 회원 위치정보를 사용합니다."
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +173,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            app:sb_checked="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -160,10 +200,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="?attr/selectableItemBackground"
             android:text="위치기반서비스 약관보기"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -219,7 +259,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            app:sb_checked="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -247,10 +286,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="?attr/selectableItemBackground"
-            android:text="광고성 정보 수신 동의 약관보기"
+            android:text="마케팅 활용 동의 약관보기"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

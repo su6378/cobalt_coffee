@@ -100,7 +100,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerNextBtn.setOnClickListener {
             val intent = Intent(this@RegisterActivity, RegisterActivity2::class.java)
             val email = binding.registerEmailEt.text.toString().trim()
-            intent.putExtra("userInfo", User(email, "", "", 0,adCheck,locationCheck,marketingCheck))
+            intent.putExtra("userInfo", User(email, "", "", 0,true,locationCheck,marketingCheck))
             startActivity(intent)
             overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_none)
         }

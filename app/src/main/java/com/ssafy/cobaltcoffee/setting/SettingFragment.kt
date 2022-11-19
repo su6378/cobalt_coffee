@@ -1,8 +1,14 @@
 package com.ssafy.cobaltcoffee.setting
 
+import android.app.Notification
+import android.app.NotificationManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,15 +16,25 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentSettingBinding
 import com.ssafy.cobaltcoffee.dialog.LogoutDialog
 import com.ssafy.cobaltcoffee.dialog.MarketingDialog
+import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
+import com.ssafy.smartstore.util.RetrofitCallback
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -68,6 +84,10 @@ class SettingFragment : Fragment() {
             logoutBtn.setOnClickListener {
                 showLogoutDialog()
             }
+            //푸쉬알림 클릭
+            settingPushCl.setOnClickListener{
+                presentNotificationSetting(requireContext())
+            }
             //마케팅 활용 동의 클릭
             settingMarketingCl.setOnClickListener{
                 showMarketingDialog()
@@ -75,15 +95,21 @@ class SettingFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateUser()
+    }
+
+
+
     //화면 초기화
     private fun init(){
         //툴바 타이틀 변경
         settingActivity.changeTitle("설정")
-        //아이디 초기화
+        //사용자 아이디 초기화
         binding.settingId.text = userViewModel.currentUser.id
-        //토글버튼 터치 불가능하게 만들기
-        binding.settingLocationSb.isEnabled = false
-        binding.settingMarketngSb.isEnabled = false
+        //사용자 정보 초기화
+        getUser(userViewModel.currentUser.id)
     }
 
 
@@ -107,13 +133,45 @@ class SettingFragment : Fragment() {
         dialog.show("로그아웃 하시겠습니까?")
     }
 
+    //버전별 푸쉬알림 설정창으로 이동
+    fun presentNotificationSetting(context: Context) {
+        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationSettingOreo(context)
+        } else {
+            notificationSettingOreoLess(context)
+        }
+        try {
+            context.startActivity(intent)
+        }catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun notificationSettingOreo(context: Context): Intent {
+        return Intent().also { intent ->
+            intent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    }
+
+    fun notificationSettingOreoLess(context: Context): Intent {
+        return Intent().also { intent ->
+            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+            intent.putExtra("app_package", context.packageName)
+            intent.putExtra("app_uid", context.applicationInfo?.uid)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    }
+
     //마케팅정보 동의 다이얼로그 생성
     private fun showMarketingDialog(){
         val dialog = MarketingDialog(requireActivity() as AppCompatActivity)
         dialog.setOnOKClickedListener {
             //변수 설정
-            binding.settingMarketngSb.isChecked = !binding.settingMarketngSb.isChecked
-            binding.settingMarketngSb.isEnabled = false
+            userViewModel.currentUser.isMarketing = !binding.settingMarketngSb.isChecked
+            updateUser()
         }
 
         binding.settingMarketngSb.isEnabled = true
@@ -141,4 +199,69 @@ class SettingFragment : Fragment() {
         val str_date = t_dateFormat.format(t_date)
         return str_date
     }
+
+    //사용자 조회
+    private fun getUser(id: String) {
+        UserRepository.get().getInfo(id, GetUserInfoCallback())
+    }
+
+    inner class GetUserInfoCallback: RetrofitCallback<HashMap<String, Any>> {
+        override fun onSuccess( code: Int, result: HashMap<String,Any>) {
+            val jsonString = result
+
+            userViewModel.currentUser = Gson().fromJson(jsonString["user"].toString(), object: TypeToken<User>(){}.type)
+
+            binding.apply {
+                Log.d(TAG, "onSuccess: ${userViewModel.currentUser.isPush}")
+                settingPushSb.isChecked = userViewModel.currentUser.isPush
+                settingLocationSb.isChecked = userViewModel.currentUser.isLocation
+                settingMarketngSb.isChecked = userViewModel.currentUser.isMarketing
+                //토글버튼 터치 불가능하게 만들기
+                settingPushSb.isEnabled = false
+                settingLocationSb.isEnabled = false
+                settingMarketngSb.isEnabled = false
+            }
+        }
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+
+    //회원정보 수정
+    private fun updateUser() {
+        //푸쉬 알림
+        userViewModel.currentUser.isPush = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+        //토글버튼 터치 불가능하게 만들기
+        binding.apply {
+            settingPushSb.isEnabled = true
+            settingLocationSb.isEnabled = true
+            settingMarketngSb.isEnabled = true
+        }
+        //유저정보 변경
+        UserRepository.get().update(userViewModel.currentUser, UpdateCallback())
+    }
+
+    //회원수정 콜백
+    inner class UpdateCallback : RetrofitCallback<Boolean> {
+        override fun onSuccess(code: Int, result: Boolean) {
+            if (result) {
+                init()
+            } else {
+                Log.d(TAG, "회원정보 수정 실패 ")
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "서버 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+
 }
