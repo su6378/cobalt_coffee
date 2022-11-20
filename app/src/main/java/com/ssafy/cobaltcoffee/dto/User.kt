@@ -8,9 +8,9 @@ data class User(
     @SerializedName("pass") var pw: String,
     var stamps: Int,
     @SerializedName("push") var isPush: Boolean = true,
-    @SerializedName("location")var isLocation: Boolean = true,
-    @SerializedName("marketing")var isMarketing: Boolean = true,
-    @SerializedName("leave")var isLeave : Boolean = false,
+    @SerializedName("location") var isLocation: Boolean = true,
+    @SerializedName("marketing") var isMarketing: Boolean = true,
+    @SerializedName("leave") var isLeave : Boolean = false,
     val stampList: ArrayList<Stamp> = ArrayList()
 ) : java.io.Serializable
 {

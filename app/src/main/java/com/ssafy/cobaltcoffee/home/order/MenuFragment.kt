@@ -1,5 +1,6 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,12 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.view.menu.MenuAdapter
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentMenuBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.HomeActivity
+import com.ssafy.cobaltcoffee.repository.ProductRepository
+import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.smartstore.util.RetrofitCallback
 import okhttp3.internal.immutableListOf
 
 private const val TAG = "MenuFragment_코발트"
@@ -24,7 +30,8 @@ class MenuFragment(productType: Int) : Fragment() {
 
     private lateinit var productAdapter: ProductAdapter
 
-    private val productType: Int = productType
+    private var productList: MutableList<Product> = mutableListOf()
+    private val productType = productType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,19 +47,14 @@ class MenuFragment(productType: Int) : Fragment() {
     }
 
     private fun init() {
-        val productList: MutableList<Product> = mutableListOf<Product>()
-        val productTypes: List<String> = mutableListOf<String>("과자", "음료", "차")
-        productList.apply {
-            for (i in 0 .. 30) {
-                when (i % 3) {
-                    0 -> this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"ICED 카페 모카.png", false, false))
-                    1 -> this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"ICED 카페 아메리카노.png", true, false))
-                    2 -> this.add(Product(productType + i, "상품이름${productType + i}", productTypes[i % 3], (productType + i) * 1_000,"(EX) ICED 버블 흑당 콜드브루.png", false, true))
-                }
-
-            }
+        when (productType) {
+            0 -> ProductRepository.get().getNewProductList(MenuListCallback())
+            1 -> ProductRepository.get().getBestProductList(MenuListCallback())
+            2 -> ProductRepository.get().getCoffeeProductList(MenuListCallback())
+            3 -> ProductRepository.get().getTeaProductList(MenuListCallback())
+            4 -> ProductRepository.get().getCookieProductList(MenuListCallback())
         }
-        
+
         binding.apply {
             productAdapter = ProductAdapter(requireContext(), productList)
             productAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
@@ -69,6 +71,22 @@ class MenuFragment(productType: Int) : Fragment() {
                 adapter = productAdapter
 //                adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
+        }
+    }
+
+    inner class MenuListCallback: RetrofitCallback<List<Product>> {
+        override fun onSuccess(code: Int, result: List<Product>) {
+            productList = result as MutableList<Product>
+            productAdapter.products = productList
+            productAdapter.notifyDataSetChanged()
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "메뉴 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
         }
     }
 }

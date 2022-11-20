@@ -14,14 +14,11 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductListBinding
 
     private val tabTitleArray = arrayOf(
-        "메뉴1",
-        "메뉴2",
-        "메뉴3",
-        "메뉴4",
-        "메뉴5",
-        "메뉴6",
-        "메뉴7",
-        "메뉴8"
+        "NEW",
+        "BEST",
+        "커피",
+        "차",
+        "쿠키"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

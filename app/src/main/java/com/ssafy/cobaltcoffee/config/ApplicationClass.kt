@@ -3,6 +3,7 @@ package com.ssafy.cobaltcoffee.config
 import android.Manifest
 import android.app.Application
 import com.ssafy.cobaltcoffee.intercepter.AddCookiesInterceptor
+import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.smartstore.intercepter.ReceivedCookiesInterceptor
 import com.ssafy.smartstore.util.SharedPreferencesUtil
@@ -41,6 +42,7 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         UserRepository.initialize(this)
+        ProductRepository.initialize(this)
 
         //shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)

@@ -17,7 +17,7 @@ import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.util.CommonUtils
 
 private const val TAG = "ProductAdapter_코발트"
-class ProductAdapter (val context: Context, val products: List<Product>)
+class ProductAdapter (val context: Context, var products: List<Product>)
     : RecyclerView.Adapter<ProductAdapter.ListHolder>() {
     inner class ListHolder(view: View) : RecyclerView.ViewHolder(view) {
         val productImage: ImageView = view.findViewById<ImageView>(R.id.product_image)

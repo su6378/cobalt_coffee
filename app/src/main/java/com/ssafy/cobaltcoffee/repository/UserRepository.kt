@@ -122,7 +122,7 @@ class UserRepository(context: Context) {
 
         fun get() : UserRepository {
             return INSTANCE ?:
-            throw IllegalStateException("GalleryRepository must be initialized")
+            throw IllegalStateException("UserRepository must be initialized")
         }
     }
 }
