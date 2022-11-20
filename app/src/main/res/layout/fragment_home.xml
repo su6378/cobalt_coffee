@@ -183,10 +183,12 @@
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/image_slider"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/home_cv3"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:iss_auto_cycle="true"
-                app:iss_period="1000"
+                app:iss_period="3000"
                 app:iss_delay="0"/>
 
 

@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.adapter.BestMenuAdapter
 import com.ssafy.cobaltcoffee.databinding.FragmentHomeBinding
@@ -81,6 +84,15 @@ class HomeFragment : Fragment() {
                 adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         }
+
+        //이미지 슬라이더
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+        imageList.add(SlideModel(R.drawable.banner4))
+        imageList.add(SlideModel(R.drawable.banner5))
+        imageList.add(SlideModel(R.drawable.banner6))
+
+        binding.imageSlider.setImageList(imageList,ScaleTypes.FIT)
 
     }
 
