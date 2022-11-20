@@ -84,4 +84,7 @@ dependencies {
 
     //SwitchButton
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 }
