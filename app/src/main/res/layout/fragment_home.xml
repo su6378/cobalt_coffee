@@ -15,28 +15,73 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="600dp"
             android:layout_gravity="center"
-            android:background="@color/gold"
+            android:background="@color/white"
+            android:fitsSystemWindows="true"
             app:collapsedTitleGravity="center"
             app:collapsedTitleTextAppearance="@style/CollapsingToolbar.Collapsed.Title"
             app:collapsedTitleTextColor="@color/white"
+            app:contentScrim="@color/cobalt"
             app:expandedTitleGravity="left|bottom"
             app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
-            app:expandedTitleTextColor="@color/white"
-            app:statusBarScrim="@android:color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="Order">
+            app:expandedTitleTextColor="@color/cobalt"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax">
+
+                <ImageView
+                    android:id="@+id/home_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:scaleType="fitXY"
+                    android:src="@color/blue"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    app:layout_constraintTop_toBottomOf="@id/home_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginTop="-30dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="10dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/black">
+
+                    <ImageView
+                        android:id="@+id/home_banner"
+                        android:layout_width="match_parent"
+                        android:scaleType="fitXY"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/banner"/>
+
+                </com.google.android.material.card.MaterialCardView>
+                
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+
+<!--                    -->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 app:layout_collapseMode="pin"
-                app:title="Order">
+                app:title="Cobalt Coffee" />
 
-            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -65,13 +110,13 @@
                 app:fb_borderWidth="0dp"
                 app:fb_cornerRadius="20dp"
                 app:fb_fontFamilyRes="@font/jejugothic"
+                app:fb_icon="@drawable/ic_coffee"
+                app:fb_iconColor="@color/white"
+                app:fb_iconHeight="100dp"
+                app:fb_iconPosition="top"
+                app:fb_iconWidth="100dp"
                 app:fb_rippleColor="@color/white"
                 app:fb_shape="rectangle"
-                app:fb_icon="@drawable/ic_coffee"
-                app:fb_iconHeight="100dp"
-                app:fb_iconWidth="100dp"
-                app:fb_iconPosition="top"
-                app:fb_iconColor="@color/white"
                 app:fb_text="주문하기"
                 app:fb_textColor="@color/white"
                 app:fb_textSize="20sp"
@@ -94,13 +139,13 @@
                 app:fb_borderWidth="4dp"
                 app:fb_cornerRadius="20dp"
                 app:fb_fontFamilyRes="@font/jejugothic"
+                app:fb_icon="@drawable/ic_cart"
+                app:fb_iconColor="@color/cobalt"
+                app:fb_iconHeight="100dp"
+                app:fb_iconPosition="top"
+                app:fb_iconWidth="100dp"
                 app:fb_rippleColor="@color/cobalt"
                 app:fb_shape="rectangle"
-                app:fb_icon="@drawable/ic_cart"
-                app:fb_iconHeight="100dp"
-                app:fb_iconWidth="100dp"
-                app:fb_iconPosition="top"
-                app:fb_iconColor="@color/cobalt"
                 app:fb_text="장바구니"
                 app:fb_textColor="@color/cobalt"
                 app:fb_textSize="20sp"
