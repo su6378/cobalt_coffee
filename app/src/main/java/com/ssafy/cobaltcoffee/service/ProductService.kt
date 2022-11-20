@@ -32,5 +32,9 @@ interface ProductService {
 
     // 상품 정보 반환
     @GET("/rest/product/{productId}")
+    fun getProduct(@Path("productId") productId: String): Call<Product>
+
+    // 상품 정보 및 comment 반환
+    @GET("/rest/product/comment/{productId}")
     fun getProductWithComments(@Path("productId") productId: String): Call<List<Map<String, Any>>>
 }

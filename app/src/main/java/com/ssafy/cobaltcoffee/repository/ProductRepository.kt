@@ -124,6 +124,25 @@ class ProductRepository(context: Context) {
         })
     }
 
+    fun getProduct(productId: Int, callback: RetrofitCallback<Product>)  {
+        RetrofitUtil.productService.getProduct(productId.toString()).enqueue(object: Callback<Product> {
+            override fun onResponse(call: Call<Product>, response: Response<Product>) {
+                val res = response.body()
+                if (response.code() == 200) {
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Product>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
+
     companion object {
         private var INSTANCE : ProductRepository? = null
 
