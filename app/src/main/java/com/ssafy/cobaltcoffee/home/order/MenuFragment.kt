@@ -1,6 +1,5 @@
 package com.ssafy.cobaltcoffee.home.order
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,19 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.view.menu.MenuAdapter
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.cobaltcoffee.R
-import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentMenuBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.repository.ProductRepository
-import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.smartstore.util.RetrofitCallback
-import okhttp3.internal.immutableListOf
 
 private const val TAG = "MenuFragment_코발트"
 class MenuFragment(productType: Int) : Fragment() {

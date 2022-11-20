@@ -12,8 +12,5 @@
 
     <string name="marketingAgree">마케팅 수신 동의에 동의하셨습니다.\n자세한 상황은 [마케팅 활용 동의 약관]을 참고하시기 바랍니다.</string>
     <string name="marketingDisagree">마케팅 수신 동의에 거절하셨습니다.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>
