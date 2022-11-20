@@ -49,7 +49,7 @@ class ProductListActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowTitleEnabled(false)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-            registerToolBar.toolbarTitle.text = "주문하기"
+            registerToolBar.toolbarTitle.text = "코발트오더"
         }
     }
 
