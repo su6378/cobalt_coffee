@@ -24,37 +24,37 @@ public class ProductRestController {
     @Autowired
     ProductService pService;
     
-    @GetMapping()
+    @GetMapping("/")
     @ApiOperation(value="전체 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getProductList(){
         return new ResponseEntity<List<Product>>(pService.getProductList(), HttpStatus.OK);
     }
     
-    @GetMapping()
+    @GetMapping("/new")
     @ApiOperation(value="신규 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getNewProductList(){
         return new ResponseEntity<List<Product>>(pService.getNewProductList(), HttpStatus.OK);
     }
     
-    @GetMapping()
+    @GetMapping("/best")
     @ApiOperation(value="인기 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getBestProductList(){
         return new ResponseEntity<List<Product>>(pService.getBestProductList(), HttpStatus.OK);
     }
     
-    @GetMapping()
+    @GetMapping("/coffee")
     @ApiOperation(value="커피 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getCoffeeProductList(){
         return new ResponseEntity<List<Product>>(pService.getCoffeeProductList(), HttpStatus.OK);
     }
     
-    @GetMapping()
+    @GetMapping("/tea")
     @ApiOperation(value="차 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getTeaProductList(){
         return new ResponseEntity<List<Product>>(pService.getTeaProductList(), HttpStatus.OK);
     }
     
-    @GetMapping()
+    @GetMapping("/cookie")
     @ApiOperation(value="쿠키 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getCookieProductList(){
         return new ResponseEntity<List<Product>>(pService.getCookieProductList(), HttpStatus.OK);
