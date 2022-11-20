@@ -61,9 +61,10 @@ class HomeFragment : Fragment() {
         //이미지 적용 (Glide 라이브러리 사용)
         val options = RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
 
-        Glide.with(requireContext()).load(R.drawable.background_home).apply(options).into(binding.homeImg) //툴바 쪽 이미지
-        Glide.with(requireContext()).load(R.drawable.banner).apply(options).into(binding.homeBanner) //신상품 이미지
-        Glide.with(this).load(R.drawable.banner3).apply(options).into(binding.homeBanner2) //신상메뉴 이미지
+        Glide.with(this).load(R.drawable.background_home).apply(options).into(binding.homeImg) //툴바 쪽 이미지
+        Glide.with(this).load(R.drawable.banner).apply(options).into(binding.homeBanner) //신상품 이미지
+        Glide.with(this).load(R.drawable.banner2).apply(options).into(binding.homeBanner2) //신상메뉴 이미지
+        Glide.with(this).load(R.drawable.banner3).apply(options).into(binding.homeBanner3) //콜드브루 이미지
 
         binding.apply {
             bestMenuAdapter = BestMenuAdapter(bestMenuList)

@@ -115,7 +115,7 @@
                 android:paddingTop="20dp"
                 android:paddingHorizontal="10dp"
                 android:text="코발트 커피 Winter 시즌 메뉴"
-                android:textColor="@color/cobalt"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -149,7 +149,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingHorizontal="10dp"
                 android:text="가장 인기 있는 음료 (BEST)"
-                android:textColor="@color/cobalt"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/home_cv2" />
 
@@ -159,11 +159,36 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/home_tv2" />
 
-            <TextView
-                android:background="@color/blue"
-                app:layout_constraintTop_toBottomOf="@id/home_rv"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/home_cv3"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"/>
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toBottomOf="@id/home_rv"
+                app:strokeColor="@color/black">
+
+                <ImageView
+                    android:id="@+id/home_banner3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/banner" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/home_cv3"
+                app:iss_auto_cycle="true"
+                app:iss_period="1000"
+                app:iss_delay="0"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
