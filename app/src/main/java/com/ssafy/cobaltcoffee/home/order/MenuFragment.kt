@@ -1,13 +1,14 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.FragmentMenuBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.HomeActivity
@@ -51,10 +52,9 @@ class MenuFragment(productType: Int) : Fragment() {
             productAdapter = ProductAdapter(requireContext(), productList)
             productAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener {
                 override fun onItemClick(v: View, pos: Int) {
-                    Log.d(TAG, "onItemClick: ${pos}")
-                    Toast.makeText(requireContext(), "${productList[pos].name}", Toast.LENGTH_SHORT).show()
-//                    v.product = productList[pos]
-//                    mainActivity.openFragment(3, "productId", productId)
+                    startActivity(Intent(context, ProductActivity::class.java).apply {
+                        putExtra("product", productList[pos])
+                    })
                 }
             })
 
