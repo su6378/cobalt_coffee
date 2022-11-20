@@ -84,6 +84,7 @@
         </activity>
         <activity
             android:name=".home.HomeActivity"
+            android:theme="@style/CollapsingToolbar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

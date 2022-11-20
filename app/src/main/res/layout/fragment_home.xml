@@ -1,25 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:stateListAnimator="@drawable/appbar_elevated">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/home"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_gravity="center"
+            android:background="@color/gold"
+            app:collapsedTitleGravity="center"
+            app:collapsedTitleTextAppearance="@style/CollapsingToolbar.Collapsed.Title"
+            app:collapsedTitleTextColor="@color/white"
+            app:expandedTitleGravity="left|bottom"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
+            app:expandedTitleTextColor="@color/white"
+            app:statusBarScrim="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:title="Order">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_vertical"
+                app:layout_collapseMode="pin"
+                app:title="Order">
 
-</FrameLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.nikartm.button.FitButton
+                android:id="@+id/btn_order"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_backgroundColor="@color/cobalt"
+                app:fb_borderColor="@color/white"
+                app:fb_borderWidth="0dp"
+                app:fb_cornerRadius="20dp"
+                app:fb_fontFamilyRes="@font/jejugothic"
+                app:fb_rippleColor="@color/white"
+                app:fb_shape="rectangle"
+                app:fb_icon="@drawable/ic_coffee"
+                app:fb_iconHeight="100dp"
+                app:fb_iconWidth="100dp"
+                app:fb_iconPosition="top"
+                app:fb_iconColor="@color/white"
+                app:fb_text="주문하기"
+                app:fb_textColor="@color/white"
+                app:fb_textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_cart"
+                app:layout_constraintHorizontal_bias="0.577"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.github.nikartm.button.FitButton
+                android:id="@+id/btn_cart"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_backgroundColor="@color/white"
+                app:fb_borderColor="@color/cobalt"
+                app:fb_borderWidth="4dp"
+                app:fb_cornerRadius="20dp"
+                app:fb_fontFamilyRes="@font/jejugothic"
+                app:fb_rippleColor="@color/cobalt"
+                app:fb_shape="rectangle"
+                app:fb_icon="@drawable/ic_cart"
+                app:fb_iconHeight="100dp"
+                app:fb_iconWidth="100dp"
+                app:fb_iconPosition="top"
+                app:fb_iconColor="@color/cobalt"
+                app:fb_text="장바구니"
+                app:fb_textColor="@color/cobalt"
+                app:fb_textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_order"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
