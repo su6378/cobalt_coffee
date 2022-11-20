@@ -24,10 +24,39 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getProductList() {
         return pDao.selectAll();
     }
+    
+    @Override
+    @Cacheable(value="getNewProductList")
+    public List<Product> getNewProductList() {
+        return pDao.selectNewProducts();
+    }
+
+    @Override
+    @Cacheable(value="getBestProductList")
+    public List<Product> getBestProductList() {
+        return pDao.selectBestProducts();
+    }
+
+    @Override
+    @Cacheable(value="getCoffeeProductList")
+    public List<Product> getCoffeeProductList() {
+        return pDao.selectCoffeeProducts();
+    }
+
+    @Override
+    @Cacheable(value="getTeaProductList")
+    public List<Product> getTeaProductList() {
+        return pDao.selectTeaProducts();
+    }
+
+    @Override
+    @Cacheable(value="getCookieProductList")
+    public List<Product> getCookieProductList() {
+        return pDao.selectCookieProducts();
+    }
 
     @Override
     public List<Map<String, Object>> selectWithComment(Integer productId) {
         return pDao.selectWithComment(productId);
     }
-    
 }

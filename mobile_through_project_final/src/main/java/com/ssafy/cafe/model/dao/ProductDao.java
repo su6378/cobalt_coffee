@@ -18,6 +18,16 @@ public interface ProductDao {
 
     List<Product> selectAll();
     
+    List<Product> selectNewProducts();
+    
+    List<Product> selectBestProducts();
+    
+    List<Product> selectCoffeeProducts();
+    
+    List<Product> selectTeaProducts();
+    
+    List<Product> selectCookieProducts();
+    
     // backend 관통 과정에서 추가됨.
     List<Map<String, Object>> selectWithComment(Integer productId);
 }

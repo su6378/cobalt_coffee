@@ -27,7 +27,7 @@ class ProductTest extends AbstractDaoTest{
     @Test
     @Order(2)
     public void insertTest() {
-        Product data = new  Product("좋은상품","쿠키",100,"abc.png");
+        Product data = new  Product("좋은상품","쿠키",100,"abc.png", false, false);
         int result = pDao.insert(data);
         assertEquals(result, 1);
     }

@@ -30,6 +30,36 @@ public class ProductRestController {
         return new ResponseEntity<List<Product>>(pService.getProductList(), HttpStatus.OK);
     }
     
+    @GetMapping()
+    @ApiOperation(value="신규 상품의 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<Product>> getNewProductList(){
+        return new ResponseEntity<List<Product>>(pService.getNewProductList(), HttpStatus.OK);
+    }
+    
+    @GetMapping()
+    @ApiOperation(value="인기 상품의 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<Product>> getBestProductList(){
+        return new ResponseEntity<List<Product>>(pService.getBestProductList(), HttpStatus.OK);
+    }
+    
+    @GetMapping()
+    @ApiOperation(value="커피 상품의 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<Product>> getCoffeeProductList(){
+        return new ResponseEntity<List<Product>>(pService.getCoffeeProductList(), HttpStatus.OK);
+    }
+    
+    @GetMapping()
+    @ApiOperation(value="차 상품의 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<Product>> getTeaProductList(){
+        return new ResponseEntity<List<Product>>(pService.getTeaProductList(), HttpStatus.OK);
+    }
+    
+    @GetMapping()
+    @ApiOperation(value="쿠키 상품의 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<Product>> getCookieProductList(){
+        return new ResponseEntity<List<Product>>(pService.getCookieProductList(), HttpStatus.OK);
+    }
+    
     @GetMapping("/{productId}")
     @ApiOperation(value="{productId}에 해당하는 상품의 정보를 comment와 함께 반환한다."
             + "이 기능은 상품의 comment를 조회할 때 사용된다.", response = List.class)

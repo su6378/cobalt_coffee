@@ -25,31 +25,68 @@
 		img = #{img}
 		WHERE id = #{id}
 	</update>
+	
 	<delete id="delete" parameterType="int">
 		DELETE FROM t_product
 		WHERE id
 		= #{id}
 	</delete>
+	
 	<select id="select" parameterType="int" resultType="Product">
 		SELECT * FROM
 		t_product
 		WHERE id = #{id}
 	</select>
+	
 	<select id="selectAll" resultType="Product">
 		SELECT * FROM t_product order by id desc
 	</select>
 	
+	<select id="selectNewProducts" resultType="Product">
+		SELECT
+			*
+		FROM t_product
+		WHERE is_new = 1
+	</select>
+	
+	<select id="selectBestProducts" resultType="Product">
+		SELECT
+			*
+		FROM t_product
+		WHERE is_best = 1
+	</select>
+	
+	<select id="selectCoffeeProducts" resultType="Product">
+		SELECT
+			*
+		FROM t_product
+		WHERE type = 'coffee'
+	</select>
+	
+	<select id="selectTeaProducts" resultType="Product">
+		SELECT
+			*
+		FROM t_product
+		WHERE type = 'tea'
+	</select>
+	
+	<select id="selectCookieProducts" resultType="Product">
+		SELECT
+			*
+		FROM t_product
+		WHERE type = 'cookie'
+	</select>
 	
 	<!-- backend  관통 과정에서 추가됨 -->
 	<select id="selectWithComment" resultType="map" parameterType="int">
-	select p.name, p.price, p.img, p.type, c.id as commentId, c.user_id, c.rating, c.comment, 
-	(select name from t_user where id=c.user_Id	) userName,
-    (select count(rating)  from t_comment where product_id=p.id) as commentCnt,
-    (select avg(rating)  from t_comment where product_id=p.id) as avg,
-    (select sum(quantity) from t_order_detail where product_id=p.id) as sells
-from t_product p left join  t_comment c on p.id=c.product_id
-where p.id=#{productId}
-order by c.id desc;
+		select p.name, p.price, p.img, p.type, c.id as commentId, c.user_id, c.rating, c.comment, 
+			(select name from t_user where id=c.user_Id	) userName,
+		    (select count(rating)  from t_comment where product_id=p.id) as commentCnt,
+		    (select avg(rating)  from t_comment where product_id=p.id) as avg,
+		    (select sum(quantity) from t_order_detail where product_id=p.id) as sells
+		from t_product p left join  t_comment c on p.id=c.product_id
+		where p.id=#{productId}
+		order by c.id desc;
 	</select>
 	
 </mapper>
