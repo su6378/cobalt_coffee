@@ -24,7 +24,8 @@
             app:expandedTitleGravity="left|bottom"
             app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
             app:expandedTitleTextColor="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:statusBarScrim="@android:color/transparent"
             app:title="Other">
 
             <androidx.appcompat.widget.Toolbar

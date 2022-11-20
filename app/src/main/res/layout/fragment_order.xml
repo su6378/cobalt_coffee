@@ -25,6 +25,7 @@
             app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
             app:expandedTitleTextColor="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent"
             app:title="Order">
 
             <androidx.appcompat.widget.Toolbar
