@@ -116,8 +116,6 @@ class SettingFragment : Fragment() {
     private fun init(){
         //툴바 타이틀 변경
         settingActivity.changeTitle("설정")
-        //사용자 아이디 초기화
-        binding.settingId.text = userViewModel.currentUser.id
         //사용자 정보 초기화
         getUser(userViewModel.currentUser.id)
     }
@@ -217,10 +215,17 @@ class SettingFragment : Fragment() {
 
             userViewModel.currentUser = Gson().fromJson(jsonString["user"].toString(), object: TypeToken<User>(){}.type)
 
+
             binding.apply {
+
+                //사용자 아이디 초기화
+                settingId.text = userViewModel.currentUser.id
+
+                //토글버튼 초기화
                 settingPushSb.isChecked = userViewModel.currentUser.isPush
                 settingLocationSb.isChecked = userViewModel.currentUser.isLocation
                 settingMarketngSb.isChecked = userViewModel.currentUser.isMarketing
+
                 //토글버튼 터치 불가능하게 만들기
                 settingPushSb.isEnabled = false
                 settingLocationSb.isEnabled = false
@@ -244,7 +249,6 @@ class SettingFragment : Fragment() {
 
         //위치 권한 boolean값 갱신
         locationPmCheck()
-        Log.d(TAG, "updateUser: ${userViewModel.currentUser.isLocation}")
         //토글버튼 터치 불가능하게 만들기
         binding.apply {
             settingPushSb.isEnabled = true

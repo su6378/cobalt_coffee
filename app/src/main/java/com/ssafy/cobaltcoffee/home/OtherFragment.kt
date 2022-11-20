@@ -19,6 +19,7 @@ import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentOtherBinding
 import com.ssafy.cobaltcoffee.dialog.LogoutDialog
 import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.dto.UserLevel
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import com.ssafy.smartstore.util.RetrofitCallback
@@ -26,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 private const val TAG = "OtherFragment_코발트"
 class OtherFragment : Fragment() {
@@ -98,11 +100,23 @@ class OtherFragment : Fragment() {
     //유저 정보 초기화
     private fun initUser(){
         binding.apply {
-            otherNickname.text = userViewModel.currentUser.name
-            CoroutineScope(Dispatchers.Main).launch{
-                countUp(userViewModel.currentUser.stamps,"stamp")
+
+            otherNickname.text = userViewModel.currentUser.name //닉네임
+
+            //등급
+            val grade = if(userViewModel.currentUser.stamps / 30 >= 4) 4 else userViewModel.currentUser.stamps / 30
+            otherGrade.text = UserLevel.userInfoList[grade].title //현재 등급
+            val color = resources.getIdentifier(UserLevel.userInfoList[grade].color,"color",requireContext().packageName)
+            otherGrade.setTextColor(ContextCompat.getColor(requireContext(),color))
+            otherUnitCount.text = "/${UserLevel.userInfoList[grade].max}" //max Count
+
+            val count = userViewModel.currentUser.stamps - (30 * grade)
+            if(count == 0) otherStampCount.text = "0"
+            else{
+                CoroutineScope(Dispatchers.Main).launch{
+                    countUp(count,"stamp")
+                }
             }
-            otherStampCount.text = userViewModel.currentUser.stamps.toString()
         }
     }
 

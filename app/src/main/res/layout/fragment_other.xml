@@ -205,12 +205,12 @@
                         android:id="@+id/other_unitCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:fontFamily="@font/quicksand_semibold"
                         android:text="/10"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toTopOf="@id/other_stampCount"
                         app:layout_constraintLeft_toRightOf="@id/other_stampCount"
-                        app:layout_constraintTop_toBottomOf="@id/other_tv4" />
+                        app:layout_constraintBottom_toBottomOf="@id/other_stampCount" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
