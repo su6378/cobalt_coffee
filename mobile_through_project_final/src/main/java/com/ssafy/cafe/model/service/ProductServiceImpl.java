@@ -15,7 +15,7 @@ import com.ssafy.cafe.model.dto.Product;
  * @since 2021. 6. 23.
  */
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao pDao;
 
@@ -53,6 +53,11 @@ public class ProductServiceImpl implements ProductService{
     @Cacheable(value="getCookieProductList")
     public List<Product> getCookieProductList() {
         return pDao.selectCookieProducts();
+    }
+    
+    @Override
+    public Product selectProduct(Integer productId) {
+        return pDao.selectProduct(productId);
     }
 
     @Override

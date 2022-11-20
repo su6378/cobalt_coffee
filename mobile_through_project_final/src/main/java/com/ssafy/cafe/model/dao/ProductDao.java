@@ -28,6 +28,8 @@ public interface ProductDao {
     
     List<Product> selectCookieProducts();
     
+    Product selectProduct(Integer productId);
+    
     // backend 관통 과정에서 추가됨.
     List<Map<String, Object>> selectWithComment(Integer productId);
 }

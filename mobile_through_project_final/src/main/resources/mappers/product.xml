@@ -77,6 +77,13 @@
 		WHERE type = 'cookie'
 	</select>
 	
+	<select id="selectProduct" parameterType="int" resultType="Product">
+		SELECT
+			*
+		FROM t_product
+		WHERE id = #{productId}
+	</select>
+	
 	<!-- backend  관통 과정에서 추가됨 -->
 	<select id="selectWithComment" resultType="map" parameterType="int">
 		select p.name, p.price, p.img, p.type, c.id as commentId, c.user_id, c.rating, c.comment, 
