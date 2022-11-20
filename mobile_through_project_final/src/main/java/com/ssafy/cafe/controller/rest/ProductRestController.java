@@ -60,7 +60,7 @@ public class ProductRestController {
         return new ResponseEntity<List<Product>>(pService.getCookieProductList(), HttpStatus.OK);
     }
     
-    @GetMapping("/product/{productId}")
+    @GetMapping("/{productId}")
     @ApiOperation(value="{productId}에 해당하는 상품의 정보를 반환한다.", response = List.class)
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         return new ResponseEntity<Product>(pService.selectProduct(productId), HttpStatus.OK);
