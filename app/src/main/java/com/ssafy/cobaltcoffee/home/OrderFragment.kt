@@ -13,8 +13,10 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.bumptech.glide.Glide.init
 import com.google.gson.Gson
@@ -31,6 +33,9 @@ import com.ssafy.cobaltcoffee.repository.OrderRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlin.math.ceil
 
 private const val TAG = "OrderFragment_코발트"
 class OrderFragment : Fragment() {
@@ -41,6 +46,9 @@ class OrderFragment : Fragment() {
     private lateinit var currentOrderAdapter: CurrentOrderAdapter
 
     private val userViewModel : UserViewModel by activityViewModels()
+
+    private var bannerPosition = 0
+    private lateinit var job : Job
 
     private val images = intArrayOf(
         R.drawable.banner7,
@@ -65,6 +73,16 @@ class OrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        scrollJobCreate()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        job.cancel()
     }
 
     //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
@@ -98,6 +116,10 @@ class OrderFragment : Fragment() {
         //유저 정보 갱신
         getUserInfo()
 
+        bannerPosition = Int.MAX_VALUE / 2 - ceil(images.size.toDouble() / 2).toInt()
+
+        binding.orderSlider.setCurrentItem(bannerPosition, false)
+
         binding.apply {
             btnOrder.setOnClickListener {
                 val intent = Intent(context, ProductListActivity::class.java)
@@ -109,12 +131,25 @@ class OrderFragment : Fragment() {
 
             //이미지 슬라이더
             orderSlider.offscreenPageLimit = 1
-            orderSlider.adapter = ImageSliderAdapter(requireContext(), images)
+            orderSlider.adapter = ImageSliderAdapter(requireContext(),images)
 
             orderSlider.registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    setCurrentIndicator(position)
+                    bannerPosition = position
+                    setCurrentIndicator(bannerPosition)
+                }
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    when (state) {
+                        ViewPager2.SCROLL_STATE_IDLE ->{
+                            if (!job.isActive) scrollJobCreate()
+                        }
+
+                        ViewPager2.SCROLL_STATE_DRAGGING -> job.cancel()
+
+                        ViewPager2.SCROLL_STATE_SETTLING -> {}
+                    }
                 }
             })
             setupIndicators(images.size)
@@ -205,6 +240,14 @@ class OrderFragment : Fragment() {
 
         override fun onFailure(code: Int) {
             Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+
+    //자동스크롤
+    private fun scrollJobCreate() {
+        job = lifecycleScope.launchWhenResumed {
+            delay(1500)
+            binding.orderSlider.setCurrentItem(++bannerPosition, true)
         }
     }
 }

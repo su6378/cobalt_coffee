@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.ssafy.cobaltcoffee.R
 
@@ -25,12 +26,13 @@ class ImageSliderAdapter(context: Context, sliderImage: IntArray) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindSliderImage(sliderImage[position])
+        val viewHolder: MyViewHolder = holder
+        viewHolder.bindSliderImage(sliderImage[position % sliderImage.size])
     }
 
-    override fun getItemCount(): Int {
-        return sliderImage.size
-    }
+    override fun getItemCount(): Int = Int.MAX_VALUE //무한 스크롤
+
+    private val runnable = Runnable { sliderImage }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mImageView: ImageView
