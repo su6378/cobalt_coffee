@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lineColor2"
     tools:context=".home.order.OrderDetailActivity">
 
     <include
@@ -12,30 +13,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/order_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:padding="10dp"
-        android:text="주문 날짜 : "
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/orderDetail_toolBar" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/orderDetail_cl"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/orderDetail_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/od_orderDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:padding="10dp"
-        android:text="2022년"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/order_tv"
-        app:layout_constraintTop_toBottomOf="@id/orderDetail_toolBar" />
+
+        <TextView
+            android:id="@+id/od_orderDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:text="2022년"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/od_rv"
@@ -43,6 +40,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/order_tv" />
+        app:layout_constraintTop_toBottomOf="@id/orderDetail_cl" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

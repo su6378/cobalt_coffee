@@ -38,7 +38,13 @@ class OrderDetailAdapter(var orderDetailList:List<OrderDetailResponse>) :Recycle
 
             menuPrice.text = CommonUtils.makeComma(orderDetail.unitPrice)
             totalPrice.text = CommonUtils.makeComma(orderDetail.totalPrice)
-            totalCount.text = "총 ${orderDetail.quantity}잔"
+
+            if(orderDetail.productType == "cookie"){
+                totalCount.text = "총 ${orderDetail.quantity}개"
+            }else{
+                totalCount.text = "총 ${orderDetail.quantity}잔"
+            }
+
 
             itemView.setOnClickListener{
                 itemClickListner.onClick(it, layoutPosition, orderDetailList[layoutPosition].productId)

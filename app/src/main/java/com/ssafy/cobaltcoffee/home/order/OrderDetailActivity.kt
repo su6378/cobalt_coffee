@@ -84,7 +84,7 @@ class OrderDetailActivity : AppCompatActivity() {
 
     // OrderDetail 페이지 화면 구성
     private fun setOrderDetailScreen(orderDetails: List<OrderDetailResponse>){
-        binding.odOrderDate.text = CommonUtils.getFormattedString(orderDetails[0].orderDate)
+        binding.odOrderDate.text = "${CommonUtils.getFormattedString(orderDetails[0].orderDate)}에 주문했어요!"
         var totalPrice = 0
         orderDetails.forEach { totalPrice += it.totalPrice }
 //        binding.tvTotalPrice.text = "$totalPrice 원"
