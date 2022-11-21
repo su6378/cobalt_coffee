@@ -93,8 +93,8 @@ dependencies {
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
     //Room 의존성 추가
-    implementation 'androidx.room:room-runtime:2.4.2'
-    annotationProcessor('androidx.room:room-compiler-processing:2.4.2')
-    kapt 'androidx.room:room-compiler:2.4.2'
-    implementation 'androidx.room:room-ktx:2.4.2'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    annotationProcessor('androidx.room:room-compiler-processing:2.4.3')
+    kapt 'androidx.room:room-compiler:2.4.3'
+    implementation 'androidx.room:room-ktx:2.4.3'
 }
