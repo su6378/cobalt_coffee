@@ -1,9 +1,11 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.cobaltcoffee.R
@@ -60,26 +62,30 @@ class OrderDetailActivity : AppCompatActivity() {
     private fun init(){
         val orderDetails = OrderRepository.get().getOrderDetails(orderId)
         orderDetails.observe(
-            this,
-            { orderDetails ->
-                orderDetails.let {
-                    orderDetailAdapter = OrderDetailAdapter(orderDetails)
-                }
-
-                binding.odRv.apply {
-                    val linearLayoutManager = LinearLayoutManager(context)
-                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                    layoutManager = linearLayoutManager
-                    adapter = orderDetailAdapter
-                    //원래의 목록위치로 돌아오게함
-                    adapter!!.stateRestorationPolicy =
-                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-                }
-
-                setOrderDetailScreen(orderDetails)
-
+            this
+        ) { orderDetails ->
+            orderDetails.let {
+                orderDetailAdapter = OrderDetailAdapter(orderDetails)
             }
-        )
+            //클릭 리스너
+            orderDetailAdapter.setItemClickListener(object : OrderDetailAdapter.ItemClickListener {
+                override fun onClick(view: View, position: Int, productId: Int) {
+                }
+            })
+
+
+            binding.odRv.apply {
+                val linearLayoutManager = LinearLayoutManager(context)
+                linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                layoutManager = linearLayoutManager
+                adapter = orderDetailAdapter
+                //원래의 목록위치로 돌아오게함
+                adapter!!.stateRestorationPolicy =
+                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            }
+
+            setOrderDetailScreen(orderDetails)
+        }
     }
 
     // OrderDetail 페이지 화면 구성
@@ -87,6 +93,5 @@ class OrderDetailActivity : AppCompatActivity() {
         binding.odOrderDate.text = "${CommonUtils.getFormattedString(orderDetails[0].orderDate)}에 주문했어요!"
         var totalPrice = 0
         orderDetails.forEach { totalPrice += it.totalPrice }
-//        binding.tvTotalPrice.text = "$totalPrice 원"
     }
 }

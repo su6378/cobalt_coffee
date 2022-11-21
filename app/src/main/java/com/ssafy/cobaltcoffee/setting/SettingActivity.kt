@@ -93,13 +93,6 @@ class SettingActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun moveHomeActivity() {
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        overridePendingTransition(0, 0)
-    }
 
     //툴바 타이틀 변경
     fun changeTitle(title: String) {

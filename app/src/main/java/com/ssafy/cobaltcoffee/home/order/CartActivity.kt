@@ -1,12 +1,16 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +22,8 @@ import com.ssafy.cobaltcoffee.adapter.CurrentOrderAdapter
 import com.ssafy.cobaltcoffee.adapter.ImageSliderAdapter
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityCartBinding
+import com.ssafy.cobaltcoffee.dialog.LocationDialog
+import com.ssafy.cobaltcoffee.dialog.LogoutDialog
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.OrderRepository
@@ -33,7 +39,7 @@ class CartActivity : AppCompatActivity() {
     private lateinit var cartAdapter: CurrentOrderAdapter
 
     private val userViewModel : UserViewModel by viewModels()
-
+    private val REQUEST_PERMISSION_LOCATION = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +90,21 @@ class CartActivity : AppCompatActivity() {
     private fun init() {
         //유저 정보 갱신
         getUserInfo()
+
+        binding.apply {
+
+            //주문하기 버튼 클릭 시
+            orderBtn.setOnClickListener {
+                if(ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+
+                }else{ //위치 서비스 동의하지 않은 경우 dialog 띄우기
+                    showLocationDialog()
+                }
+            }
+        }
+
     }
 
     //최근 주문 내역
@@ -127,5 +148,14 @@ class CartActivity : AppCompatActivity() {
         override fun onFailure(code: Int) {
             Log.d(TAG, "onResponse: Error Code $code")
         }
+    }
+
+    //위치 정보 서비스 동의 다이얼로그 생성
+    private fun showLocationDialog(){
+        val dialog = LocationDialog(this)
+        dialog.setOnOKClickedListener {
+            ActivityCompat.requestPermissions(this@CartActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+        }
+        dialog.show()
     }
 }

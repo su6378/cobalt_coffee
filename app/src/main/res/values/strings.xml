@@ -13,4 +13,6 @@
     <string name="marketingAgree">마케팅 수신 동의에 동의하셨습니다.\n자세한 상황은 [마케팅 활용 동의 약관]을 참고하시기 바랍니다.</string>
     <string name="marketingDisagree">마케팅 수신 동의에 거절하셨습니다.</string>
 
+    <string name="locationContent">위치 정보의 보호 및 이용 등에 관한 법률에 따라 현재 위치 확인 서비스가 포함된 본 애플리케이션의 이용을 위해서는 위치 기반 서비스 이용 약관 동의가 필요합니다. 동의하지 않는 경우 위치 기반 서비스 이용에 제약을 받을 수 있습니다.</string>
+
 </resources>

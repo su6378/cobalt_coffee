@@ -207,9 +207,10 @@
                     <TextView
                         android:id="@+id/other_unitCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:fontFamily="@font/quicksand_semibold"
                         android:text="/10"
+                        android:gravity="bottom"
                         android:textSize="16sp"
                         app:layout_constraintTop_toTopOf="@id/other_stampCount"
                         app:layout_constraintLeft_toRightOf="@id/other_stampCount"
