@@ -54,11 +54,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_marginTop="10dp"
+                android:id="@+id/order_slider"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/viewFadingEdge"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_fade_edge"
+                app:layout_constraintBottom_toBottomOf="@id/order_slider" />
+
+            <LinearLayout
+                android:id="@+id/order_indicator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/viewFadingEdge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <com.github.nikartm.button.FitButton
                 android:id="@+id/btn_order"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:paddingVertical="10dp"
                 app:fb_backgroundColor="@color/cobalt"
                 app:fb_borderColor="@color/white"
@@ -68,26 +94,24 @@
                 app:fb_rippleColor="@color/white"
                 app:fb_shape="rectangle"
                 app:fb_icon="@drawable/ic_coffee"
-                app:fb_iconHeight="100dp"
-                app:fb_iconWidth="100dp"
+                app:fb_iconHeight="80dp"
+                app:fb_iconWidth="80dp"
                 app:fb_iconPosition="top"
                 app:fb_iconColor="@color/white"
                 app:fb_text="주문하기"
                 app:fb_textColor="@color/white"
-                app:fb_textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:fb_textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_cart"
-                app:layout_constraintHorizontal_bias="0.577"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toBottomOf="@id/order_indicator" />
 
             <com.github.nikartm.button.FitButton
                 android:id="@+id/btn_cart"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:paddingVertical="10dp"
                 app:fb_backgroundColor="@color/white"
                 app:fb_borderColor="@color/cobalt"
@@ -97,19 +121,35 @@
                 app:fb_rippleColor="@color/cobalt"
                 app:fb_shape="rectangle"
                 app:fb_icon="@drawable/ic_cart"
-                app:fb_iconHeight="100dp"
-                app:fb_iconWidth="100dp"
+                app:fb_iconHeight="80dp"
+                app:fb_iconWidth="80dp"
                 app:fb_iconPosition="top"
                 app:fb_iconColor="@color/cobalt"
                 app:fb_text="장바구니"
                 app:fb_textColor="@color/cobalt"
                 app:fb_textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_order"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toBottomOf="@id/order_indicator" />
+
+            <TextView
+                android:id="@+id/order_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_marginTop="10dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="10dp"
+                android:text="최근 주문내역"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/btn_order" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/order_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/order_tv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

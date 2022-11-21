@@ -27,6 +27,7 @@ import com.ssafy.cobaltcoffee.dialog.LogoutDialog
 import com.ssafy.cobaltcoffee.dialog.MarketingDialog
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import com.ssafy.smartstore.util.RetrofitCallback
 import java.text.SimpleDateFormat
@@ -179,6 +180,7 @@ class SettingFragment : Fragment() {
         }
 
         binding.settingMarketngSb.isEnabled = true
+
         val currentTime = getCurrentTime()
         if(!binding.settingMarketngSb.isChecked) { //동의를 한다면
             dialog.show("${currentTime}에\n${resources.getString(R.string.marketingAgree)}")
@@ -196,12 +198,7 @@ class SettingFragment : Fragment() {
         // 현재 시간을 Date 타입으로 변환
         val t_date = Date(long_now)
 
-        // 날짜, 시간을 가져오고 싶은 형태 선언
-        val t_dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 kk:mm", Locale("ko", "KR"))
-
-        // 현재 시간을 dateFormat 에 선언한 형태의 String 으로 변환
-        val str_date = t_dateFormat.format(t_date)
-        return str_date
+        return  CommonUtils.getFormattedString(t_date)
     }
 
     //사용자 조회
