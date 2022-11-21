@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,55 +7,145 @@
     android:fitsSystemWindows="true"
     tools:context=".home.order.CartActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
         android:fitsSystemWindows="true"
-        android:stateListAnimator="@drawable/appbar_elevated">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:elevation="0dp"
-            app:collapsedTitleGravity="center"
-            app:collapsedTitleTextAppearance="@style/CollapsingToolbar.Collapsed.Title"
-            app:collapsedTitleTextColor="@color/white"
-            app:expandedTitleGravity="left|bottom"
-            app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
-            app:expandedTitleTextColor="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="@android:color/transparent"
-            app:title="장바구니">
+            android:layout_height="180dp"
+            android:fitsSystemWindows="true"
+            android:stateListAnimator="@drawable/appbar_elevated">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/collapsing_toolbar"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:gravity="center_vertical"
-                app:layout_collapseMode="pin"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:elevation="0dp"
+                app:collapsedTitleGravity="center"
+                app:collapsedTitleTextAppearance="@style/CollapsingToolbar.Collapsed.Title"
+                app:collapsedTitleTextColor="@color/white"
+                app:expandedTitleGravity="left|bottom"
+                app:expandedTitleTextAppearance="@style/CollapsingToolbar.Expanded.Title"
+                app:expandedTitleTextColor="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@android:color/transparent"
                 app:title="장바구니">
 
-            </androidx.appcompat.widget.Toolbar>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center_vertical"
+                    app:layout_collapseMode="pin"
+                    app:title="장바구니">
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="40dp"
+                        android:src="@drawable/ic_setting"
+                        android:visibility="invisible"
+                        app:tint="@color/white" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                </androidx.appcompat.widget.Toolbar>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/lineColor2"
+            android:descendantFocusability="blocksDescendants"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/cart_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:padding="20dp"
+                    android:text="주문 메뉴"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cart_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/cart_tv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/cart_totalCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fontFamily="@font/quicksand_medium"
+            android:padding="20dp"
+            android:text="총 개수"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cart_totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fontFamily="@font/quicksand_semibold"
+            android:padding="20dp"
+            android:text="총 금액"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/order_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="20dp"
+            app:fb_backgroundColor="@color/cobalt"
+            app:fb_borderColor="@color/white"
+            app:fb_borderWidth="0dp"
+            app:fb_cornerRadius="40dp"
+            app:fb_fontFamilyRes="@font/quicksand_medium"
+            app:fb_rippleColor="@color/white"
+            app:fb_shape="rectangle"
+            app:fb_text="주문하기"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/cart_totalCount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

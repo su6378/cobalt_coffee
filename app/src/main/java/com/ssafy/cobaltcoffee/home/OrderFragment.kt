@@ -25,6 +25,7 @@ import com.ssafy.cobaltcoffee.adapter.ImageSliderAdapter
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentOrderBinding
 import com.ssafy.cobaltcoffee.dto.*
+import com.ssafy.cobaltcoffee.home.order.CartActivity
 import com.ssafy.cobaltcoffee.home.order.ProductListActivity
 import com.ssafy.cobaltcoffee.repository.OrderRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
@@ -99,11 +100,11 @@ class OrderFragment : Fragment() {
 
         binding.apply {
             btnOrder.setOnClickListener {
-                val intent: Intent = Intent(context, ProductListActivity::class.java)
+                val intent = Intent(context, ProductListActivity::class.java)
                 startActivity(intent)
             }
             btnCart.setOnClickListener {
-                Toast.makeText(context, "장바구니", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(requireContext(),CartActivity::class.java))
             }
 
             //이미지 슬라이더
