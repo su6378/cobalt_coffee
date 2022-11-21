@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityLoginBinding
+import com.ssafy.cobaltcoffee.dialog.LoginDialog
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.register.RegisterActivity
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.smartstore.util.RetrofitCallback
+import java.util.regex.Pattern
 
 private const val TAG = "LoginActivity_코발트"
 class LoginActivity : AppCompatActivity() {
@@ -19,10 +22,20 @@ class LoginActivity : AppCompatActivity() {
 
     private var autoLoginChecked = false
 
+    // 이메일 정규식
+    val emailValidation =
+        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //이메일
+        binding.loginEmailEt.addTextChangedListener {
+            emailValidation()
+        }
 
         binding.apply {
             //자동 로그인
@@ -75,17 +88,45 @@ class LoginActivity : AppCompatActivity() {
                 if (autoLoginChecked) ApplicationClass.sharedPreferencesUtil.addUser(user)
                 moveHome()
             }else{
-                Toast.makeText(this@LoginActivity,"ID 또는 패스워드를 확인해 주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity,"아이디가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
             }
         }
 
         override fun onError(t: Throwable) {
             Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+            showLoginDialog()
         }
 
         override fun onFailure(code: Int) {
             Log.d(TAG, "onResponse: Error Code $code")
         }
+    }
+
+    //이메일 유효성 체크 메소드
+    private fun emailValidation() {
+        var email = binding.loginEmailEt.text.toString().trim() //공백제거
+        val e = Pattern.matches(emailValidation, email)
+        //이메일이 비어있는 경우
+        if (email.isEmpty()) {
+            binding.loginEmailTl.error = "이메일을 입력하세요."
+            return
+        } else {
+            //이메일 형태가 정상일 경우
+            if (e) {
+                binding.loginEmailTl.error = null
+            } else {
+                binding.loginEmailTl.error = "이메일 형식이 올바르지 않습니다."
+            }
+        }
+    }
+
+    //로그인 실패 다이얼로그 생성
+    private fun showLoginDialog(){
+        val dialog = LoginDialog(this)
+        dialog.setOnOKClickedListener {
+
+        }
+        dialog.show("계정정보가 일치하지 않습니다.")
     }
 
 
