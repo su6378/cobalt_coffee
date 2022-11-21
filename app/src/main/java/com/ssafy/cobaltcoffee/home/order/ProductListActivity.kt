@@ -45,11 +45,11 @@ class ProductListActivity : AppCompatActivity() {
     //툴바 적용하기
     private fun initTb() {
         binding.apply {
-            setSupportActionBar(registerToolBar.toolbar)
+            setSupportActionBar(productToolBar.toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowTitleEnabled(false)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-            registerToolBar.toolbarTitle.text = "코발트오더"
+            productToolBar.toolbarTitle.text = "코발트오더"
         }
     }
 
@@ -58,7 +58,7 @@ class ProductListActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
-                overridePendingTransition(0, 0)
+//                overridePendingTransition(0, 0)
             }
         }
         return super.onOptionsItemSelected(item)

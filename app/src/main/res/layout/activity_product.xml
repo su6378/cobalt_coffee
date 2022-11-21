@@ -6,53 +6,257 @@
     android:layout_height="match_parent"
     tools:context=".home.order.ProductActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/productToolBar"
+        layout="@layout/layout_include_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/product_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_margin="12dp"
-            android:src="@drawable/drink"
-            app:layout_constraintBottom_toTopOf="@+id/product_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productToolBar">
 
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:text="(상품 이름)"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/product_price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_image"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/product_price"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_margin="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="상품명"
+                android:textSize="18sp"
+                android:fontFamily="@font/quicksand_regular"
+                app:layout_constraintBottom_toTopOf="@+id/product_price"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/product_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_marginStart="12dp"
+                android:text="상품가격"
+                android:textSize="16sp"
+                android:textColor="@color/cobalt"
+                android:fontFamily="@font/quicksand_semibold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/product_image"
+                app:layout_constraintTop_toBottomOf="@+id/product_name"
+                app:layout_constraintVertical_bias="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:text="(상품 가격)"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_name"
-            app:layout_constraintVertical_bias="0.5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/badge_new"
+                android:layout_width="48dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/badge_new"/>
+
+            <ImageView
+                android:id="@+id/badge_best"
+                android:layout_width="48dp"
+                android:layout_height="24dp"
+                android:src="@drawable/badge_best"/>
 
 
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="수량"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_semibold"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/quantity_minus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/minus" />
+
+            <TextView
+                android:id="@+id/product_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="1"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_regular" />
+
+            <ImageView
+                android:id="@+id/quantity_add"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/add" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="제품영양정보 (칼로리)"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_semibold"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/product_kcal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="(칼로리정보)"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_regular"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="상품설명"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_semibold"/>
+
+            <TextView
+                android:id="@+id/product_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="(상품설명)"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_regular"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@color/gray" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/cart_btn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            android:layout_marginRight="20dp"
+            app:fb_backgroundColor="@color/white"
+            app:fb_borderColor="@color/cobalt"
+            app:fb_borderWidth="3dp"
+            app:fb_cornerRadius="40dp"
+            app:fb_fontFamilyRes="@font/quicksand_medium"
+            app:fb_rippleColor="@color/cobalt"
+            app:fb_shape="rectangle"
+            app:fb_text="장바구니 담기"
+            app:fb_textColor="@color/cobalt"
+            app:fb_textSize="16sp"/>
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/order_btn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            app:fb_backgroundColor="@color/cobalt"
+            app:fb_borderColor="@color/white"
+            app:fb_borderWidth="0dp"
+            app:fb_cornerRadius="40dp"
+            app:fb_fontFamilyRes="@font/quicksand_medium"
+            app:fb_rippleColor="@color/white"
+            app:fb_shape="rectangle"
+            app:fb_text="바로 주문하기"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="16sp"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

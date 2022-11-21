@@ -7,7 +7,7 @@
     tools:context=".home.order.ProductListActivity">
 
     <include
-        android:id="@+id/register_toolBar"
+        android:id="@+id/productToolBar"
         layout="@layout/layout_include_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_toolBar">
+        app:layout_constraintTop_toBottomOf="@+id/productToolBar">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
