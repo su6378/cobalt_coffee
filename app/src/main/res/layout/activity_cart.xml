@@ -131,6 +131,7 @@
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
+            app:fb_disableColor="@color/lineColor2"
             android:paddingVertical="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginHorizontal="20dp"

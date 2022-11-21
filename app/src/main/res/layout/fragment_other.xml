@@ -309,6 +309,7 @@
                     android:id="@+id/other_basket_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingVertical="10dp">
 
                     <ImageView

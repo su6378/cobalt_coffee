@@ -59,6 +59,10 @@ class OtherFragment : Fragment() {
             otherLogout.setOnClickListener {
                 showDialog()
             }
+            //장바구니 페이지로 이동
+            otherBasketCl.setOnClickListener {
+                homeActivity.cartPage()
+            }
         }
 
 
@@ -138,27 +142,11 @@ class OtherFragment : Fragment() {
 
     }
 
-
     inner class GetUserInfoCallback: RetrofitCallback<HashMap<String, Any>> {
         override fun onSuccess( code: Int, result: HashMap<String,Any>) {
             val jsonString = result
-
             userViewModel.currentUser = Gson().fromJson(jsonString["user"].toString(), object: TypeToken<User>(){}.type)
-//            val gradeInfo = Gson().fromJson<Grade>(jsonString["grade"].toString(), object: TypeToken<Grade>(){}.type)
-
             initUser()
-            binding.apply {
-
-//                val step = if (gradeInfo.step == 0) 1 else gradeInfo.step
-//                textUserLevel.text = "${gradeInfo.title} ${step}단계"
-//                textLevelRest.text = "다음 레벨까지 ${gradeInfo.to}잔 남았습니다."
-//                Glide.with(this@MypageFragment)
-//                    .load("${ApplicationClass.GRADE_URL}${gradeInfo.img}")
-//                    .into(binding.imageLevel)
-//                val currentProgress = UserLevel.userInfoList[step-1].unit - gradeInfo.to
-//                proBarUserLevel.progress = currentProgress
-//                textUserNextLevel.text = "${currentProgress}/${UserLevel.userInfoList[step-1].unit}"
-            }
         }
 
         override fun onError(t: Throwable) {

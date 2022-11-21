@@ -104,7 +104,7 @@ class OrderFragment : Fragment() {
                 startActivity(intent)
             }
             btnCart.setOnClickListener {
-                startActivity(Intent(requireContext(),CartActivity::class.java))
+                homeActivity.cartPage()
             }
 
             //이미지 슬라이더
@@ -173,8 +173,8 @@ class OrderFragment : Fragment() {
         binding.apply {
             currentOrderAdapter = CurrentOrderAdapter(currentOrderList)
             currentOrderAdapter.setItemClickListener(object : CurrentOrderAdapter.ItemClickListener {
-                override fun onClick(view: View, position: Int, productId: Int) {
-
+                override fun onClick(view: View, position: Int, orderId: Int) {
+                    homeActivity.orderDetailPage(orderId)
                 }
             })
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Order
+import com.ssafy.cobaltcoffee.response.OrderDetailResponse
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import retrofit2.Call
@@ -33,25 +34,6 @@ class OrderRepository(context: Context) {
         })
     }
 
-    fun getOrderDetail(orderId: Int, callback: RetrofitCallback<List<Map<String, Any>>>)  {
-        RetrofitUtil.orderService.getOrderDetail(orderId.toString()).enqueue(object : Callback<List<Map<String, Any>>> {
-            override fun onResponse(call: Call<List<Map<String, Any>>>, response: Response<List<Map<String, Any>>>) {
-                val res = response.body()
-                if (response.code() == 200) {
-                    if (res != null) {
-                        callback.onSuccess(response.code(), res)
-                    }
-                } else {
-                    callback.onFailure(response.code())
-                }
-            }
-
-            override fun onFailure(call: Call<List<Map<String, Any>>>, t: Throwable) {
-                callback.onError(t)
-            }
-        })
-    }
-
     fun getRecentOrder(userId: String, callback: RetrofitCallback<List<LatestOrder>>)  {
         RetrofitUtil.orderService.getRecentOrder(userId).enqueue(object : Callback<List<LatestOrder>> {
             override fun onResponse(call: Call<List<LatestOrder>>, response: Response<List<LatestOrder>>) {
@@ -69,6 +51,32 @@ class OrderRepository(context: Context) {
                 callback.onError(t)
             }
         })
+    }
+
+    //주문 상세 내역 가져오기
+    fun getOrderDetails(orderId: Int): LiveData<List<OrderDetailResponse>> {
+        val responseLiveData: MutableLiveData<List<OrderDetailResponse>> = MutableLiveData()
+        val orderDetailRequest: Call<List<OrderDetailResponse>> = RetrofitUtil.orderService.getOrderDetail(orderId)
+
+        orderDetailRequest.enqueue(object : Callback<List<OrderDetailResponse>> {
+            override fun onResponse(call: Call<List<OrderDetailResponse>>, response: Response<List<OrderDetailResponse>>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        responseLiveData.value = res
+                    }
+                    Log.d(TAG, "onResponse: $res")
+                } else {
+                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<OrderDetailResponse>>, t: Throwable) {
+                Log.d(TAG, t.message ?: "주문 상세 내역 받아오는 중 통신오류")
+            }
+        })
+
+        return responseLiveData
     }
 
     companion object {

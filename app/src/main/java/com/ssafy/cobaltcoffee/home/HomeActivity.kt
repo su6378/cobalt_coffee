@@ -9,6 +9,8 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
 import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.home.order.CartActivity
+import com.ssafy.cobaltcoffee.home.order.OrderDetailActivity
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.setting.SettingActivity
 import com.ssafy.cobaltcoffee.start.StartActivity
@@ -120,4 +122,18 @@ class HomeActivity : AppCompatActivity() {
         overridePendingTransition(0,0)
     }
 
+    //장바구니 페이지로 이동
+    fun cartPage(){
+        val intent = Intent(this, CartActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(0,0)
+    }
+
+    //주문 상세 페이지로 이동
+    fun orderDetailPage(orderId : Int){
+        val intent = Intent(this, OrderDetailActivity::class.java)
+        intent.putExtra("orderId",orderId)
+        startActivity(intent)
+        overridePendingTransition(0,0)
+    }
 }

@@ -63,7 +63,7 @@ class CurrentOrderAdapter(var currentOrderList:List<LatestOrder>) :RecyclerView.
 
     //클릭 인터페이스 정의 사용하는 곳에서 만들어준다.
     interface ItemClickListener {
-        fun onClick(view: View,  position: Int, productId:Int)
+        fun onClick(view: View,  position: Int, orderId:Int)
     }
 
     //클릭리스너 선언
