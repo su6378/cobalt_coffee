@@ -9,6 +9,7 @@ import com.ssafy.cafe.model.dao.OrderDao;
 import com.ssafy.cafe.model.dao.OrderDetailDao;
 import com.ssafy.cafe.model.dao.StampDao;
 import com.ssafy.cafe.model.dao.UserDao;
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Order;
 import com.ssafy.cafe.model.dto.OrderDetail;
 import com.ssafy.cafe.model.dto.Stamp;
@@ -75,12 +76,12 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    public List<Map<String, Object>> getRecentOrder(String id) {
+    public List<LatestOrder> getRecentOrder(String id) {
         return oDao.getRecentOrder(id);
     }
 
     @Override
-    public List<Map<String, Object>> getLastMonthOrder(String id) {
+    public List<LatestOrder> getLastMonthOrder(String id) {
         return oDao.getLastMonthOrder(id);
     }
 }

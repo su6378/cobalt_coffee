@@ -1,6 +1,5 @@
 package com.ssafy.cafe.model.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.Builder;

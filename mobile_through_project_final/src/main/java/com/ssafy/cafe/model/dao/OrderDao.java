@@ -2,6 +2,8 @@ package com.ssafy.cafe.model.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Order;
 
 public interface OrderDao {
@@ -22,7 +24,7 @@ public interface OrderDao {
     // back end 관통에서 추가함
     List<Map> selectOrderTotalInfo(int id);
     
-    List<Map<String, Object>> getRecentOrder(String id);
+    List<LatestOrder> getRecentOrder(String id);
     
     /**
      * 최근 1개월의 주문 내역을 반환한다.
@@ -30,5 +32,5 @@ public interface OrderDao {
      * @param id
      * @return
      */
-    List<Map<String, Object>> getLastMonthOrder(String id);    
+    List<LatestOrder> getLastMonthOrder(String id);    
 }

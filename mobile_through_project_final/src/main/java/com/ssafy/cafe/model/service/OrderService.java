@@ -2,6 +2,8 @@ package com.ssafy.cafe.model.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Order;
 
 public interface OrderService {
@@ -51,7 +53,7 @@ public interface OrderService {
      * @param id
      * @return
      */
-    List<Map<String, Object>> getRecentOrder(String id);
+    List<LatestOrder> getRecentOrder(String id);
 
     /**
      * 최근 1개월의 주문 내역을 반환한다.
@@ -59,5 +61,5 @@ public interface OrderService {
      * @param id
      * @return
      */
-    List<Map<String, Object>> getLastMonthOrder(String id);
+    List<LatestOrder> getLastMonthOrder(String id);
 }

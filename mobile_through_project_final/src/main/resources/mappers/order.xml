@@ -97,9 +97,18 @@
 		where o_id=#{oid};
 	</select>
 	
-	<select id="getRecentOrder" parameterType="string" resultType="map">
-		select o.o_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price, p.img
-		from t_order o join t_order_detail d on d.order_id=o.o_id
+	<select id="getRecentOrder" parameterType="string" resultType="LatestOrder">
+		select
+			o.o_id as orderId
+			,o.user_id userId
+			,o.order_time as orderDate
+			,d.quantity as orderCnt
+			,p.name as productName
+			,p.type as type
+			,p.price as price
+			,p.img as img
+		from t_order o
+		join t_order_detail d on d.order_id=o.o_id
                join t_product p on d.product_id = p.id
 		where user_id=#{id}
 		order by o.o_id desc, d.d_id desc
@@ -107,9 +116,18 @@
 	</select>
 
 	<!-- 관통 프로젝트 6단계에서 추가됨 -->
-	<select id="getLastMonthOrder" parameterType="string" resultType="map">
-		select o.o_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price, p.img
-		from t_order o join t_order_detail d on d.order_id=o.o_id
+	<select id="getLastMonthOrder" parameterType="string" resultType="LatestOrder">
+		select
+			o.o_id as orderId
+			,o.user_id userId
+			,o.order_time as orderDate
+			,d.quantity as orderCnt
+			,p.name as productName
+			,p.type as type
+			,p.price as price
+			,p.img as img
+		from t_order o
+		join t_order_detail d on d.order_id=o.o_id
                join t_product p on d.product_id = p.id
 		where user_id=#{id} and order_time > date_add(now(), interval -1 month)
 		order by o.o_id desc, d.d_id desc
