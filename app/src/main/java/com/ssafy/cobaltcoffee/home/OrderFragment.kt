@@ -188,7 +188,7 @@ class OrderFragment : Fragment() {
 
     //최근 주문내역 가져오기 : Retrofit
     private fun getCurrentOrder(){
-        OrderRepository.get().getRecentOrder("test123@naver.com",CurrentOrderListCallback())
+        OrderRepository.get().getRecentOrder(userViewModel.currentUser.id,CurrentOrderListCallback())
     }
 
     inner class CurrentOrderListCallback: RetrofitCallback<List<LatestOrder>> {

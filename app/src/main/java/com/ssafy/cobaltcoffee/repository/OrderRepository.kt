@@ -2,6 +2,8 @@ package com.ssafy.cobaltcoffee.repository
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Order
 import com.ssafy.cobaltcoffee.util.RetrofitUtil

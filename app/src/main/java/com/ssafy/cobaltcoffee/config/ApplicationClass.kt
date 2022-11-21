@@ -2,12 +2,11 @@ package com.ssafy.cobaltcoffee.config
 
 import android.Manifest
 import android.app.Application
+import android.database.sqlite.SQLiteDatabase
 import com.ssafy.cobaltcoffee.intercepter.AddCookiesInterceptor
-import com.ssafy.cobaltcoffee.repository.OrderRepository
-import com.ssafy.cobaltcoffee.repository.ProductRepository
-import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.smartstore.intercepter.ReceivedCookiesInterceptor
 import com.ssafy.smartstore.util.SharedPreferencesUtil
+import com.ssafy.cobaltcoffee.repository.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,6 +15,7 @@ import java.util.concurrent.TimeUnit
 
 private const val TAG = "ApplicationClass_코발트"
 class ApplicationClass : Application() {
+
     companion object{
         // ipconfig를 통해 ip확인하기
         // 핸드폰으로 접속은 같은 인터넷으로 연결 되어있어야함 (유,무선)
@@ -45,6 +45,7 @@ class ApplicationClass : Application() {
         UserRepository.initialize(this)
         ProductRepository.initialize(this)
         OrderRepository.initialize(this)
+        CartRepository.initialize(this)
 
         //shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
