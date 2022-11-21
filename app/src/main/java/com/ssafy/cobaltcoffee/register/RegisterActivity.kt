@@ -1,29 +1,19 @@
 package com.ssafy.cobaltcoffee.register
 
-import android.content.ComponentName
 import android.content.Intent
-import android.content.ServiceConnection
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.IBinder
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
-import android.widget.Toast.makeText
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityRegisterBinding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.UserRepository
-import com.ssafy.cobaltcoffee.service.UserService
-import com.ssafy.smartstore.util.RetrofitCallback
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import java.util.regex.Pattern
 
 private const val TAG = "RegisterActivity_코발트"

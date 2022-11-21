@@ -3,7 +3,7 @@ package com.ssafy.cobaltcoffee.repository
 import android.content.Context
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

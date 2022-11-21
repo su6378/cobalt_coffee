@@ -16,10 +16,9 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.FragmentChangeNameBinding
-import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 
 private const val TAG = "ChangeNameFragment_코발트"
 class ChangeNameFragment : Fragment() {

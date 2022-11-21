@@ -1,7 +1,6 @@
 package com.ssafy.cobaltcoffee.home
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,10 +10,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentOtherBinding
 import com.ssafy.cobaltcoffee.dialog.LogoutDialog
@@ -22,12 +19,11 @@ import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.dto.UserLevel
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 private const val TAG = "OtherFragment_코발트"
 class OtherFragment : Fragment() {
@@ -143,7 +139,7 @@ class OtherFragment : Fragment() {
     }
 
 
-    inner class GetUserInfoCallback: RetrofitCallback<HashMap<String,Any>> {
+    inner class GetUserInfoCallback: RetrofitCallback<HashMap<String, Any>> {
         override fun onSuccess( code: Int, result: HashMap<String,Any>) {
             val jsonString = result
 

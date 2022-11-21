@@ -1,9 +1,11 @@
 package com.ssafy.cobaltcoffee.repository
 
 import android.content.Context
+import android.util.Log
+import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Order
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,9 +50,9 @@ class OrderRepository(context: Context) {
         })
     }
 
-    fun getRecentOrder(orderId: Int, callback: RetrofitCallback<List<Map<String, Any>>>)  {
-        RetrofitUtil.orderService.getRecentOrder(orderId.toString()).enqueue(object : Callback<List<Map<String, Any>>> {
-            override fun onResponse(call: Call<List<Map<String, Any>>>, response: Response<List<Map<String, Any>>>) {
+    fun getRecentOrder(userId: String, callback: RetrofitCallback<List<LatestOrder>>)  {
+        RetrofitUtil.orderService.getRecentOrder(userId).enqueue(object : Callback<List<LatestOrder>> {
+            override fun onResponse(call: Call<List<LatestOrder>>, response: Response<List<LatestOrder>>) {
                 val res = response.body()
                 if (response.code() == 200) {
                     if (res != null) {
@@ -61,7 +63,7 @@ class OrderRepository(context: Context) {
                 }
             }
 
-            override fun onFailure(call: Call<List<Map<String, Any>>>, t: Throwable) {
+            override fun onFailure(call: Call<List<LatestOrder>>, t: Throwable) {
                 callback.onError(t)
             }
         })

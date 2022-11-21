@@ -1,4 +1,4 @@
-package com.ssafy.smartstore.util
+package com.ssafy.cobaltcoffee.util
 
 interface RetrofitCallback<T> {
     fun onError(t: Throwable)

@@ -13,7 +13,7 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityFindPasswordBinding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.UserRepository
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import java.util.regex.Pattern
 
 private const val TAG = "FindPasswordActivity_코발트"
@@ -142,7 +142,7 @@ class FindPasswordActivity : AppCompatActivity() {
         UserRepository.get().getInfo(id, GetUserInfoCallback())
     }
 
-    inner class GetUserInfoCallback: RetrofitCallback<HashMap<String,Any>> {
+    inner class GetUserInfoCallback: RetrofitCallback<HashMap<String, Any>> {
         override fun onSuccess( code: Int, result: HashMap<String,Any>) {
             val jsonString = result
 

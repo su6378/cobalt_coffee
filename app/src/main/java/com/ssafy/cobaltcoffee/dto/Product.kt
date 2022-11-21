@@ -3,7 +3,7 @@ package com.ssafy.cobaltcoffee.dto
 import com.google.gson.annotations.SerializedName
 
 class Product(
-    val id: Int,
+    var id: Int,
     val name: String,
     val type: String,
     val price: Int,

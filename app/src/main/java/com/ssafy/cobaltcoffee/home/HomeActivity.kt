@@ -3,20 +3,16 @@ package com.ssafy.cobaltcoffee.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
-import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.setting.SettingActivity
 import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
-import com.ssafy.smartstore.util.RetrofitCallback
 
 const val HOME_FRAGMENT = 0
 const val ORDER_FRAGMENT = 1
@@ -110,6 +106,16 @@ class HomeActivity : AppCompatActivity() {
     fun moveSettingPage() {
         val intent = Intent(this, SettingActivity::class.java)
         intent.putExtra("user",userViewModel.currentUser)
+        startActivity(intent)
+        overridePendingTransition(0,0)
+    }
+
+    //상세 페이지로 이동
+    fun detailPage(){
+        val intent = Intent(this, ProductActivity::class.java)
+        intent.putExtra("product", Product().apply {
+            this.id = 3
+        })
         startActivity(intent)
         overridePendingTransition(0,0)
     }

@@ -13,7 +13,7 @@ import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.register.RegisterActivity
 import com.ssafy.cobaltcoffee.repository.UserRepository
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import java.util.regex.Pattern
 
 private const val TAG = "LoginActivity_코발트"

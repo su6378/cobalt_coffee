@@ -1,6 +1,5 @@
 package com.ssafy.cobaltcoffee.register
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -14,7 +13,6 @@ import com.forms.sti.progresslitieigb.ProgressLoadingIGB
 import com.forms.sti.progresslitieigb.finishLoadingIGB
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.ssafy.cobaltcoffee.R
@@ -23,7 +21,7 @@ import com.ssafy.cobaltcoffee.databinding.ActivityRegister2Binding
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.repository.UserRepository
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import java.util.regex.Pattern
 
 

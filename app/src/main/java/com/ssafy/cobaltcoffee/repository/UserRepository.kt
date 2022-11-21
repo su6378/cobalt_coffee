@@ -3,7 +3,7 @@ package com.ssafy.cobaltcoffee.repository
 import android.content.Context
 import android.util.Log
 import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,7 +70,7 @@ class UserRepository(context: Context) {
         })
     }
     //회원정보 조회
-    fun getInfo(id : String, callback: RetrofitCallback<HashMap<String,Any>>){
+    fun getInfo(id : String, callback: RetrofitCallback<HashMap<String, Any>>){
         RetrofitUtil.userService.getInfo(id).enqueue(object : Callback<HashMap<String,Any>>{
             override fun onResponse(call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>) {
                 val res = response.body()

@@ -16,10 +16,9 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.FragmentChangePwBinding
-import com.ssafy.cobaltcoffee.databinding.FragmentSettingBinding
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import java.util.regex.Pattern
 
 private const val TAG = "ChangePwFragment_코발트"

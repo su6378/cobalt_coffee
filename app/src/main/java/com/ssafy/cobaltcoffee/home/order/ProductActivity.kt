@@ -10,7 +10,7 @@ import com.ssafy.cobaltcoffee.databinding.ActivityProductBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 
 private const val TAG = "ProductActivity_코발트"
 class ProductActivity : AppCompatActivity() {

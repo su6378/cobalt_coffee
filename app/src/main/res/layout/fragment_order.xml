@@ -127,7 +127,7 @@
                 app:fb_iconColor="@color/cobalt"
                 app:fb_text="장바구니"
                 app:fb_textColor="@color/cobalt"
-                app:fb_textSize="20sp"
+                app:fb_textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_order"
                 app:layout_constraintTop_toBottomOf="@id/order_indicator" />

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.ssafy.cobaltcoffee.R
@@ -21,9 +20,8 @@ import com.ssafy.cobaltcoffee.adapter.BestMenuAdapter
 import com.ssafy.cobaltcoffee.databinding.FragmentHomeBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
-import com.ssafy.cobaltcoffee.home.order.ProductAdapter
 import com.ssafy.cobaltcoffee.repository.ProductRepository
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 
 private const val TAG = "HomeFragment_코발트"
 class HomeFragment : Fragment() {
@@ -50,8 +48,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        binding.homeBanner.setOnClickListener {
-
+        binding.homeBanner.setOnClickListener { //흑임자 라떼 커피 메뉴 상세 페이지로 이동
+            homeActivity.detailPage()
         }
 
 
@@ -73,7 +71,9 @@ class HomeFragment : Fragment() {
             bestMenuAdapter = BestMenuAdapter(bestMenuList)
             bestMenuAdapter.setItemClickListener(object : BestMenuAdapter.ItemClickListener {
                 override fun onClick(view: View, position: Int, productId: Int) {
-
+                    startActivity(Intent(context, ProductActivity::class.java).apply {
+                        putExtra("product", bestMenuList[position])
+                    })
                 }
             })
 

@@ -29,8 +29,7 @@ import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
-import com.ssafy.smartstore.util.RetrofitCallback
-import java.text.SimpleDateFormat
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import java.util.*
 
 private const val TAG = "SettingFragment_코발트"
