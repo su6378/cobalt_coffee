@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -59,6 +60,17 @@ class CartActivity : AppCompatActivity() {
             supportActionBar?.setDisplayShowTitleEnabled(false)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         }
+    }
+
+    //뒤로가기 버튼 클릭 시
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+//                overridePendingTransition(0, 0)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
