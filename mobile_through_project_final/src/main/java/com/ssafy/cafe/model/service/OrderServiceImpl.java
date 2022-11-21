@@ -73,6 +73,11 @@ public class OrderServiceImpl implements OrderService {
     public List<Map> selectOrderTotalInfo(int id) {
         return oDao.selectOrderTotalInfo(id);
     }
+    
+    @Override
+    public List<Map<String, Object>> getRecentOrder(String id) {
+        return oDao.getRecentOrder(id);
+    }
 
     @Override
     public List<Map<String, Object>> getLastMonthOrder(String id) {

@@ -20,37 +20,37 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao pDao;
 
     @Override
-    @Cacheable(value="getProductList")
+//    @Cacheable(value="getProductList")
     public List<Product> getProductList() {
         return pDao.selectAll();
     }
     
     @Override
-    @Cacheable(value="getNewProductList")
+//    @Cacheable(value="getNewProductList")
     public List<Product> getNewProductList() {
         return pDao.selectNewProducts();
     }
 
     @Override
-    @Cacheable(value="getBestProductList")
+//    @Cacheable(value="getBestProductList")
     public List<Product> getBestProductList() {
         return pDao.selectBestProducts();
     }
 
     @Override
-    @Cacheable(value="getCoffeeProductList")
+//    @Cacheable(value="getCoffeeProductList")
     public List<Product> getCoffeeProductList() {
         return pDao.selectCoffeeProducts();
     }
 
     @Override
-    @Cacheable(value="getTeaProductList")
+//    @Cacheable(value="getTeaProductList")
     public List<Product> getTeaProductList() {
         return pDao.selectTeaProducts();
     }
 
     @Override
-    @Cacheable(value="getCookieProductList")
+//    @Cacheable(value="getCookieProductList")
     public List<Product> getCookieProductList() {
         return pDao.selectCookieProducts();
     }

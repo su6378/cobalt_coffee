@@ -18,8 +18,11 @@ public interface OrderDao {
     Order selectWithDetail(int id);
     
     List<Order> selectByUser(String userId);
+    
     // back end 관통에서 추가함
-    List<Map> selectOrderTotalInfo(int id); 
+    List<Map> selectOrderTotalInfo(int id);
+    
+    List<Map<String, Object>> getRecentOrder(String id);
     
     /**
      * 최근 1개월의 주문 내역을 반환한다.

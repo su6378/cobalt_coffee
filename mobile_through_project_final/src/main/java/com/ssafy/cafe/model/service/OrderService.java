@@ -45,6 +45,13 @@ public interface OrderService {
      * @return
      */
     List<Map> selectOrderTotalInfo(int id); 
+    
+    /**
+     * 최근 5개의 주문 내역을 반환한다.
+     * @param id
+     * @return
+     */
+    List<Map<String, Object>> getRecentOrder(String id);
 
     /**
      * 최근 1개월의 주문 내역을 반환한다.
