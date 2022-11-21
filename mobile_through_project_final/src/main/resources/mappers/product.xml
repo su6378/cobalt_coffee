@@ -8,21 +8,33 @@
 		(name,
 		type,
 		price,
-		img)
+		img, 
+		is_new, 
+		is_best,
+		content, 
+		kcal)
 		VALUES
 		(#{name},
 		#{type},
 		#{price},
-		#{img})
+		#{img}, 
+		#{isNew}, 
+		#{isBest},
+		#{content}, 
+		#{kcal})
 	</insert>
 
 	<update id="update" parameterType="Product">
 		UPDATE t_product
 		SET
-		name = #{name},
-		type = #{type},
-		price = #{price},
-		img = #{img}
+			name = #{name},
+			type = #{type},
+			price = #{price},
+			img = #{img}, 
+			is_new = #{isNew}, 
+			is_best = #{isBest}, 
+			content = #{content}, 
+			kcal = #{kcal}
 		WHERE id = #{id}
 	</update>
 	

@@ -14,9 +14,11 @@ public class Product {
     private String img;
     private boolean isNew;
     private boolean isBest;
+    private String content;
+    private Integer kcal;
     
     @Builder
-    public Product(Integer id, String name, String type, Integer price, String img, boolean isNew, boolean isBest) {
+    public Product(Integer id, String name, String type, Integer price, String img, boolean isNew, boolean isBest, String content, Integer kcal) {
         super();
         this.id = id;
         this.name = name;
@@ -25,6 +27,8 @@ public class Product {
         this.img = img;
         this.isNew = isNew;
         this.isBest = isBest;
+        this.content = content;
+        this.kcal = kcal;
     }
     
     public Product(String name, String type, Integer price, String img, boolean isNew, boolean isBest) {
