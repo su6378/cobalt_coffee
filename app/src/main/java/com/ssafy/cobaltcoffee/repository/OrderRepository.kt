@@ -15,9 +15,9 @@ import retrofit2.Response
 
 private const val TAG = "OrderRepository_코발트"
 class OrderRepository(context: Context) {
-    fun makeOrder(callback: RetrofitCallback<Order>)  {
-        RetrofitUtil.orderService.makeOrder().enqueue(object : Callback<Order> {
-            override fun onResponse(call: Call<Order>, response: Response<Order>) {
+    fun makeOrder(order: Order, callback: RetrofitCallback<Boolean>)  {
+        RetrofitUtil.orderService.makeOrder(order).enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 val res = response.body()
                 if (response.code() == 200) {
                     if (res != null) {
@@ -28,7 +28,7 @@ class OrderRepository(context: Context) {
                 }
             }
 
-            override fun onFailure(call: Call<Order>, t: Throwable) {
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 callback.onError(t)
             }
         })

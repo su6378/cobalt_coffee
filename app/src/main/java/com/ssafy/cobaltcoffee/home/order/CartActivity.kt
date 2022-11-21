@@ -57,11 +57,11 @@ class CartActivity : AppCompatActivity() {
 
     //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
     private fun getUserInfo(){
-        if (userViewModel.userId.isEmpty()){
+        if (userViewModel.userId.isEmpty()) {
             val user = ApplicationClass.sharedPreferencesUtil.getUser()
-            UserRepository.get().getInfo(user.id,GetUserInfoCallback())
-        }else{
-            UserRepository.get().getInfo(userViewModel.userId,GetUserInfoCallback())
+            UserRepository.get().getInfo(user.id, GetUserInfoCallback())
+        } else {
+            UserRepository.get().getInfo(userViewModel.userId, GetUserInfoCallback())
         }
     }
 

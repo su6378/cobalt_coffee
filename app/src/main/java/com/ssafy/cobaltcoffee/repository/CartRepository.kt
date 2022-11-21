@@ -3,13 +3,12 @@ package com.ssafy.cobaltcoffee.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.room.withTransaction
-import com.ssafy.cobaltcoffee.dto.database.CartDatabase
-import com.ssafy.cobaltcoffee.dto.database.CartsDto
+import com.ssafy.cobaltcoffee.database.CartDatabase
+import com.ssafy.cobaltcoffee.database.CartDto
 
 private const val TAG = "CartRepository_코발트"
-private const val DATABASE_NAME = "cart-database.db"
-class CartRepository private constructor(context: Context){
-
+private const val DATABASE_NAME = "cobalt-cafe.db"
+class CartRepository(context: Context) {
     private val database : CartDatabase = Room.databaseBuilder(
         context.applicationContext,
         CartDatabase::class.java,
@@ -18,17 +17,24 @@ class CartRepository private constructor(context: Context){
 
     private val cartDao = database.cartDao()
 
-    suspend fun getCarts(userId : String) : MutableList<CartsDto> {
+    suspend fun getCarts(userId: String): MutableList<CartDto> {
         return cartDao.getCarts(userId)
     }
-    suspend fun insertCart(dto: CartsDto) = database.withTransaction{
-        cartDao.insertCart(dto)
+
+    suspend fun insertCart(dto: CartDto): Int = database.withTransaction {
+        return@withTransaction cartDao.insertCart(dto)
     }
-    suspend  fun updateCart(dto: CartsDto) = database.withTransaction{
-        cartDao.updateCart(dto)
+
+    suspend fun updateCart(dto: CartDto): Int = database.withTransaction {
+        return@withTransaction cartDao.updateCart(dto)
     }
-    suspend fun deleteCart(dto : CartsDto) = database.withTransaction {
-        cartDao.deleteCart(dto)
+
+    suspend fun deleteCart(dto: CartDto): Int = database.withTransaction {
+        return@withTransaction cartDao.deleteCart(dto.id)
+    }
+
+    suspend fun clearCart(): Int = database.withTransaction {
+        return@withTransaction cartDao.clearCart()
     }
 
     companion object{

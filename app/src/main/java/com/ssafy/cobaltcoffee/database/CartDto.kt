@@ -1,10 +1,10 @@
-package com.ssafy.cobaltcoffee.dto.database
+package com.ssafy.cobaltcoffee.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "cart")
-data class CartsDto(
+data class CartDto(
     var userId : String = "userId",
     var productId: Int = 0,
     var quantity: Int = 0

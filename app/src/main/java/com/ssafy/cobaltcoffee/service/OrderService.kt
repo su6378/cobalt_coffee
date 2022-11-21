@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface OrderService {
     // 주문정보 저장
     @POST("/rest/order")
-    fun makeOrder(): Call<Order>
+    fun makeOrder(order: Order): Call<Boolean>
 
     // 주문 상세내역 반환
     @GET("/rest/order/{orderId}")

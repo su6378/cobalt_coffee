@@ -10,20 +10,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
+import com.ssafy.cobaltcoffee.database.CartDto
 import com.ssafy.cobaltcoffee.databinding.ActivityProductBinding
 import com.ssafy.cobaltcoffee.dialog.CartDialog
 import com.ssafy.cobaltcoffee.dto.OrderDetail
 import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.repository.CartRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "ProductActivity_코발트"
 class ProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductBinding
 
     private var product: Product = Product()
-    private var orderDetail: OrderDetail = OrderDetail().apply {
+    private var cartDto: CartDto = CartDto().apply {
         this.quantity = 1
     }
 
@@ -55,24 +60,32 @@ class ProductActivity : AppCompatActivity() {
     private fun initBtn() {
         binding.apply {
             quantityMinus.setOnClickListener {
-                if (orderDetail.quantity > 1) {
-                    orderDetail.quantity -= 1
-                    productQty.text = orderDetail.quantity.toString()
+                if (cartDto.quantity > 1) {
+                    cartDto.quantity -= 1
+                    productQty.text = cartDto.quantity.toString()
                 }
             }
             quantityAdd.setOnClickListener {
-                orderDetail.quantity += 1
-                productQty.text = orderDetail.quantity.toString()
+                cartDto.quantity += 1
+                productQty.text = cartDto.quantity.toString()
             }
             cartBtn.setOnClickListener {
-                if (orderDetail.productId == 0) {
+                if (cartDto.productId == 0) {
                     showCartDialog("잠시 후에 다시 시도해주세요.")
                     return@setOnClickListener
                 }
-                showCartDialog("선택하신 상품을 장바구니에 담았습니다.")
+                CoroutineScope(Dispatchers.IO).launch {
+                    val result = CartRepository.get().insertCart(cartDto)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        when (result) {
+                            0 -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
+                            else -> showCartDialog("선택하신 상품을 장바구니에 담았습니다.")
+                        }
+                    }
+                }
             }
             orderBtn.setOnClickListener {
-                if (orderDetail.productId == 0) {
+                if (cartDto.productId == 0) {
                     showCartDialog("잠시 후에 다시 시도해주세요.")
                     return@setOnClickListener
                 }
@@ -111,10 +124,10 @@ class ProductActivity : AppCompatActivity() {
                 productName.text = product.name
                 productPrice.text = CommonUtils.makeComma(product.price)
                 productContent.text = product.content
-                productQty.text = orderDetail.quantity.toString()
+                productQty.text = cartDto.quantity.toString()
                 productKcal.text = "${product.kcal} kcal"
 
-                orderDetail.productId = product.id
+                cartDto.productId = product.id
 
                 if (!product.isNew) {
                     badgeNew.visibility = View.GONE
