@@ -13,7 +13,7 @@ interface CartDao {
     suspend fun getCarts(userId: String): MutableList<CartDto>
 
     @Insert(onConflict = REPLACE)
-    suspend fun insertCart(dto: CartDto): Int
+    suspend fun insertCart(dto: CartDto): Long
 
     @Update
     suspend fun updateCart(dto: CartDto): Int

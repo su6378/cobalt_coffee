@@ -21,7 +21,7 @@ class CartRepository(context: Context) {
         return cartDao.getCarts(userId)
     }
 
-    suspend fun insertCart(dto: CartDto): Int = database.withTransaction {
+    suspend fun insertCart(dto: CartDto): Long = database.withTransaction {
         return@withTransaction cartDao.insertCart(dto)
     }
 

@@ -29,6 +29,7 @@ class ProductActivity : AppCompatActivity() {
 
     private var product: Product = Product()
     private var cartDto: CartDto = CartDto().apply {
+        this.userId = ApplicationClass.sharedPreferencesUtil.getUser().id
         this.quantity = 1
     }
 
@@ -78,7 +79,7 @@ class ProductActivity : AppCompatActivity() {
                     val result = CartRepository.get().insertCart(cartDto)
                     CoroutineScope(Dispatchers.Main).launch {
                         when (result) {
-                            0 -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
+                            0L -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
                             else -> showCartDialog("선택하신 상품을 장바구니에 담았습니다.")
                         }
                     }
