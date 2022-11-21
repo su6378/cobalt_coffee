@@ -18,10 +18,11 @@ public class LatestOrder {
     char orderCompleted;
     int productPrice;
     String type;
+    int totalPrice;
     
     @Builder
     public LatestOrder(String img, int orderCnt, String userId, int orderId, String productName, Date orderDate,
-            char orderCompleted, int productPrice, String type) {
+            char orderCompleted, int productPrice, String type, int totalPrice) {
         super();
         this.img = img;
         this.orderCnt = orderCnt;
@@ -32,6 +33,7 @@ public class LatestOrder {
         this.orderCompleted = orderCompleted;
         this.productPrice = productPrice;
         this.type = type;
+        this.totalPrice = totalPrice;
     }
     
 }

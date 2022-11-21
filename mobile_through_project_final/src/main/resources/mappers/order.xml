@@ -105,12 +105,15 @@
 			,d.quantity as orderCnt
 			,p.name as productName
 			,p.type as type
-			,p.price as price
 			,p.img as img
+			,sum(d.quantity) as quantity
+			,(p.price * d.quantity) as totalPrice
+			,o.completed as orderCompleted
 		from t_order o
 		join t_order_detail d on d.order_id=o.o_id
                join t_product p on d.product_id = p.id
 		where user_id=#{id}
+		group by o.o_id
 		order by o.o_id desc, d.d_id desc
 		limit 5
 	</select>
