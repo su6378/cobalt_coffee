@@ -17,9 +17,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productToolBar">
@@ -45,9 +46,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
+                android:fontFamily="@font/quicksand_regular"
                 android:text="상품명"
                 android:textSize="18sp"
-                android:fontFamily="@font/quicksand_regular"
                 app:layout_constraintBottom_toTopOf="@+id/product_price"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/product_image"
@@ -61,10 +62,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_marginStart="12dp"
-                android:text="상품가격"
-                android:textSize="16sp"
-                android:textColor="@color/cobalt"
                 android:fontFamily="@font/quicksand_semibold"
+                android:text="상품가격"
+                android:textColor="@color/cobalt"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/product_image"
@@ -84,13 +85,13 @@
                 android:layout_width="48dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="8dp"
-                android:src="@drawable/badge_new"/>
+                android:src="@drawable/badge_new" />
 
             <ImageView
                 android:id="@+id/badge_best"
                 android:layout_width="48dp"
                 android:layout_height="24dp"
-                android:src="@drawable/badge_best"/>
+                android:src="@drawable/badge_best" />
 
 
         </LinearLayout>
@@ -109,9 +110,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/quicksand_semibold"
                 android:text="수량"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_semibold"/>
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="0dp"
@@ -130,9 +131,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/quicksand_regular"
                 android:text="1"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_regular" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/quantity_add"
@@ -156,9 +157,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/quicksand_semibold"
                 android:text="제품영양정보 (칼로리)"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_semibold"/>
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="0dp"
@@ -170,9 +171,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/quicksand_regular"
                 android:text="(칼로리정보)"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_regular"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
         <View
@@ -189,18 +190,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/quicksand_semibold"
                 android:text="상품설명"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_semibold"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/product_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/quicksand_regular"
                 android:text="(상품설명)"
-                android:textSize="16sp"
-                android:fontFamily="@font/quicksand_regular"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
         <View
@@ -211,11 +212,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="20dp"
         android:orientation="horizontal"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -223,12 +225,12 @@
 
         <com.github.nikartm.button.FitButton
             android:id="@+id/cart_btn"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:paddingVertical="10dp"
-            android:layout_marginRight="20dp"
             app:fb_backgroundColor="@color/white"
             app:fb_borderColor="@color/cobalt"
             app:fb_borderWidth="3dp"
@@ -238,13 +240,13 @@
             app:fb_shape="rectangle"
             app:fb_text="장바구니 담기"
             app:fb_textColor="@color/cobalt"
-            app:fb_textSize="16sp"/>
+            app:fb_textSize="16sp" />
 
         <com.github.nikartm.button.FitButton
             android:id="@+id/order_btn"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:paddingVertical="10dp"
             app:fb_backgroundColor="@color/cobalt"
@@ -256,7 +258,7 @@
             app:fb_shape="rectangle"
             app:fb_text="바로 주문하기"
             app:fb_textColor="@color/white"
-            app:fb_textSize="16sp"/>
+            app:fb_textSize="16sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,8 +33,8 @@ class CartRepository(context: Context) {
         return@withTransaction cartDao.deleteCart(dto.id)
     }
 
-    suspend fun clearCart(): Int = database.withTransaction {
-        return@withTransaction cartDao.clearCart()
+    suspend fun clearCart(userId: String): Int = database.withTransaction {
+        return@withTransaction cartDao.clearCart(userId)
     }
 
     companion object{

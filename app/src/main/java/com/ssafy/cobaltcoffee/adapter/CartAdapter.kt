@@ -16,7 +16,7 @@ import com.ssafy.cobaltcoffee.dto.UserOrderDetail
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import java.util.Date
 
-private const val TAG = "MenuAdapter_코발트"
+private const val TAG = "CartAdapter_코발트"
 class CartAdapter(var currentOrderList:List<LatestOrder>) :RecyclerView.Adapter<CartAdapter.CartHolder>(){
 
     inner class CartHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

@@ -1,7 +1,6 @@
 package com.ssafy.cobaltcoffee.home.order
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,33 +9,35 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.adapter.CurrentOrderAdapter
-import com.ssafy.cobaltcoffee.adapter.ImageSliderAdapter
 import com.ssafy.cobaltcoffee.config.ApplicationClass
+import com.ssafy.cobaltcoffee.database.CartDto
 import com.ssafy.cobaltcoffee.databinding.ActivityCartBinding
+import com.ssafy.cobaltcoffee.dialog.CartDialog
 import com.ssafy.cobaltcoffee.dialog.LocationDialog
-import com.ssafy.cobaltcoffee.dialog.LogoutDialog
 import com.ssafy.cobaltcoffee.dto.LatestOrder
+import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.cobaltcoffee.repository.OrderRepository
+import com.ssafy.cobaltcoffee.repository.CartRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
+import kotlinx.coroutines.*
 
 private const val TAG = "CartActivity_코발트"
 class CartActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCartBinding
 
     private var cartList: MutableList<LatestOrder> = mutableListOf()
+    private var cartRawList: MutableList<CartDto> = mutableListOf()
+    private val userId: String = ApplicationClass.sharedPreferencesUtil.getUser().id
+
     private lateinit var cartAdapter: CurrentOrderAdapter
 
     private val userViewModel : UserViewModel by viewModels()
@@ -50,7 +51,6 @@ class CartActivity : AppCompatActivity() {
         initTb()
         init()
     }
-
 
     //툴바 적용하기
     private fun initTb() {
@@ -121,8 +121,7 @@ class CartActivity : AppCompatActivity() {
 
     //최근 주문 내역
     private fun initAdpater(){
-
-        getCurrentOrder()
+        getCartRawList()
 
         binding.apply {
             cartAdapter = CurrentOrderAdapter(cartList)
@@ -141,25 +140,30 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    //최근 주문내역 가져오기 : Retrofit
-    private fun getCurrentOrder(){
-        OrderRepository.get().getRecentOrder(userViewModel.currentUser.id,CurrentOrderListCallback())
+    private fun getCartRawList() {
+        cartList.clear()
+        cartRawList.clear()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = CoroutineScope(Dispatchers.IO).async {
+                CartRepository.get().getCarts(userId)
+            }.await()
+
+            when (result == null) {
+                true-> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
+                false -> {
+                    cartRawList.addAll(result)
+                }
+            }
+        }
     }
 
-    inner class CurrentOrderListCallback: RetrofitCallback<List<LatestOrder>> {
-        override fun onSuccess(code: Int, result: List<LatestOrder>) {
-            cartList = result as MutableList<LatestOrder>
-            cartAdapter.currentOrderList = cartList
-            cartAdapter.notifyDataSetChanged()
-        }
+    private fun showCartDialog(content: String){
+        val dialog = CartDialog(this)
+        dialog.setOnOKClickedListener {
 
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "최근 주문 내역 불러오는 중 통신오류")
         }
-
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
+        dialog.show(content)
     }
 
     //위치 정보 서비스 동의 다이얼로그 생성
