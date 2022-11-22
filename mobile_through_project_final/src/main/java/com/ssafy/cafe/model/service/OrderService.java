@@ -54,6 +54,13 @@ public interface OrderService {
      * @return
      */
     List<LatestOrder> getRecentOrder(String id);
+    
+    /**
+     * 전체 주문 내역을 반환한다.
+     * @param id
+     * @return
+     */
+    List<LatestOrder> getAllOrder(String id);
 
     /**
      * 최근 1개월의 주문 내역을 반환한다.

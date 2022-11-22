@@ -26,6 +26,8 @@ public interface OrderDao {
     
     List<LatestOrder> getRecentOrder(String id);
     
+    List<LatestOrder> getAllOrder(String id);
+    
     /**
      * 최근 1개월의 주문 내역을 반환한다.
      * 관통 6단계에서 추가됨
