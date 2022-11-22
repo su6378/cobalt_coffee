@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.dao.CouponDao">
+	<select id="selectByUserId" parameterType="string" resultType="Coupon">
+		SELECT * FROM t_coupon
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<insert id="insert" parameterType="Coupon">
+		INSERT INTO t_coupon(
+			user_id, name, disc_rate, is_use
+		) VALUES (
+			#{userId}, 
+			#{name}, 
+			#{discountRate}, 
+			1
+		)
+	</insert>
+	
+	<update id="update" parameterType="int">
+		UPDATE t_coupon
+		SET
+			is_use = 0
+		WHERE id = #{couponId}
+	</update>
+</mapper>
