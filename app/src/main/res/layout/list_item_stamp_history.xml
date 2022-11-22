@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand_semibold"
             android:padding="10dp"
-            android:text="+ 3"
+            android:text="+ 1"
             android:textColor="@color/cobalt" />
 
     </com.google.android.material.card.MaterialCardView>
