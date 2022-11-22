@@ -2,7 +2,6 @@ package com.ssafy.cobaltcoffee.config
 
 import android.Manifest
 import android.app.Application
-import android.database.sqlite.SQLiteDatabase
 import com.ssafy.cobaltcoffee.intercepter.AddCookiesInterceptor
 import com.ssafy.smartstore.intercepter.ReceivedCookiesInterceptor
 import com.ssafy.smartstore.util.SharedPreferencesUtil
@@ -46,6 +45,7 @@ class ApplicationClass : Application() {
         ProductRepository.initialize(this)
         OrderRepository.initialize(this)
         CartRepository.initialize(this)
+        CouponRepository.initialize(this)
 
         //shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
