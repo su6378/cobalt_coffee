@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.cache.annotation.Cacheable;
 
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Product;
 
 public interface ProductDao {

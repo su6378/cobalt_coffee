@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,6 +59,12 @@ public class ProductRestController {
     @ApiOperation(value="쿠키 상품의 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<Product>> getCookieProductList(){
         return new ResponseEntity<List<Product>>(pService.getCookieProductList(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/cart")
+    @ApiOperation(value="장바구니에 표시할 상품의 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<Product>> getCartProductList(@RequestBody List<Product> productList){
+        return new ResponseEntity<List<Product>>(pService.getCartProductList(productList), HttpStatus.OK);
     }
     
     @GetMapping("/{productId}")

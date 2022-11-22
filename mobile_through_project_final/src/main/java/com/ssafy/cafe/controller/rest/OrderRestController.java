@@ -43,7 +43,7 @@ public class OrderRestController {
     @ApiOperation(value="{id}에 해당하는 사용자의 최근 5개의 주문 내역을 반환한다.", response = List.class)
     public List<LatestOrder> getRecentOrder(String id) {
         return oService.getRecentOrder(id);
-    }  
+    }
     
 //    @GetMapping("/byUser")
 //    @ApiOperation(value="{id}에 해당하는 사용자의 최근 1개월간 주문 내역을 반환한다."

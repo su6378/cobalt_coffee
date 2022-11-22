@@ -45,6 +45,12 @@ public interface ProductService {
     List<Product> getCookieProductList();
     
     /**
+     * 장바구니 상품 정보를 반환한다.
+     * @return
+     */
+    List<Product> getCartProductList(List<Product> productList);
+    
+    /**
      * 상품 정보를 반환한다.
      * @param productId
      * @return

@@ -1,5 +1,6 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,15 @@ public class ProductServiceImpl implements ProductService {
 //    @Cacheable(value="getCookieProductList")
     public List<Product> getCookieProductList() {
         return pDao.selectCookieProducts();
+    }
+    
+    @Override
+    public List<Product> getCartProductList(List<Product> productList) {
+        List<Product> returnList = new ArrayList<>();
+        for (Product product: productList) {
+            returnList.add(pDao.selectProduct(product.getId()));
+        }
+        return returnList;
     }
     
     @Override
