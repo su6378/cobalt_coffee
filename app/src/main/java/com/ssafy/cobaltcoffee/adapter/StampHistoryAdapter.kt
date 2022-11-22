@@ -10,28 +10,28 @@ import com.bumptech.glide.Glide
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.response.OrderDetailResponse
+import com.ssafy.cobaltcoffee.util.CommonUtils
 
-private const val TAG = "StampCardAdapter_코발트"
-class StampCardAdapter(var stampList:List<Int>) :RecyclerView.Adapter<StampCardAdapter.StampCardHolder>(){
+private const val TAG = "StampHistoryAdapter_코발트"
+class StampHistoryAdapter(var stampList:List<OrderDetailResponse>) :RecyclerView.Adapter<StampHistoryAdapter.StampHistoryHolder>(){
 
-    inner class StampCardHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val stampImage = itemView.findViewById<ImageView>(R.id.stampCard_img)
+    inner class StampHistoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val stampCount = itemView.findViewById<TextView>(R.id.stampHistory_stampCount)
+        val stampDate = itemView.findViewById<TextView>(R.id.stampHistory_date)
 
-        fun bindInfo(stampCount : Int){
-            if (stampCount == 1){ //적립한 스탬프 이미지 넣기
-                Glide.with(itemView).load(R.drawable.ic_logo).override(200,200).centerCrop().into(stampImage)
-            }else{ //default 이미지
-                Glide.with(itemView).load(R.drawable.ic_logo_black).override(200,200).centerCrop().into(stampImage)
-            }
+        fun bindInfo(stamp : OrderDetailResponse){
+            stampCount.text = "+${stamp.stampCount}"
+            stampDate.text = CommonUtils.getFormattedString(stamp.orderDate)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StampCardHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StampHistoryHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_stamp_card, parent, false)
-        return StampCardHolder(view)
+        return StampHistoryHolder(view)
     }
 
-    override fun onBindViewHolder(holder: StampCardHolder, position: Int) {
+    override fun onBindViewHolder(holder: StampHistoryHolder, position: Int) {
         holder.apply{
             bindInfo(stampList[position])
         }
