@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.cobaltcoffee.databinding.FragmentMenuBinding
@@ -14,6 +15,7 @@ import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
 private const val TAG = "MenuFragment_코발트"
 class MenuFragment(productType: Int) : Fragment() {
@@ -25,6 +27,9 @@ class MenuFragment(productType: Int) : Fragment() {
 
     private var productList: MutableList<Product> = mutableListOf()
     private val productType = productType
+
+    private val userViewModel: UserViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,7 @@ class MenuFragment(productType: Int) : Fragment() {
                 override fun onItemClick(v: View, pos: Int) {
                     startActivity(Intent(context, ProductActivity::class.java).apply {
                         putExtra("product", productList[pos])
+                        putExtra("userInfo",userViewModel.currentUser)
                     })
                 }
             })

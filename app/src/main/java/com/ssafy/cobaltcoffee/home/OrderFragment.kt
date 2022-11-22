@@ -105,6 +105,7 @@ class OrderFragment : Fragment() {
         binding.apply {
             btnOrder.setOnClickListener {
                 val intent = Intent(context, ProductListActivity::class.java)
+                intent.putExtra("userInfo",userViewModel.currentUser)
                 startActivity(intent)
             }
             btnCart.setOnClickListener {

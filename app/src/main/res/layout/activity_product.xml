@@ -256,7 +256,7 @@
             app:fb_fontFamilyRes="@font/quicksand_medium"
             app:fb_rippleColor="@color/white"
             app:fb_shape="rectangle"
-            app:fb_text="바로 주문하기"
+            app:fb_text="장바구니 이동"
             app:fb_textColor="@color/white"
             app:fb_textSize="16sp" />
 

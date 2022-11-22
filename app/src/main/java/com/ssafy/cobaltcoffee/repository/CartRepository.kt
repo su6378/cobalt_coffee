@@ -1,57 +1,38 @@
 package com.ssafy.cobaltcoffee.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.room.withTransaction
+import com.ssafy.cobaltcoffee.database.CartDao
 import com.ssafy.cobaltcoffee.database.CartDatabase
 import com.ssafy.cobaltcoffee.database.CartDto
 
 private const val TAG = "CartRepository_코발트"
 private const val DATABASE_NAME = "cobalt-cafe.db"
-class CartRepository(context: Context) {
-    private val database : CartDatabase = Room.databaseBuilder(
-        context.applicationContext,
-        CartDatabase::class.java,
-        DATABASE_NAME
-    ).build()
+class CartRepository(private val cartDao: CartDao) {
 
-    private val cartDao = database.cartDao()
+    val realAllData : LiveData<MutableList<CartDto>> = cartDao.getCarts()
 
-    suspend fun getCarts(userId: String): MutableList<CartDto> {
-        return cartDao.getCarts(userId)
+    fun getCarts(userId: String): LiveData<MutableList<CartDto>> {
+        return cartDao.getCartsById(userId)
     }
 
-    suspend fun insertCart(dto: CartDto): Long = database.withTransaction {
-        return@withTransaction cartDao.insertCart(dto)
+    suspend fun insertCart(dto: CartDto) {
+        cartDao.insertCart(dto)
     }
 
-    suspend fun updateCart(dto: CartDto): Int = database.withTransaction {
-        return@withTransaction cartDao.updateCart(dto)
-    }
-
-    suspend fun deleteCart(dto: CartDto): Int = database.withTransaction {
-        return@withTransaction cartDao.deleteCart(dto.id)
-    }
-
-    suspend fun clearCart(userId: String): Int = database.withTransaction {
-        return@withTransaction cartDao.clearCart(userId)
-    }
-
-    companion object{
-        private var INSTANCE : CartRepository? =null
-
-        fun initialize(context: Context){
-            if(INSTANCE == null){
-                INSTANCE = CartRepository(context)
-            }
-        }
-
-        fun get() : CartRepository {
-            return INSTANCE ?:
-            throw IllegalStateException("CartRepository must be initialized")
-        }
-    }
-
+//    suspend fun updateCart(dto: CartDto) = database.withTransaction {
+//        cartDao.updateCart(dto)
+//    }
+//
+//    suspend fun deleteCart(dto: CartDto) = database.withTransaction {
+//        cartDao.deleteCart(dto.id)
+//    }
+//
+//    suspend fun clearCart(userId: String) = database.withTransaction {
+//        cartDao.clearCart(userId)
+//    }
 }
 
 

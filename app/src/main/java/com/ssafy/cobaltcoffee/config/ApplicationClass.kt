@@ -44,7 +44,6 @@ class ApplicationClass : Application() {
         UserRepository.initialize(this)
         ProductRepository.initialize(this)
         OrderRepository.initialize(this)
-        CartRepository.initialize(this)
         CouponRepository.initialize(this)
 
         //shared preference 초기화

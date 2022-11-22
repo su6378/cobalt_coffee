@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -28,6 +29,7 @@ import com.ssafy.cobaltcoffee.repository.CartRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.viewmodel.CartViewModel
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import kotlinx.coroutines.*
 
@@ -43,6 +45,9 @@ class CartActivity : AppCompatActivity() {
 
     private val userViewModel : UserViewModel by viewModels()
     private val REQUEST_PERMISSION_LOCATION = 10
+
+    private lateinit var cartViewModel: CartViewModel
+    private lateinit var cartDto: CartDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +73,6 @@ class CartActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
-//                overridePendingTransition(0, 0)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -104,6 +108,11 @@ class CartActivity : AppCompatActivity() {
         //유저 정보 갱신
         getUserInfo()
 
+        // 뷰모델 연결
+        cartViewModel = ViewModelProvider(this, CartViewModel.Factory(application)).get(CartViewModel::class.java)
+
+        Log.d(TAG, "init: ${cartViewModel.getCartsById(userViewModel.currentUser.id)}")
+        
         binding.apply {
 
             //주문하기 버튼 클릭 시
@@ -122,42 +131,42 @@ class CartActivity : AppCompatActivity() {
 
     //최근 주문 내역
     private fun initAdpater(){
-        getCartRawList()
+//        getCartRawList()
 
-        binding.apply {
-            cartAdapter = CartAdapter(cartList)
-            cartAdapter.setCloseClickListener(object: CartAdapter.CloseClickListener {
-                override fun onClick(view: View, position: Int, productId: Int) {
-                    Toast.makeText(this@CartActivity, "", Toast.LENGTH_SHORT).show()
-                }
-            })
-
-            cartRv.apply {
-                layoutManager = LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
-                adapter = cartAdapter
-                //원래의 목록위치로 돌아오게함
-                adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            }
-        }
+//        binding.apply {
+//            cartAdapter = CartAdapter(cartList)
+//            cartAdapter.setCloseClickListener(object: CartAdapter.CloseClickListener {
+//                override fun onClick(view: View, position: Int, productId: Int) {
+//                    Toast.makeText(this@CartActivity, "", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+//
+//            cartRv.apply {
+//                layoutManager = LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
+//                adapter = cartAdapter
+//                //원래의 목록위치로 돌아오게함
+//                adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//            }
+//        }
     }
 
-    private fun getCartRawList() {
-        cartRawList.clear()
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val result = CoroutineScope(Dispatchers.IO).async {
-                CartRepository.get().getCarts(userId)
-            }.await()
-
-            when (result == null) {
-                true -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
-                false -> {
-                    cartRawList.addAll(result)
-                    getCartList()
-                }
-            }
-        }
-    }
+//    private fun getCartRawList() {
+//        cartRawList.clear()
+//
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val result = CoroutineScope(Dispatchers.IO).async {
+//                CartRepository.get().getCarts(userId)
+//            }.await()
+//
+//            when (result == null) {
+//                true -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
+//                false -> {
+//                    cartRawList.addAll(result)
+//                    getCartList()
+//                }
+//            }
+//        }
+//    }
 
     private fun getCartList() {
         cartList.clear()

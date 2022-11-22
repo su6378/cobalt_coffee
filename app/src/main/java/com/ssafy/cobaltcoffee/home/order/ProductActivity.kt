@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.ssafy.cobaltcoffee.R
@@ -15,24 +17,28 @@ import com.ssafy.cobaltcoffee.databinding.ActivityProductBinding
 import com.ssafy.cobaltcoffee.dialog.CartDialog
 import com.ssafy.cobaltcoffee.dto.OrderDetail
 import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.CartRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.viewmodel.CartViewModel
+import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val TAG = "ProductActivity_코발트"
+
 class ProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductBinding
 
     private var product: Product = Product()
-    private var cartDto: CartDto = CartDto().apply {
-        this.userId = ApplicationClass.sharedPreferencesUtil.getUser().id
-        this.quantity = 1
-    }
+    private val userViewModel: UserViewModel by viewModels()
+
+    private lateinit var cartViewModel: CartViewModel
+    private lateinit var cartDto: CartDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +48,17 @@ class ProductActivity : AppCompatActivity() {
     }
 
     private fun init() {
+
+        userViewModel.currentUser = intent.getSerializableExtra("userInfo") as User
+
+        // 뷰모델 연결
+        cartViewModel = ViewModelProvider(this, CartViewModel.Factory(application)).get(CartViewModel::class.java)
+
+        cartDto = CartDto().apply { //장바구니 초기값 세팅
+            this.userId = userViewModel.currentUser.id
+            this.quantity = 1
+        }
+
         initTb()
         initBtn()
         val receiveProduct: Product = intent.getSerializableExtra("product") as Product
@@ -78,15 +95,16 @@ class ProductActivity : AppCompatActivity() {
                     showCartDialog("잠시 후에 다시 시도해주세요.")
                     return@setOnClickListener
                 }
-                CoroutineScope(Dispatchers.IO).launch {
-                    val result = CartRepository.get().insertCart(cartDto)
-                    CoroutineScope(Dispatchers.Main).launch {
-                        when (result) {
-                            0L -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
-                            else -> showCartDialog("선택하신 상품을 장바구니에 담았습니다.")
-                        }
-                    }
-                }
+                    cartViewModel.addCart(cartDto)
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    val result = CartRepository.get().insertCart(cartDto)
+//                    CoroutineScope(Dispatchers.Main).launch {
+//                        when (result) {
+//                            0L -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
+//                            else -> showCartDialog("선택하신 상품을 장바구니에 담았습니다.")
+//                        }
+//                    }
+//                }
             }
             orderBtn.setOnClickListener {
                 if (cartDto.productId == 0) {
@@ -97,7 +115,7 @@ class ProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun showCartDialog(content: String){
+    private fun showCartDialog(content: String) {
         val dialog = CartDialog(this)
         dialog.setOnOKClickedListener {
 
@@ -110,13 +128,12 @@ class ProductActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
-//                overridePendingTransition(0, 0)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    inner class ProductCallback: RetrofitCallback<Product> {
+    inner class ProductCallback : RetrofitCallback<Product> {
         override fun onSuccess(code: Int, result: Product) {
             product = result
 
