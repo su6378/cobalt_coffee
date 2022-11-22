@@ -108,11 +108,11 @@ class CartActivity : AppCompatActivity() {
 
             //주문하기 버튼 클릭 시
             orderBtn.setOnClickListener {
-                if(ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                if (ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
 
-                }else{ //위치 서비스 동의하지 않은 경우 dialog 띄우기
+                } else { //위치 서비스 동의하지 않은 경우 dialog 띄우기
                     showLocationDialog()
                 }
             }
@@ -150,7 +150,7 @@ class CartActivity : AppCompatActivity() {
             }.await()
 
             when (result == null) {
-                true-> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
+                true -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
                 false -> {
                     cartRawList.addAll(result)
                     getCartList()

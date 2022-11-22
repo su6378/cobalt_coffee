@@ -38,7 +38,7 @@ class CartAdapter(var cartList: List<LatestOrder>): RecyclerView.Adapter<CartAda
                 .into(productImage)
 
             menuName.text = item.productName
-//            menuNameEng.text = cartProduct.productNameEng
+            menuNameEng.text = item.productName
             menuPrice.text = CommonUtils.makeComma(item.productPrice)
             menuPriceTotal.text = CommonUtils.makeComma(item.totalPrice)
             menuType.text = item.type
@@ -92,19 +92,5 @@ class CartAdapter(var cartList: List<LatestOrder>): RecyclerView.Adapter<CartAda
     }
     fun setCloseClickListener(closeClickListner: CloseClickListener) {
         this.closeClickListner = closeClickListner
-    }
-
-    inner class ProductCallback: RetrofitCallback<Product> {
-        override fun onSuccess(code: Int, result: Product) {
-
-        }
-
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "상품 정보 불러오는 중 통신오류")
-        }
-
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
     }
 }

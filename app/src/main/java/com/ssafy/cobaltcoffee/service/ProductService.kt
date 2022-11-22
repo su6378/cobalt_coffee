@@ -31,9 +31,8 @@ interface ProductService {
     fun getCookieProductList(): Call<List<Product>>
 
     // 장바구니에 표시할 상품 정보를 반환한다.
-//    @GET("/rest/product/cart")
-    @HTTP(method = "GET", path = "/rest/product/cart", hasBody = true)
-    fun getCartProductList(cartList: List<LatestOrder>): Call<List<LatestOrder>>
+    @POST("/rest/product/cart")
+    fun getCartProductList(@Body cartList: List<LatestOrder>): Call<List<LatestOrder>>
 
     // 상품 정보 반환
     @GET("/rest/product/{productId}")
