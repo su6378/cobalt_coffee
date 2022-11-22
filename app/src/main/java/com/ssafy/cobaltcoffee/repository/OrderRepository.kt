@@ -34,6 +34,27 @@ class OrderRepository(context: Context) {
         })
     }
 
+    //사용자 주문 내역 가져오기
+    fun getAllOrder(userId: String, callback: RetrofitCallback<List<LatestOrder>>)  {
+        RetrofitUtil.orderService.getRecentOrder(userId).enqueue(object : Callback<List<LatestOrder>> {
+            override fun onResponse(call: Call<List<LatestOrder>>, response: Response<List<LatestOrder>>) {
+                val res = response.body()
+                if (response.code() == 200) {
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<List<LatestOrder>>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
+
+    //최근 주문내역 5개 가져오기
     fun getRecentOrder(userId: String, callback: RetrofitCallback<List<LatestOrder>>)  {
         RetrofitUtil.orderService.getRecentOrder(userId).enqueue(object : Callback<List<LatestOrder>> {
             override fun onResponse(call: Call<List<LatestOrder>>, response: Response<List<LatestOrder>>) {

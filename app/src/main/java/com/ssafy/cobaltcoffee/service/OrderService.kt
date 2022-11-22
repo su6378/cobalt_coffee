@@ -22,4 +22,8 @@ interface OrderService {
     // 사용자의 최근 5개 주문 반환
     @GET("/rest/order/recent")
     fun getRecentOrder(@Query("id") id: String): Call<List<LatestOrder>>
+
+    // 사용자의 최근 5개 주문 반환
+    @GET("/rest/order/all")
+    fun getAllOrder(@Query("id") id: String): Call<List<LatestOrder>>
 }
