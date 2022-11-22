@@ -40,4 +40,14 @@
         <item name="fontFamily">@font/quicksand_semibold</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <!-- 아래를 추가해야 popup dialog 시 특정 기종에서 에러가 발생하지 않는다 -->
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+    <!-- 탭 레이아웃 글자 Style -->
+    <style name="tabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/quicksand_semibold</item>
+    </style>
 </resources>

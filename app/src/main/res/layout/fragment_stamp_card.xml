@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".stamp.StampCardFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/stampCard_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_semibold"
+                android:padding="10dp"
+                android:text="스탬프 적립"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/stampCard_stampCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
+                android:paddingVertical="10dp"
+                android:text="0"
+                android:textColor="@color/cobalt"
+                android:textSize="18sp"
+                app:layout_constraintRight_toLeftOf="@id/stampCard_tv2" />
+
+            <TextView
+                android:id="@+id/stampCard_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:paddingVertical="10dp"
+                android:text=" / 30"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/stampCard_stampCount"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <View
+                android:id="@+id/stampCard_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="@color/lineColor2"
+                app:layout_constraintTop_toBottomOf="@id/stampCard_tv2" />
+
+            <TextView
+                android:id="@+id/stampCard_couponCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
+                android:padding="10dp"
+                android:text="스탬프 적립"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/stampCard_line" />
+
+            <TextView
+                android:id="@+id/stampCard_tv3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
+                android:paddingHorizontal="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/stampText"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/stampCard_couponCount" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/stampCard_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lineColor2"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@id/stampCard_tv3">
+
+                <ImageView
+                    android:id="@+id/stampCard_medal"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="30dp"
+                    android:src="@drawable/ic_medal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/cobalt" />
+
+                <TextView
+                    android:id="@+id/stampCard_name_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintLeft_toRightOf="@id/stampCard_medal"
+                    app:layout_constraintTop_toTopOf="@id/stampCard_medal" />
+
+                <TextView
+                    android:id="@+id/stampCard_levelUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/stampCard_name_grade"
+                    app:layout_constraintTop_toBottomOf="@id/stampCard_name_grade" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/stampCard_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="10dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintTop_toBottomOf="@id/stampCard_medal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/stampCard_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/stampCard_medal" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/stampCard_tv4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="10dp"
+                android:text="멤버십 적립 유의사항안내"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/stampCard_cl" />
+
+            <TextView
+                android:id="@+id/stampCard_tv5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:text="@string/stampText2"
+                app:layout_constraintTop_toBottomOf="@id/stampCard_tv4" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

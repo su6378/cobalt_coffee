@@ -63,6 +63,13 @@ class OtherFragment : Fragment() {
             otherBasketCl.setOnClickListener {
                 homeActivity.cartPage()
             }
+            //주문내역 페이지로 이동
+            otherHistoryCl.setOnClickListener {
+                homeActivity.orderHistoryPage()
+            }
+            stampPageBtn.setOnClickListener {
+                homeActivity.stampPage(userViewModel.currentUser)
+            }
         }
 
 

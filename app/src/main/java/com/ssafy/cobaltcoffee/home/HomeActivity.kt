@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.ssafy.cobaltcoffee.R
+import com.ssafy.cobaltcoffee.stamp.StampActivity
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
 import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.order.CartActivity
 import com.ssafy.cobaltcoffee.home.order.OrderDetailActivity
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
@@ -109,7 +111,6 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this, SettingActivity::class.java)
         intent.putExtra("user",userViewModel.currentUser)
         startActivity(intent)
-        overridePendingTransition(0,0)
     }
 
     //상세 페이지로 이동
@@ -119,14 +120,12 @@ class HomeActivity : AppCompatActivity() {
             this.id = 3
         })
         startActivity(intent)
-        overridePendingTransition(0,0)
     }
 
     //장바구니 페이지로 이동
     fun cartPage(){
         val intent = Intent(this, CartActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(0,0)
     }
 
     //주문 상세 페이지로 이동
@@ -134,6 +133,18 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this, OrderDetailActivity::class.java)
         intent.putExtra("orderId",orderId)
         startActivity(intent)
-        overridePendingTransition(0,0)
+    }
+
+    //주문 내역 페이지로 이동
+    fun orderHistoryPage(){
+        val intent = Intent(this, TestActivity::class.java)
+        startActivity(intent)
+    }
+
+    //스탬프 페이지로 이동
+    fun stampPage(user : User){
+        val intent = Intent(this,StampActivity::class.java)
+        intent.putExtra("user",user)
+        startActivity(intent)
     }
 }

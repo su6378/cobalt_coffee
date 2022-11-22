@@ -95,16 +95,17 @@ dependencies {
     // ImageSlider
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
     implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0'
-    
+
     // Circle Indicator (To fix the xml preview "Missing classes" error)
     implementation 'me.relex:circleindicator:2.1.6'
-
-
 
     //Room 의존성 추가
     implementation 'androidx.room:room-runtime:2.4.3'
     annotationProcessor('androidx.room:room-compiler-processing:2.4.3')
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
+
+    //BootPay
+    implementation 'io.github.bootpay:android:4.2.3'
 
 }
