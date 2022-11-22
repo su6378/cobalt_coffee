@@ -73,7 +73,8 @@ public class ProductServiceImpl implements ProductService {
                 'N', 
                 product.getPrice(), 
                 product.getType(), 
-                product.getPrice() * latestOrder.getOrderCnt()
+                product.getPrice() * latestOrder.getOrderCnt(),
+                latestOrder.getProductId()
             ));
         }
         return returnList;
