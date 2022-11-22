@@ -124,7 +124,7 @@ class ProductRepository(context: Context) {
         })
     }
 
-    fun getProduct(productId: Int, callback: RetrofitCallback<Product>)  {
+    suspend fun getProduct(productId: Int, callback: RetrofitCallback<Product>)  {
         RetrofitUtil.productService.getProduct(productId.toString()).enqueue(object: Callback<Product> {
             override fun onResponse(call: Call<Product>, response: Response<Product>) {
                 val res = response.body()

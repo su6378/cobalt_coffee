@@ -21,6 +21,7 @@ import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val TAG = "ProductActivity_코발트"
@@ -44,7 +45,9 @@ class ProductActivity : AppCompatActivity() {
         initTb()
         initBtn()
         val receiveProduct: Product = intent.getSerializableExtra("product") as Product
-        ProductRepository.get().getProduct(receiveProduct.id, ProductCallback())
+        CoroutineScope(Dispatchers.IO).launch {
+            ProductRepository.get().getProduct(receiveProduct.id, ProductCallback())
+        }
     }
 
     //툴바 적용하기
