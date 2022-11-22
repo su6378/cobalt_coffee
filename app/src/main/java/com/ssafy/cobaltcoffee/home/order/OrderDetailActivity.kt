@@ -94,4 +94,6 @@ class OrderDetailActivity : AppCompatActivity() {
         var totalPrice = 0
         orderDetails.forEach { totalPrice += it.totalPrice }
     }
+
+
 }
