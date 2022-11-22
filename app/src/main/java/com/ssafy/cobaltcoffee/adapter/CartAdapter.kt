@@ -12,36 +12,54 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Product
-import com.ssafy.cobaltcoffee.dto.UserOrderDetail
 import com.ssafy.cobaltcoffee.util.CommonUtils
-import java.util.Date
+import com.ssafy.cobaltcoffee.util.RetrofitCallback
 
 private const val TAG = "CartAdapter_코발트"
-class CartAdapter(var currentOrderList:List<LatestOrder>) :RecyclerView.Adapter<CartAdapter.CartHolder>(){
-
+class CartAdapter(var cartList: List<LatestOrder>): RecyclerView.Adapter<CartAdapter.CartHolder>(){
     inner class CartHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val menuList = itemView.findViewById<TextView>(R.id.co_list)
-        val menuImage = itemView.findViewById<ImageView>(R.id.co_img)
-        val totalPrice = itemView.findViewById<TextView>(R.id.co_totalPrice)
-        val orderDate = itemView.findViewById<TextView>(R.id.co_orderDate)
+        val productImage = itemView.findViewById<ImageView>(R.id.cart_img)
 
-        fun bindInfo(currentOrder : LatestOrder){
-            Log.d(TAG, "bindInfo: $currentOrder")
-            if(currentOrder.orderCnt > 1){
-                menuList.text = "${currentOrder.productName} 외 ${currentOrder.orderCnt -1}건"  //외 x건
-            }else{
-                menuList.text = currentOrder.productName
+        val menuName = itemView.findViewById<TextView>(R.id.menu_name)
+        val menuNameEng = itemView.findViewById<TextView>(R.id.menu_name_eng)
+        val menuPrice = itemView.findViewById<TextView>(R.id.menu_price)
+        val menuPriceTotal = itemView.findViewById<TextView>(R.id.menu_totalPrice)
+        val menuType = itemView.findViewById<TextView>(R.id.menu_type)
+
+        val productQty = itemView.findViewById<TextView>(R.id.product_qty)
+        val quantityMinus = itemView.findViewById<ImageView>(R.id.quantity_minus)
+        val quantityAdd = itemView.findViewById<ImageView>(R.id.quantity_add)
+
+        val deleteProduct = itemView.findViewById<ImageView>(R.id.delete_product)
+
+        fun bindInfo(item: LatestOrder){
+            Glide.with(itemView)
+                .load("${ApplicationClass.MENU_IMGS_URL}${item.img}")
+                .into(productImage)
+
+            menuName.text = item.productName
+//            menuNameEng.text = cartProduct.productNameEng
+            menuPrice.text = CommonUtils.makeComma(item.productPrice)
+            menuPriceTotal.text = CommonUtils.makeComma(item.totalPrice)
+            menuType.text = item.type
+            productQty.text = item.orderCnt.toString()
+
+            quantityMinus.setOnClickListener {
+                if (item.orderCnt > 1) {
+//                    cartProduct.productQty -= 1
+//                    productQty.text = cartProduct.orderCnt.toString()
+                }
+            }
+            quantityAdd.setOnClickListener {
+//                cartProduct.productQty += 1
+//                productQty.text = cartProduct.orderCnt.toString()
             }
 
-            Glide.with(itemView)
-                .load("${ApplicationClass.MENU_IMGS_URL}${currentOrder.img}")
-                .into(menuImage)
-
-            totalPrice.text = CommonUtils.makeComma(currentOrder.totalPrice)
-            orderDate.text = CommonUtils.getFormattedString(currentOrder.orderDate)
-
-            itemView.setOnClickListener{
-                itemClickListner.onClick(it, layoutPosition, currentOrderList[layoutPosition].orderId)
+//            itemView.setOnClickListener{
+//                itemClickListner.onClick(it, layoutPosition, cartList[layoutPosition].orderId)
+//            }
+            deleteProduct.setOnClickListener{
+                closeClickListner.onClick(it, layoutPosition, cartList[layoutPosition].orderId)
             }
         }
     }
@@ -52,25 +70,41 @@ class CartAdapter(var currentOrderList:List<LatestOrder>) :RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: CartHolder, position: Int) {
-        holder.apply{
-            bindInfo(currentOrderList[position])
-        }
+        holder.bindInfo(cartList[position])
     }
 
     override fun getItemCount(): Int {
-        return currentOrderList.size
+        return cartList.size
     }
 
-    //클릭 인터페이스 정의 사용하는 곳에서 만들어준다.
     interface ItemClickListener {
-        fun onClick(view: View,  position: Int, productId:Int)
+        fun onClick(view: View, position: Int, productId:Int)
+    }
+    interface CloseClickListener {
+        fun onClick(view: View, position: Int, productId:Int)
     }
 
-    //클릭리스너 선언
     private lateinit var itemClickListner: ItemClickListener
-    //클릭리스너 등록 매소드
+    private lateinit var closeClickListner: CloseClickListener
+
     fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListner = itemClickListener
     }
-}
+    fun setCloseClickListener(closeClickListner: CloseClickListener) {
+        this.closeClickListner = closeClickListner
+    }
 
+    inner class ProductCallback: RetrofitCallback<Product> {
+        override fun onSuccess(code: Int, result: Product) {
+
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "상품 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+}

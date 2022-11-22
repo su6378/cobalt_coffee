@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,16 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
-import com.ssafy.cobaltcoffee.adapter.CurrentOrderAdapter
+import com.ssafy.cobaltcoffee.adapter.CartAdapter
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.database.CartDto
 import com.ssafy.cobaltcoffee.databinding.ActivityCartBinding
 import com.ssafy.cobaltcoffee.dialog.CartDialog
 import com.ssafy.cobaltcoffee.dialog.LocationDialog
 import com.ssafy.cobaltcoffee.dto.LatestOrder
-import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.CartRepository
+import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
@@ -38,7 +39,7 @@ class CartActivity : AppCompatActivity() {
     private var cartRawList: MutableList<CartDto> = mutableListOf()
     private val userId: String = ApplicationClass.sharedPreferencesUtil.getUser().id
 
-    private lateinit var cartAdapter: CurrentOrderAdapter
+    private lateinit var cartAdapter: CartAdapter
 
     private val userViewModel : UserViewModel by viewModels()
     private val REQUEST_PERMISSION_LOCATION = 10
@@ -124,10 +125,10 @@ class CartActivity : AppCompatActivity() {
         getCartRawList()
 
         binding.apply {
-            cartAdapter = CurrentOrderAdapter(cartList)
-            cartAdapter.setItemClickListener(object : CurrentOrderAdapter.ItemClickListener {
+            cartAdapter = CartAdapter(cartList)
+            cartAdapter.setCloseClickListener(object: CartAdapter.CloseClickListener {
                 override fun onClick(view: View, position: Int, productId: Int) {
-
+                    Toast.makeText(this@CartActivity, "", Toast.LENGTH_SHORT).show()
                 }
             })
 
@@ -141,7 +142,6 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun getCartRawList() {
-        cartList.clear()
         cartRawList.clear()
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -153,9 +153,24 @@ class CartActivity : AppCompatActivity() {
                 true-> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
                 false -> {
                     cartRawList.addAll(result)
+                    getCartList()
                 }
             }
         }
+    }
+
+    private fun getCartList() {
+        cartList.clear()
+
+        val tempList: MutableList<LatestOrder> = mutableListOf()
+        cartRawList.forEach {
+            tempList.add(LatestOrder().apply {
+                this.orderId = it.id.toInt()
+                this.productId = it.productId
+                this.orderCnt = it.quantity
+            })
+        }
+        ProductRepository.get().getCartProductList(tempList, CartCallback())
     }
 
     private fun showCartDialog(content: String){
@@ -173,5 +188,23 @@ class CartActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this@CartActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
         }
         dialog.show()
+    }
+
+    inner class CartCallback: RetrofitCallback<List<LatestOrder>> {
+        override fun onSuccess(code: Int, result: List<LatestOrder>) {
+            cartList.addAll(result)
+            binding.apply {
+                cartRv.adapter!!.notifyDataSetChanged()
+            }
+            Log.d(TAG, "onSuccess: 장바구니 정보를 받아왔습니다")
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "상품 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }

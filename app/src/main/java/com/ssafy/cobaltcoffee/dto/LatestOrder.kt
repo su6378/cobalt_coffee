@@ -16,6 +16,6 @@ data class LatestOrder(
     var type: String,
     var totalPrice: Int = 0,
     var productId: Int = 0
-) {
+): java.io.Serializable {
     constructor(): this("", 0, "", 0, "", Date(), ' ', 0, "", 0, 0)
 }

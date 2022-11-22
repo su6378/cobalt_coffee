@@ -1,9 +1,9 @@
 package com.ssafy.cobaltcoffee.service
 
+import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Product
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ProductService {
     // 전체 상품의 목록을 반환한다.
@@ -29,6 +29,11 @@ interface ProductService {
     // 쿠키 상품의 목록을 반환한다.
     @GET("/rest/product/cookie")
     fun getCookieProductList(): Call<List<Product>>
+
+    // 장바구니에 표시할 상품 정보를 반환한다.
+//    @GET("/rest/product/cart")
+    @HTTP(method = "GET", path = "/rest/product/cart", hasBody = true)
+    fun getCartProductList(cartList: List<LatestOrder>): Call<List<LatestOrder>>
 
     // 상품 정보 반환
     @GET("/rest/product/{productId}")

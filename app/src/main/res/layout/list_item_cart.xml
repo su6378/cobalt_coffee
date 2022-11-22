@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cart_cv"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="wrap_content"
         app:cardElevation="10dp"
+        android:padding="16dp"
         app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/black">
 
@@ -24,11 +29,11 @@
                 app:cardBackgroundColor="@color/menuBackground"
                 app:cardCornerRadius="100dp"
                 app:cardElevation="0dp"
+                android:layout_margin="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.3">
 
                 <ImageView
@@ -41,71 +46,119 @@
             <TextView
                 android:id="@+id/menu_name"
                 android:layout_width="0dp"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:fontFamily="@font/quicksand_semibold"
                 android:gravity="center"
-                android:layout_marginLeft="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="음료이름"
-                android:textSize="20sp"
                 android:textColor="@color/black"
+                android:textSize="18sp"
                 app:layout_constraintLeft_toRightOf="@id/cart_cv2"
                 app:layout_constraintTop_toTopOf="@id/cart_cv2" />
 
             <TextView
-                android:id="@+id/cart_tv"
-                android:layout_width="wrap_content"
+                android:id="@+id/menu_name_eng"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/quicksand_light"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
-                android:text="음료 가격: "
-                android:textSize="16sp"
+                android:paddingHorizontal="5dp"
+                android:text="음료영문이름"
                 android:textColor="@color/black"
-                app:layout_constraintLeft_toLeftOf="@id/menu_name"
-                app:layout_constraintTop_toBottomOf="@id/menu_name" />
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@id/cart_cv2"
+                app:layout_constraintTop_toTopOf="@id/cart_cv2" />
 
             <TextView
                 android:id="@+id/menu_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
-                android:text="1000원"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"
+                android:text="1000 원"
                 android:textColor="@color/black"
-                app:layout_constraintLeft_toRightOf="@id/cart_tv"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/menu_name" />
 
             <TextView
-                android:id="@+id/menu_totalCount"
-                android:layout_marginTop="10dp"
+                android:id="@+id/menu_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand_light"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
-                android:textSize="16sp"
-                android:text="총 주문 잔"
-                app:layout_constraintLeft_toLeftOf="@id/cart_tv"
+                android:text="음료"
                 android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/menu_price" />
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_totalPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_price" />
 
             <TextView
                 android:id="@+id/menu_totalPrice"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"
-                android:text="10000원"
+                android:text="10,000 원"
                 android:textColor="@color/black"
-                app:layout_constraintLeft_toRightOf="@id/menu_totalCount"
-                app:layout_constraintTop_toBottomOf="@id/menu_price" />
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menu_price"
+                app:layout_constraintVertical_bias="0.157" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cart_cv2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.873">
+
+                <ImageView
+                    android:id="@+id/quantity_minus"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/minus" />
+
+                <TextView
+                    android:id="@+id/product_qty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:text="1"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/quantity_add"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/add" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/delete_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

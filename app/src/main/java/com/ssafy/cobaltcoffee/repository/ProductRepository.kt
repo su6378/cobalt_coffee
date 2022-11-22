@@ -1,6 +1,7 @@
 package com.ssafy.cobaltcoffee.repository
 
 import android.content.Context
+import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
@@ -124,7 +125,26 @@ class ProductRepository(context: Context) {
         })
     }
 
-    suspend fun getProduct(productId: Int, callback: RetrofitCallback<Product>)  {
+    fun getCartProductList(cartList: List<LatestOrder>, callback: RetrofitCallback<List<LatestOrder>>)  {
+        RetrofitUtil.productService.getCartProductList(cartList).enqueue(object : Callback<List<LatestOrder>> {
+            override fun onResponse(call: Call<List<LatestOrder>>, response: Response<List<LatestOrder>>) {
+                val res = response.body()
+                if (response.code() == 200) {
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<List<LatestOrder>>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
+
+    fun getProduct(productId: Int, callback: RetrofitCallback<Product>)  {
         RetrofitUtil.productService.getProduct(productId.toString()).enqueue(object: Callback<Product> {
             override fun onResponse(call: Call<Product>, response: Response<Product>) {
                 val res = response.body()
