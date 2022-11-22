@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="최근 6개월간의 적립내역 입니다."
+        android:text="최근 한 달 동안의 적립내역입니다."
         android:fontFamily="@font/quicksand_medium"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"/>
@@ -29,18 +29,5 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/stampHistory_line"/>
-
-<!--    <View-->
-<!--        android:id="@+id/stampHistory_line2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/lineColor2"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/stampHistory_rv"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
@@ -41,7 +43,8 @@ class StampHistoryFragment : Fragment() {
     private lateinit var stampActivity: StampActivity
 
     private lateinit var stampHistoryAdapter: StampHistoryAdapter
-    private var orderList: MutableList<LatestOrder> = mutableListOf()
+    private var orderList: MutableList<Pair<LatestOrder,Int>> = mutableListOf()
+    private var stampList: MutableList<Int> = mutableListOf()
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -68,7 +71,7 @@ class StampHistoryFragment : Fragment() {
         getAllOrder()
 
         binding.apply {
-            stampHistoryAdapter = StampHistoryAdapter(orderList)
+            stampHistoryAdapter = StampHistoryAdapter(orderList,requireContext())
 
             stampHistoryRv.apply {
                 layoutManager =
@@ -77,8 +80,14 @@ class StampHistoryFragment : Fragment() {
                 //원래의 목록위치로 돌아오게함
                 adapter!!.stateRestorationPolicy =
                     RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
+                //구분선 추가
+                val decoration = DividerItemDecoration(requireContext(), VERTICAL)
+                addItemDecoration(decoration)
             }
         }
+
+
     }
 
     //전체 주문내역 가져오기 : Retrofit
@@ -89,9 +98,19 @@ class StampHistoryFragment : Fragment() {
 
     inner class AllOrderListCallback : RetrofitCallback<List<LatestOrder>> {
         override fun onSuccess(code: Int, result: List<LatestOrder>) {
-            orderList = result as MutableList<LatestOrder>
-            stampHistoryAdapter.orderList = orderList
-            stampHistoryAdapter.notifyDataSetChanged()
+            val latestOrderList = result as MutableList<LatestOrder>
+            for (order in latestOrderList){
+                var count = 0
+                val orderDetails = OrderRepository.get().getOrderDetails(order.orderId)
+                orderDetails.observe(viewLifecycleOwner) { orderDetails ->
+                    orderDetails.let {
+                        count = orderDetails[0].stampCount
+                    }
+                    orderList.add(Pair(order,count))
+                    stampHistoryAdapter.orderList = orderList
+                    stampHistoryAdapter.notifyDataSetChanged()
+                }
+            }
         }
 
         override fun onError(t: Throwable) {
