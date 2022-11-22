@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Product;
 import com.ssafy.cafe.model.service.ProductService;
 
@@ -63,8 +64,8 @@ public class ProductRestController {
     
     @GetMapping("/cart")
     @ApiOperation(value="장바구니에 표시할 상품의 목록을 반환한다.", response = List.class)
-    public ResponseEntity<List<Product>> getCartProductList(@RequestBody List<Product> productList){
-        return new ResponseEntity<List<Product>>(pService.getCartProductList(productList), HttpStatus.OK);
+    public ResponseEntity<List<LatestOrder>> getCartProductList(@RequestBody List<LatestOrder> cartList){
+        return new ResponseEntity<List<LatestOrder>>(pService.getCartProductList(cartList), HttpStatus.OK);
     }
     
     @GetMapping("/{productId}")

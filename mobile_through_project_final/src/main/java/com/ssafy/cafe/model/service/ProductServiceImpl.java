@@ -1,6 +1,7 @@
 package com.ssafy.cafe.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.cafe.model.dao.ProductDao;
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Product;
 
 /**
@@ -57,10 +59,22 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public List<Product> getCartProductList(List<Product> productList) {
-        List<Product> returnList = new ArrayList<>();
-        for (Product product: productList) {
-            returnList.add(pDao.selectProduct(product.getId()));
+    public List<LatestOrder> getCartProductList(List<LatestOrder> cartList) {
+        List<LatestOrder> returnList = new ArrayList<>();
+        for (LatestOrder latestOrder: cartList) {
+            Product product = pDao.selectProduct(latestOrder.getOrderId());
+            returnList.add(new LatestOrder(
+                product.getImg(), 
+                latestOrder.getOrderCnt(), 
+                "", 
+                latestOrder.getOrderId(), 
+                product.getName(), 
+                new Date(), 
+                'N', 
+                product.getPrice(), 
+                product.getType(), 
+                product.getPrice() * latestOrder.getOrderCnt()
+            ));
         }
         return returnList;
     }

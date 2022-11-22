@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.cache.annotation.Cacheable;
 
+import com.ssafy.cafe.model.dto.LatestOrder;
 import com.ssafy.cafe.model.dto.Product;
 
 public interface ProductService {
@@ -48,7 +49,7 @@ public interface ProductService {
      * 장바구니 상품 정보를 반환한다.
      * @return
      */
-    List<Product> getCartProductList(List<Product> productList);
+    List<LatestOrder> getCartProductList(List<LatestOrder> cartList);
     
     /**
      * 상품 정보를 반환한다.
