@@ -50,12 +50,13 @@ class ProductActivity : AppCompatActivity() {
 
     private fun init() {
 
-        Log.d(TAG, "init: ${intent.getSerializableExtra("user") as User}")
-
         userViewModel.currentUser = intent.getSerializableExtra("user") as User
 
         // 뷰모델 연결
-        cartViewModel = ViewModelProvider(this, CartViewModel.Factory(application)).get(CartViewModel::class.java)
+        cartViewModel = ViewModelProvider(
+            this,
+            CartViewModel.Factory(application)
+        ).get(CartViewModel::class.java)
 
         cartDto = CartDto().apply { //장바구니 초기값 세팅
             this.userId = userViewModel.currentUser.id
@@ -99,9 +100,10 @@ class ProductActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                    cartDto.totalPrice = cartDto.price * cartDto.quantity
-                    cartViewModel.addCart(cartDto)
-                    showCartDialog("장바구니에 상품이 추가되었습니다.")
+                cartDto.totalPrice = cartDto.price * cartDto.quantity
+                cartViewModel.addCart(cartDto)
+                showCartDialog("장바구니에 상품이 추가되었습니다.")
+
             }
             orderBtn.setOnClickListener {
                 if (cartDto.productId == 0) {
@@ -109,7 +111,7 @@ class ProductActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
                 val intent = Intent(this@ProductActivity, CartActivity::class.java)
-                intent.putExtra("user",userViewModel.currentUser)
+                intent.putExtra("user", userViewModel.currentUser)
                 startActivity(intent)
             }
         }
