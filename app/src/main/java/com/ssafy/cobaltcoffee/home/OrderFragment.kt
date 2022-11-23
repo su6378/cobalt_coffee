@@ -109,7 +109,7 @@ class OrderFragment : Fragment() {
                 startActivity(intent)
             }
             btnCart.setOnClickListener {
-                homeActivity.cartPage()
+                homeActivity.cartPage(userViewModel.currentUser)
             }
         }
     }

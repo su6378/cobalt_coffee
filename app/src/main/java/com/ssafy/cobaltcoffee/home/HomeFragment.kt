@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,13 +16,19 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.adapter.BestMenuAdapter
+import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentHomeBinding
 import com.ssafy.cobaltcoffee.dto.Product
+import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.repository.ProductRepository
+import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
 private const val TAG = "HomeFragment_코발트"
 class HomeFragment : Fragment() {
@@ -30,6 +37,8 @@ class HomeFragment : Fragment() {
 
     private var bestMenuList: MutableList<Product> = mutableListOf()
     private lateinit var bestMenuAdapter: BestMenuAdapter
+
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,13 +58,16 @@ class HomeFragment : Fragment() {
         init()
 
         binding.homeBanner.setOnClickListener { //흑임자 라떼 커피 메뉴 상세 페이지로 이동
-            homeActivity.detailPage()
+            homeActivity.detailPage(userViewModel.currentUser)
         }
 
 
     }
 
     private fun init() {
+
+        //유저 정보 갱신
+        getUserInfo()
 
         getBestMenu()
 
@@ -73,6 +85,7 @@ class HomeFragment : Fragment() {
                 override fun onClick(view: View, position: Int, productId: Int) {
                     startActivity(Intent(context, ProductActivity::class.java).apply {
                         putExtra("product", bestMenuList[position])
+                        putExtra("user",userViewModel.currentUser)
                     })
                 }
             })
@@ -94,6 +107,31 @@ class HomeFragment : Fragment() {
 
         binding.imageSlider.setImageList(imageList,ScaleTypes.FIT)
 
+    }
+
+    //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
+    private fun getUserInfo() {
+        if (userViewModel.userId.isEmpty()) {
+            val user = ApplicationClass.sharedPreferencesUtil.getUser()
+            UserRepository.get().getInfo(user.id, GetUserInfoCallback())
+        } else {
+            UserRepository.get().getInfo(userViewModel.userId, GetUserInfoCallback())
+        }
+    }
+
+    inner class GetUserInfoCallback : RetrofitCallback<HashMap<String, Any>> {
+        override fun onSuccess(code: Int, result: HashMap<String, Any>) {
+            val jsonString = result
+            userViewModel.currentUser = Gson().fromJson(jsonString["user"].toString(), object : TypeToken<User>() {}.type)
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 
     //BestMenu 가져오기

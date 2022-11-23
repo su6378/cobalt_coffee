@@ -1,5 +1,6 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -49,7 +50,9 @@ class ProductActivity : AppCompatActivity() {
 
     private fun init() {
 
-        userViewModel.currentUser = intent.getSerializableExtra("userInfo") as User
+        Log.d(TAG, "init: ${intent.getSerializableExtra("user") as User}")
+
+        userViewModel.currentUser = intent.getSerializableExtra("user") as User
 
         // 뷰모델 연결
         cartViewModel = ViewModelProvider(this, CartViewModel.Factory(application)).get(CartViewModel::class.java)
@@ -95,22 +98,19 @@ class ProductActivity : AppCompatActivity() {
                     showCartDialog("잠시 후에 다시 시도해주세요.")
                     return@setOnClickListener
                 }
+
+                    cartDto.totalPrice = cartDto.price * cartDto.quantity
                     cartViewModel.addCart(cartDto)
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    val result = CartRepository.get().insertCart(cartDto)
-//                    CoroutineScope(Dispatchers.Main).launch {
-//                        when (result) {
-//                            0L -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
-//                            else -> showCartDialog("선택하신 상품을 장바구니에 담았습니다.")
-//                        }
-//                    }
-//                }
+                    showCartDialog("장바구니에 상품이 추가되었습니다.")
             }
             orderBtn.setOnClickListener {
                 if (cartDto.productId == 0) {
                     showCartDialog("잠시 후에 다시 시도해주세요.")
                     return@setOnClickListener
                 }
+                val intent = Intent(this@ProductActivity, CartActivity::class.java)
+                intent.putExtra("user",userViewModel.currentUser)
+                startActivity(intent)
             }
         }
     }
@@ -149,6 +149,10 @@ class ProductActivity : AppCompatActivity() {
                 productKcal.text = "${product.kcal} kcal"
 
                 cartDto.productId = product.id
+                cartDto.productName = product.name
+                cartDto.price = product.price
+                cartDto.type = product.type
+                cartDto.img = product.image
 
                 if (!product.isNew) {
                     badgeNew.visibility = View.GONE

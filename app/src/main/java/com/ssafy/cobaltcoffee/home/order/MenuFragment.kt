@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.cobaltcoffee.databinding.FragmentMenuBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.HomeActivity
@@ -59,7 +60,7 @@ class MenuFragment(productType: Int) : Fragment() {
                 override fun onItemClick(v: View, pos: Int) {
                     startActivity(Intent(context, ProductActivity::class.java).apply {
                         putExtra("product", productList[pos])
-                        putExtra("userInfo",userViewModel.currentUser)
+                        putExtra("user",userViewModel.currentUser)
                     })
                 }
             })
@@ -68,7 +69,7 @@ class MenuFragment(productType: Int) : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 addItemDecoration(DividerItemDecoration(requireContext(), 1))
                 adapter = productAdapter
-//                adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         }
     }

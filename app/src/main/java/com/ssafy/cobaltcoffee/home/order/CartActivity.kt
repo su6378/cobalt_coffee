@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,32 +29,31 @@ import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.CartRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.CartViewModel
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import kotlinx.coroutines.*
 
 private const val TAG = "CartActivity_코발트"
+
 class CartActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCartBinding
 
-    private var cartList: MutableList<LatestOrder> = mutableListOf()
-    private var cartRawList: MutableList<CartDto> = mutableListOf()
-    private val userId: String = ApplicationClass.sharedPreferencesUtil.getUser().id
-
     private lateinit var cartAdapter: CartAdapter
+    private lateinit var cartList : MutableList<CartDto>
+    private var checkInsert = false
 
-    private val userViewModel : UserViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
     private val REQUEST_PERMISSION_LOCATION = 10
 
     private lateinit var cartViewModel: CartViewModel
-    private lateinit var cartDto: CartDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        userViewModel.currentUser = intent.getSerializableExtra("user") as User
         initTb()
         init()
     }
@@ -78,111 +78,120 @@ class CartActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
-    private fun getUserInfo(){
-        if (userViewModel.userId.isEmpty()) {
-            val user = ApplicationClass.sharedPreferencesUtil.getUser()
-            UserRepository.get().getInfo(user.id, GetUserInfoCallback())
-        } else {
-            UserRepository.get().getInfo(userViewModel.userId, GetUserInfoCallback())
-        }
-    }
-
-    inner class GetUserInfoCallback: RetrofitCallback<HashMap<String, Any>> {
-        override fun onSuccess( code: Int, result: HashMap<String,Any>) {
-            val jsonString = result
-            userViewModel.currentUser = Gson().fromJson(jsonString["user"].toString(), object: TypeToken<User>(){}.type)
-            initAdpater()
-        }
-
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
-        }
-
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
+    //총 개수 총 금액 데이터 갱신
+    private fun initBottom(count : Int, price : Int){
+        binding.cartTotalCount.text = "${count}개"
+        binding.cartTotalPrice.text = CommonUtils.makeComma(price)
     }
 
     private fun init() {
-        //유저 정보 갱신
-        getUserInfo()
 
         // 뷰모델 연결
         cartViewModel = ViewModelProvider(this, CartViewModel.Factory(application)).get(CartViewModel::class.java)
 
-        Log.d(TAG, "init: ${cartViewModel.getCartsById(userViewModel.currentUser.id)}")
-        
+        initAdapter()
+
         binding.apply {
 
             //주문하기 버튼 클릭 시
             orderBtn.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && ContextCompat.checkSelfPermission(this@CartActivity,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    cartViewModel.clearCart(userViewModel.currentUser.id)
+                    cartList.clear()
+                    cartAdapter.cartList = cartList
+                    cartAdapter.notifyDataSetChanged()
+                    initBottom(0,0)
 
-
+                    binding.apply {
+                        cartRv.apply {
+                            layoutManager = LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
+                            adapter = cartAdapter
+                            //원래의 목록위치로 돌아오게함
+                            adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                        }
+                    }
                 } else { //위치 서비스 동의하지 않은 경우 dialog 띄우기
                     showLocationDialog()
                 }
             }
         }
-
     }
 
-    //최근 주문 내역
-    private fun initAdpater(){
-//        getCartRawList()
+    private fun initAdapter(){
+        //장바구니 상품가져오기
+        cartList = mutableListOf()
+        var totalCount = 0
+        var totalPrice = 0
+        cartViewModel.readAllData.observe(this@CartActivity) {
+            if (!checkInsert){
+                for(cart in it){
+                    //room에 저장되어있는 장바구니 품목에서 해당 아이디만 해당하는 주문 목록을 리스트에 추가
+                    if(cart.userId == userViewModel.currentUser.id){
+                        cartList.add(cart)
+                        totalCount += cart.quantity
+                        totalPrice += cart.totalPrice
+                    }
+                }
+                initBottom(totalCount,totalPrice)
+                checkInsert = true
+            }
 
-//        binding.apply {
-//            cartAdapter = CartAdapter(cartList)
-//            cartAdapter.setCloseClickListener(object: CartAdapter.CloseClickListener {
-//                override fun onClick(view: View, position: Int, productId: Int) {
-//                    Toast.makeText(this@CartActivity, "", Toast.LENGTH_SHORT).show()
-//                }
-//            })
-//
-//            cartRv.apply {
-//                layoutManager = LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
-//                adapter = cartAdapter
-//                //원래의 목록위치로 돌아오게함
-//                adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//            }
-//        }
-    }
+            binding.apply {
+                cartAdapter = CartAdapter(cartList)
 
-//    private fun getCartRawList() {
-//        cartRawList.clear()
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val result = CoroutineScope(Dispatchers.IO).async {
-//                CartRepository.get().getCarts(userId)
-//            }.await()
-//
-//            when (result == null) {
-//                true -> showCartDialog("데이터베이스 처리에 오류가 발생했습니다.")
-//                false -> {
-//                    cartRawList.addAll(result)
-//                    getCartList()
-//                }
-//            }
-//        }
-//    }
+                cartAdapter.setPlusClickListener(object : CartAdapter.PlusClickListener{
+                    override fun onClick(view: View, position: Int, productId: Int) {
+                        cartList[position].quantity++
+                        cartList[position].totalPrice += cartList[position].price
+                        cartAdapter.cartList = cartList
+                        cartAdapter.notifyDataSetChanged()
+                        totalCount++
+                        totalPrice += cartList[position].price
+                        initBottom(totalCount,totalPrice)
+                        cartViewModel.update(cartList[position])
+                    }
+                })
 
-    private fun getCartList() {
-        cartList.clear()
+                cartAdapter.setMinusClickListener(object : CartAdapter.MinusClickListener{
+                    override fun onClick(view: View, position: Int, productId: Int) {
 
-        val tempList: MutableList<LatestOrder> = mutableListOf()
-        cartRawList.forEach {
-            tempList.add(LatestOrder().apply {
-                this.orderId = it.id.toInt()
-                this.productId = it.productId
-                this.orderCnt = it.quantity
-            })
+                        if (cartList[position].quantity > 1 && cartList[position].totalPrice > 0){ //가격이랑 카운트가 0보다 클 때만 버튼 작동동
+                            cartList[position].quantity--
+                            cartList[position].totalPrice -= cartList[position].price
+                            cartAdapter.cartList = cartList
+                            cartAdapter.notifyDataSetChanged()
+                            totalCount--
+                            totalPrice -= cartList[position].price
+                            initBottom(totalCount,totalPrice)
+                            cartViewModel.update(cartList[position])
+                        }
+                    }
+                })
+
+                cartAdapter.setCloseClickListener(object: CartAdapter.CloseClickListener {
+                    override fun onClick(view: View, position: Int, productId: Int) {
+                        cartViewModel.deleteCart(cartList[position])
+                        totalCount -= cartList[position].quantity
+                        totalPrice -= cartList[position].totalPrice
+                        cartList.removeAt(position)
+                        cartAdapter.cartList = cartList
+                        cartAdapter.notifyDataSetChanged()
+                        initBottom(totalCount,totalPrice)
+                    }
+                })
+
+                cartRv.apply {
+                    layoutManager = LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
+                    adapter = cartAdapter
+                    //원래의 목록위치로 돌아오게함
+                    adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                }
+            }
         }
-        ProductRepository.get().getCartProductList(tempList, CartCallback())
     }
 
-    private fun showCartDialog(content: String){
+    private fun showCartDialog(content: String) {
         val dialog = CartDialog(this)
         dialog.setOnOKClickedListener {
 
@@ -191,29 +200,15 @@ class CartActivity : AppCompatActivity() {
     }
 
     //위치 정보 서비스 동의 다이얼로그 생성
-    private fun showLocationDialog(){
+    private fun showLocationDialog() {
         val dialog = LocationDialog(this)
         dialog.setOnOKClickedListener {
-            ActivityCompat.requestPermissions(this@CartActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+            ActivityCompat.requestPermissions(
+                this@CartActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_PERMISSION_LOCATION
+            )
         }
         dialog.show()
-    }
-
-    inner class CartCallback: RetrofitCallback<List<LatestOrder>> {
-        override fun onSuccess(code: Int, result: List<LatestOrder>) {
-            cartList.addAll(result)
-            binding.apply {
-                cartRv.adapter!!.notifyDataSetChanged()
-            }
-            Log.d(TAG, "onSuccess: 장바구니 정보를 받아왔습니다")
-        }
-
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "상품 정보 불러오는 중 통신오류")
-        }
-
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
     }
 }

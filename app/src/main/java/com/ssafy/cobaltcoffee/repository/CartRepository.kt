@@ -14,25 +14,21 @@ class CartRepository(private val cartDao: CartDao) {
 
     val realAllData : LiveData<MutableList<CartDto>> = cartDao.getCarts()
 
-    fun getCarts(userId: String): LiveData<MutableList<CartDto>> {
-        return cartDao.getCartsById(userId)
-    }
-
     suspend fun insertCart(dto: CartDto) {
         cartDao.insertCart(dto)
     }
 
-//    suspend fun updateCart(dto: CartDto) = database.withTransaction {
-//        cartDao.updateCart(dto)
-//    }
-//
-//    suspend fun deleteCart(dto: CartDto) = database.withTransaction {
-//        cartDao.deleteCart(dto.id)
-//    }
-//
-//    suspend fun clearCart(userId: String) = database.withTransaction {
-//        cartDao.clearCart(userId)
-//    }
+    suspend fun updateCart(dto: CartDto) {
+        cartDao.updateCart(dto)
+    }
+
+    suspend fun deleteCart(dto: CartDto) {
+        cartDao.deleteCart(dto)
+    }
+
+    suspend fun clearCart(userId: String){
+        cartDao.clearCart(userId)
+    }
 }
 
 

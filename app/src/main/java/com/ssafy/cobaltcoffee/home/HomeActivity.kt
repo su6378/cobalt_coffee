@@ -114,17 +114,19 @@ class HomeActivity : AppCompatActivity() {
     }
 
     //상세 페이지로 이동
-    fun detailPage(){
+    fun detailPage(user : User){
         val intent = Intent(this, ProductActivity::class.java)
         intent.putExtra("product", Product().apply {
             this.id = 3
         })
+        intent.putExtra("user",user)
         startActivity(intent)
     }
 
     //장바구니 페이지로 이동
-    fun cartPage(){
+    fun cartPage(user: User){
         val intent = Intent(this, CartActivity::class.java)
+        intent.putExtra("user",user)
         startActivity(intent)
     }
 

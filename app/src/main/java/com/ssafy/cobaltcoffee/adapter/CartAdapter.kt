@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
+import com.ssafy.cobaltcoffee.database.CartDto
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 
 private const val TAG = "CartAdapter_코발트"
-class CartAdapter(var cartList: List<LatestOrder>): RecyclerView.Adapter<CartAdapter.CartHolder>(){
+class CartAdapter(var cartList: List<CartDto>): RecyclerView.Adapter<CartAdapter.CartHolder>(){
     inner class CartHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val productImage = itemView.findViewById<ImageView>(R.id.cart_img)
 
@@ -32,34 +33,33 @@ class CartAdapter(var cartList: List<LatestOrder>): RecyclerView.Adapter<CartAda
 
         val deleteProduct = itemView.findViewById<ImageView>(R.id.delete_product)
 
-        fun bindInfo(item: LatestOrder){
+        fun bindInfo(item: CartDto){
             Glide.with(itemView)
                 .load("${ApplicationClass.MENU_IMGS_URL}${item.img}")
                 .into(productImage)
 
             menuName.text = item.productName
             menuNameEng.text = item.productName
-            menuPrice.text = CommonUtils.makeComma(item.productPrice)
+            menuPrice.text = CommonUtils.makeComma(item.price)
             menuPriceTotal.text = CommonUtils.makeComma(item.totalPrice)
-            menuType.text = item.type
-            productQty.text = item.orderCnt.toString()
+            when(item.type){
+                "cookie" -> menuType.text = "쿠키"
+                "tea" -> menuType.text = "차"
+                "coffee" -> menuType.text = "커피"
+            }
+
+            productQty.text = item.quantity.toString()
 
             quantityMinus.setOnClickListener {
-                if (item.orderCnt > 1) {
-//                    cartProduct.productQty -= 1
-//                    productQty.text = cartProduct.orderCnt.toString()
-                }
-            }
-            quantityAdd.setOnClickListener {
-//                cartProduct.productQty += 1
-//                productQty.text = cartProduct.orderCnt.toString()
+                minusClickListner.onClick(it,layoutPosition,cartList[layoutPosition].productId)
             }
 
-//            itemView.setOnClickListener{
-//                itemClickListner.onClick(it, layoutPosition, cartList[layoutPosition].orderId)
-//            }
+            quantityAdd.setOnClickListener {
+                plusClickListner.onClick(it,layoutPosition,cartList[layoutPosition].productId)
+            }
+
             deleteProduct.setOnClickListener{
-                closeClickListner.onClick(it, layoutPosition, cartList[layoutPosition].orderId)
+                closeClickListner.onClick(it, layoutPosition, cartList[layoutPosition].productId)
             }
         }
     }
@@ -77,19 +77,30 @@ class CartAdapter(var cartList: List<LatestOrder>): RecyclerView.Adapter<CartAda
         return cartList.size
     }
 
-    interface ItemClickListener {
+    interface PlusClickListener {
         fun onClick(view: View, position: Int, productId:Int)
     }
+
+    interface MinusClickListener {
+        fun onClick(view: View, position: Int, productId:Int)
+    }
+
     interface CloseClickListener {
         fun onClick(view: View, position: Int, productId:Int)
     }
 
-    private lateinit var itemClickListner: ItemClickListener
+    private lateinit var plusClickListner: PlusClickListener
+    private lateinit var minusClickListner: MinusClickListener
     private lateinit var closeClickListner: CloseClickListener
 
-    fun setItemClickListener(itemClickListener: ItemClickListener) {
-        this.itemClickListner = itemClickListener
+    fun setPlusClickListener(plusClickListner: PlusClickListener) {
+        this.plusClickListner = plusClickListner
     }
+
+    fun setMinusClickListener(minusClickListner: MinusClickListener) {
+        this.minusClickListner = minusClickListner
+    }
+
     fun setCloseClickListener(closeClickListner: CloseClickListener) {
         this.closeClickListner = closeClickListner
     }
