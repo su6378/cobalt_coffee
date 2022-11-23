@@ -2,7 +2,6 @@ package com.ssafy.cobaltcoffee.service
 
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Order
-import com.ssafy.cobaltcoffee.dto.UserOrderDetail
 import com.ssafy.cobaltcoffee.response.OrderDetailResponse
 import retrofit2.Call
 import retrofit2.http.*

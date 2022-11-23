@@ -37,7 +37,7 @@ class OrderRepository(context: Context) {
 
     //사용자 주문 내역 가져오기
     fun getAllOrder(userId: String, callback: RetrofitCallback<List<LatestOrder>>)  {
-        RetrofitUtil.orderService.getRecentOrder(userId).enqueue(object : Callback<List<LatestOrder>> {
+        RetrofitUtil.orderService.getAllOrder(userId).enqueue(object : Callback<List<LatestOrder>> {
             override fun onResponse(call: Call<List<LatestOrder>>, response: Response<List<LatestOrder>>) {
                 val res = response.body()
                 if (response.code() == 200) {
