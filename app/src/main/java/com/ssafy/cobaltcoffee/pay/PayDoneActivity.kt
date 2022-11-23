@@ -8,6 +8,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityPayDoneBinding
 import com.ssafy.cobaltcoffee.dialog.CouponDialog
+import com.ssafy.cobaltcoffee.dto.Coupon
+import com.ssafy.cobaltcoffee.dto.CouponType
+import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.repository.CouponRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
@@ -44,15 +47,8 @@ class PayDoneActivity : AppCompatActivity() {
     }
 
     private fun couponCheck() {
-        //showCouponDialog("테스트 쿠폰이 발급되었습니다.")
-
-
         CoroutineScope(Dispatchers.IO).launch {
-            UserRepository.get().getStamp("userId", UserStampCallback())
-
-
-
-//            CouponRepository.get().check(receiveProduct.id, ProductActivity.ProductCallback())
+            UserRepository.get().getStamp(userId, UserStampCallback())
         }
     }
 
@@ -66,10 +62,10 @@ class PayDoneActivity : AppCompatActivity() {
 
     inner class UserStampCallback : RetrofitCallback<Int> {
         override fun onSuccess(code: Int, result: Int) {
-
-
-
-
+            val stampCnt = result
+            for (i in 1 .. (stampCnt / 10) + 1) {
+                CouponRepository.get().check(userId, i, CouponCheckCallback())
+            }
         }
 
         override fun onError(t: Throwable) {
@@ -83,10 +79,29 @@ class PayDoneActivity : AppCompatActivity() {
 
     inner class CouponCheckCallback : RetrofitCallback<Boolean> {
         override fun onSuccess(code: Int, result: Boolean) {
-            
-            
-            
-            
+            val isCoupon: Boolean = result
+            if (!isCoupon) {
+                CouponRepository.get().addCoupon(Coupon(), CouponAddCallback())
+
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "쿠폰 정보 확인하는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+
+    inner class CouponAddCallback : RetrofitCallback<CouponType> {
+        override fun onSuccess(code: Int, result: CouponType) {
+            val couponResult: CouponType = result
+
+            CouponDialog(this@PayDoneActivity).apply {
+                setOnOKClickedListener {  }
+            }.show("[ ${couponResult.name} : ${couponResult.discountRate}% ]")
         }
 
         override fun onError(t: Throwable) {
