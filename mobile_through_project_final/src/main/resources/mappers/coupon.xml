@@ -25,7 +25,10 @@
 	</select>
 	
 	<select id="selectType" parameterType="int" resultType="CouponType">
-		SELECT *
+		SELECT
+			id,
+			name, 
+			disc_rate as discountRate
 		FROM t_coupon_type
 		WHERE id = #{couponTypeId}
 	</select>
