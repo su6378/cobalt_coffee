@@ -3,7 +3,6 @@ package com.ssafy.cobaltcoffee.repository
 import android.content.Context
 import android.util.Log
 import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.cobaltcoffee.home.order.PayDoneActivity
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
 import retrofit2.Call

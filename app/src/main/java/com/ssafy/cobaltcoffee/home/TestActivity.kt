@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityTestBinding
-import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.pay.PayDoneActivity
 import kr.co.bootpay.android.Bootpay
 import kr.co.bootpay.android.constants.BootpayBuildConfig
