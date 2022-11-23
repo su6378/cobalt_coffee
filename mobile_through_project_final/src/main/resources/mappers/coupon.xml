@@ -24,7 +24,7 @@
 		AND type_id = #{typeId}
 	</select>
 	
-	<select id="selectType" parameterType="int">
+	<select id="selectType" parameterType="int" resultType="CouponType">
 		SELECT *
 		FROM t_coupon_type
 		WHERE id = #{couponTypeId}
@@ -36,7 +36,7 @@
 		) VALUES (
 			#{typeId}, 
 			#{userId}, 
-			1
+			0
 		)
 	</insert>
 	
