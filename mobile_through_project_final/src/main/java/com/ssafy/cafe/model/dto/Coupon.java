@@ -8,18 +8,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Coupon {
     private Integer id;
+    private Integer typeId;
     private String userId;
-    private String name;
-    private Integer discountRate;
     private Boolean isUse;
     
     @Builder
-    public Coupon(Integer id, String userId, String name, Integer discountRate, Boolean isUse) {
+    public Coupon(Integer id, Integer typeId, String userId, Boolean isUse) {
         super();
         this.id = id;
+        this.typeId = typeId;
         this.userId = userId;
-        this.name = name;
-        this.discountRate = discountRate;
         this.isUse = isUse;
     }
 }
