@@ -107,6 +107,7 @@ class StampHistoryFragment : Fragment() {
                         count = orderDetails[0].stampCount
                     }
                     orderList.add(Pair(order,count))
+                    orderList.sortWith(compareByDescending { it.first.orderDate })
                     stampHistoryAdapter.orderList = orderList
                     stampHistoryAdapter.notifyDataSetChanged()
                 }

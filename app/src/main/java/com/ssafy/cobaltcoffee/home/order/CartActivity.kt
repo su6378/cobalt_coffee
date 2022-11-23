@@ -1,6 +1,7 @@
 package com.ssafy.cobaltcoffee.home.order
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
@@ -37,6 +38,7 @@ import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.Order
 import com.ssafy.cobaltcoffee.dto.OrderDetail
 import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.pay.PayActivity
 import com.ssafy.cobaltcoffee.repository.CartRepository
 import com.ssafy.cobaltcoffee.repository.OrderRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
@@ -123,6 +125,8 @@ class CartActivity : AppCompatActivity() {
                 ) {
                     if (cartList.isNotEmpty()){
                         startLocationUpdates()
+                        val intent = Intent(this@CartActivity,PayActivity::class.java)
+                        startActivity(intent)
                     }else{
                         showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
                     }
@@ -242,7 +246,7 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    // 시스템으로 부터 받은 위치정보를 화면에 갱신해주는 메소드
+    // 시스템으로 부터 받은 위치정보를 바탕으로 1km이내에 있으면 주문 결제창으로 이동
     fun onLocationChanged(location: Location){
         mLastLocation = location
         distance = getDistance(mLastLocation.latitude, mLastLocation.longitude)
@@ -250,7 +254,9 @@ class CartActivity : AppCompatActivity() {
         if (distance > 1000) {
             showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
         }else{
-           makeOrder()
+            val intent = Intent(this@CartActivity,PayActivity::class.java)
+            startActivity(intent)
+//           makeOrder()
         }
     }
 

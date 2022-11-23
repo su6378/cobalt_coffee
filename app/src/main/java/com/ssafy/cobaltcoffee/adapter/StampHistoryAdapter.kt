@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.github.nikartm.button.FitButton
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.dto.LatestOrder

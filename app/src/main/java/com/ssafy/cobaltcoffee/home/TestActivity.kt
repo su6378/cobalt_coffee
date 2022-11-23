@@ -17,7 +17,8 @@ import kr.co.bootpay.android.models.Payload
 
 class TestActivity : AppCompatActivity() {
     //    BootpayWebView bootpayWebView;
-    var applicationId = "5b8f6a4d396fa665fdc2b5e8"
+    var applicationId = "61c51513e38c300022d2d173"
+//    var applicationId = "5b8f6a4d396fa665fdc2b5e8" test
     private lateinit var binding: ActivityTestBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
