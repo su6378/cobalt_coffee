@@ -50,6 +50,13 @@ public interface UserService {
     public User login(String id, String pass);
     
     /**
+     * 사용자의 스탬프 개수를 반환한다.
+     * @param id
+     * @return
+     */
+    public Integer getStamp(String id);
+    
+    /**
      * id에 해당하는 사용자 정보를 삭제한다.
      * @param id
      */

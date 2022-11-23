@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+    
+    @Override
+    public Integer getStamp(String id) {
+        return userDao.selectStamp(id);
+    }
 
     @Override
     public void leave(String id) {
@@ -78,5 +83,4 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
-    
 }

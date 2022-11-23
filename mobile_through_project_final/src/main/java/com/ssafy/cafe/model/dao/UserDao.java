@@ -10,6 +10,13 @@ public interface UserDao {
      * @return
      */
     int insert(User user);
+    
+    /**
+     * 사용자의 Stamp 정보를 반환한다.
+     * @param userId
+     * @return
+     */
+    int selectStamp(String userId);
 
     /**
      * 사용자의 Stamp 정보를 수정한다.

@@ -31,6 +31,11 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="selectStamp" parameterType="string" resultType="int">
+		SELECT stamps FROM t_user
+		WHERE id = #{userId}
+	</select>
+	
 	<update id="updateStamp" parameterType="User">
 		UPDATE t_user
 		SET

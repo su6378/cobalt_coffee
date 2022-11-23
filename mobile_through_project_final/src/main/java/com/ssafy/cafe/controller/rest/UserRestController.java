@@ -103,6 +103,12 @@ public class UserRestController {
 
         return selected;
     }
+    
+    @GetMapping("/stamp")
+    @ApiOperation(value = "사용자의 스탬프 개수 반환", response = Integer.class)
+    public Integer getStamp(String id) {
+        return uService.getStamp(id);
+    }
 
     @GetMapping("/info")
     @ApiOperation(value = "사용자의 정보와 함께 사용자의 주문 내역, 사용자 등급 정보를 반환한다.", response = Map.class)
