@@ -61,7 +61,7 @@ class StampCardFragment : Fragment() {
             stampCardStampCount.text = count.toString() //스탬프 적립 개수
 
             //쿠폰 받기까지 남은 스탬프 개수
-            val leftCount = "${10-count}개"
+            val leftCount = "${10 - (count % 10)}개"
             val content = "Free 쿠폰 발행까지 ${leftCount}의 스탬프가 남았습니다."
             stampCardCouponCount.text = CommonUtils.setSpannableText(leftCount,content)
 

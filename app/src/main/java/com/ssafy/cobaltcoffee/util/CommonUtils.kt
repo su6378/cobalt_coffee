@@ -35,7 +35,7 @@ object CommonUtils {
         when(text){
             "BLUE" ->  spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#0080FF")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             "BRONZE" -> spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#A65E44")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            "SILVER" ->spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#C0C0C0")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            "SILVER" ->spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#AEAEAE")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             "GOLD" ->spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#CFB53B")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             else -> spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#1E3AD9")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
