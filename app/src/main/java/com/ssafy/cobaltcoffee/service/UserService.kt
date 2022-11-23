@@ -21,6 +21,10 @@ interface UserService {
     @POST("rest/user/login")
     fun login(@Body body: User): Call<User>
 
+    // 사용자의 스탬프 개수를 반환한다.
+    @GET("rest/user/stamp")
+    fun getStamp(@Query("id") id: String): Call<Int>
+
     // 사용자 정보를 갱신한다.
     @PUT("rest/user")
     fun update(@Body body: User) : Call<Boolean>

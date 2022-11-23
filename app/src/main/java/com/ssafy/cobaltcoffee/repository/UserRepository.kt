@@ -3,6 +3,7 @@ package com.ssafy.cobaltcoffee.repository
 import android.content.Context
 import android.util.Log
 import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.home.order.PayDoneActivity
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.util.RetrofitUtil
 import retrofit2.Call
@@ -11,7 +12,7 @@ import retrofit2.Response
 
 private const val TAG = "UserRepository_코발트"
 class UserRepository(context: Context) {
-    //로그인
+    // 로그인
     fun login(user: User, callback: RetrofitCallback<User>)  {
         RetrofitUtil.userService.login(user).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
@@ -30,7 +31,26 @@ class UserRepository(context: Context) {
             }
         })
     }
-    //회원가입
+    // 스탬프 개수 조회
+    fun getStamp(id: String, callback: PayDoneActivity.UserStampCallback)  {
+        RetrofitUtil.userService.getStamp(id).enqueue(object : Callback<Int> {
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
+    // 회원가입
     fun insert(user : User, callback: RetrofitCallback<Boolean>){
         RetrofitUtil.userService.insert(user).enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
@@ -49,7 +69,7 @@ class UserRepository(context: Context) {
             }
         })
     }
-    //아이디 중복체크
+    // 아이디 중복체크
     fun duplicateCheck(id : String, callback: RetrofitCallback<Boolean>){
         RetrofitUtil.userService.isUsedId(id).enqueue(object : Callback<Boolean>{
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
@@ -69,7 +89,7 @@ class UserRepository(context: Context) {
 
         })
     }
-    //회원정보 조회
+    // 회원정보 조회
     fun getInfo(id : String, callback: RetrofitCallback<HashMap<String, Any>>){
         RetrofitUtil.userService.getInfo(id).enqueue(object : Callback<HashMap<String,Any>>{
             override fun onResponse(call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>) {
@@ -90,7 +110,7 @@ class UserRepository(context: Context) {
         })
     }
 
-    //회원정보 수정
+    // 회원정보 수정
     fun update(user : User, callback: RetrofitCallback<Boolean>){
         RetrofitUtil.userService.update(user).enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
