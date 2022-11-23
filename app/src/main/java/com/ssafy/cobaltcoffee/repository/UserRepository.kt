@@ -32,7 +32,7 @@ class UserRepository(context: Context) {
         })
     }
     // 스탬프 개수 조회
-    fun getStamp(id: String, callback: PayDoneActivity.UserStampCallback)  {
+    fun getStamp(id: String, callback: RetrofitCallback<Int>)  {
         RetrofitUtil.userService.getStamp(id).enqueue(object : Callback<Int> {
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 val res = response.body()

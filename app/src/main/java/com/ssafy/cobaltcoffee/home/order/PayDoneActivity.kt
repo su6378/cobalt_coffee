@@ -8,6 +8,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityPayDoneBinding
 import com.ssafy.cobaltcoffee.dialog.CouponDialog
+import com.ssafy.cobaltcoffee.repository.CouponRepository
+import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
@@ -62,8 +64,8 @@ class PayDoneActivity : AppCompatActivity() {
         dialog.show(content)
     }
 
-    inner class UserStampCallback : RetrofitCallback<Boolean> {
-        override fun onSuccess(code: Int, result: Boolean) {
+    inner class UserStampCallback : RetrofitCallback<Int> {
+        override fun onSuccess(code: Int, result: Int) {
 
 
 
