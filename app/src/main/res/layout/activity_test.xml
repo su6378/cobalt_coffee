@@ -7,11 +7,22 @@
     tools:context=".home.TestActivity">
 
     <Button
-        android:id="@+id/test_btn"
+        android:id="@+id/test_btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="테스트"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:text="결제완료 테스트"
+        app:layout_constraintBottom_toTopOf="@+id/test_btn2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/test_btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="결제 API 테스트"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

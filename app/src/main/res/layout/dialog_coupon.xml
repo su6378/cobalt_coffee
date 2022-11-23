@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
+        android:paddingVertical="10dp"
+        android:paddingLeft="10dp"
+        android:text="쿠폰이 발급되었습니다"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_medium"
+        android:paddingVertical="10dp"
+        android:paddingLeft="10dp"
+        android:text="내용"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <com.github.nikartm.button.FitButton
+        android:id="@+id/okBtn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        app:fb_backgroundColor="@color/cobalt"
+        app:fb_borderColor="@color/white"
+        app:fb_borderWidth="1.5dp"
+        app:fb_cornerRadius="20dp"
+        app:fb_fontFamilyRes="@font/jejugothic"
+        app:fb_rippleColor="@color/white"
+        app:fb_shape="rectangle"
+        app:fb_text="닫기"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="14sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

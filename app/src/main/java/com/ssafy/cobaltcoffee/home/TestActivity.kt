@@ -1,11 +1,14 @@
 package com.ssafy.cobaltcoffee.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityTestBinding
+import com.ssafy.cobaltcoffee.home.order.PayDoneActivity
+import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import kr.co.bootpay.android.Bootpay
 import kr.co.bootpay.android.constants.BootpayBuildConfig
 import kr.co.bootpay.android.events.BootpayEventListener
@@ -27,7 +30,11 @@ class TestActivity : AppCompatActivity() {
             applicationId = "5b8f6a4d396fa665fdc2b5e8"
         }
 
-        binding.testBtn.setOnClickListener {
+        binding.testBtn1.setOnClickListener {
+            startActivity(Intent(this, PayDoneActivity::class.java))
+        }
+
+        binding.testBtn2.setOnClickListener {
             PaymentTest(binding.root)
         }
     }
