@@ -2,6 +2,7 @@ package com.ssafy.cobaltcoffee.home.order
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,20 +21,27 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.adapter.CartAdapter
 import com.ssafy.cobaltcoffee.config.ApplicationClass
+import com.ssafy.cobaltcoffee.config.ApplicationClass.Companion.sharedPreferencesUtil
+import com.ssafy.cobaltcoffee.config.ApplicationClass.Companion.tableNum
 import com.ssafy.cobaltcoffee.database.CartDto
 import com.ssafy.cobaltcoffee.databinding.ActivityCartBinding
 import com.ssafy.cobaltcoffee.dialog.CartDialog
 import com.ssafy.cobaltcoffee.dialog.LocationDialog
 import com.ssafy.cobaltcoffee.dto.LatestOrder
+import com.ssafy.cobaltcoffee.dto.Order
+import com.ssafy.cobaltcoffee.dto.OrderDetail
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.repository.CartRepository
+import com.ssafy.cobaltcoffee.repository.OrderRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.cobaltcoffee.service.OrderService
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.CartViewModel
@@ -53,6 +61,7 @@ class CartActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModels()
 
     private lateinit var cartViewModel: CartViewModel
+    private lateinit var orderDetailList : MutableList<OrderDetail>
 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     lateinit var mLastLocation: Location // 위치 값을 가지고 있는 객체
@@ -112,12 +121,12 @@ class CartActivity : AppCompatActivity() {
             orderBtn.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    startLocationUpdates()
-                    if (distance > 1000) {
-                        showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
+                    if (cartList.isNotEmpty()){
+                        startLocationUpdates()
                     }else{
-
+                        showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
                     }
+
 //                    cartViewModel.clearCart(userViewModel.currentUser.id)
 //                    cartList.clear()
 //                    cartAdapter.cartList = cartList
@@ -237,6 +246,12 @@ class CartActivity : AppCompatActivity() {
     fun onLocationChanged(location: Location){
         mLastLocation = location
         distance = getDistance(mLastLocation.latitude, mLastLocation.longitude)
+        Log.d(TAG, "onLocationChanged: $distance")
+        if (distance > 1000) {
+            showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
+        }else{
+           makeOrder()
+        }
     }
 
     //현재 거리 구하는 함수
@@ -269,5 +284,42 @@ class CartActivity : AppCompatActivity() {
             )
         }
         dialog.show()
+    }
+
+    private fun makeOrder() {
+        // 주문 정보 생성
+        orderDetailList = mutableListOf()
+
+        for (cart in cartList) {
+            orderDetailList.add(OrderDetail(0,0,cart.productId,cart.quantity))
+        }
+
+        val order = Order()
+        order.userId = userViewModel.currentUser.id
+        order.orderTable = "cobalt_table"
+        order.details = orderDetailList
+        order.completed = 'N'
+
+        // 레트로핏 주문 넣기
+        OrderRepository.get().makeOrder(order,MakeOrderCallback())
+
+    }
+
+    inner class MakeOrderCallback: RetrofitCallback<Boolean> {
+        override fun onSuccess( code: Int, result: Boolean) {
+            if (result) {
+
+            }else{
+                Snackbar.make(binding.root,"회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "서버 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }

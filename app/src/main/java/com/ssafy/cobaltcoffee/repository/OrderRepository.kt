@@ -15,6 +15,7 @@ import retrofit2.Response
 
 private const val TAG = "OrderRepository_코발트"
 class OrderRepository(context: Context) {
+
     fun makeOrder(order: Order, callback: RetrofitCallback<Boolean>)  {
         RetrofitUtil.orderService.makeOrder(order).enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {

@@ -4,11 +4,11 @@ import java.util.Date
 
 class Order(
     val id: Int,
-    val userId: String,
-    val orderTable: String,
+    var userId: String,
+    var orderTable: String,
     val orderTime: Date,
-    val completed: Char,
-    val details: List<OrderDetail>,
+    var completed: Char,
+    var details: List<OrderDetail>,
     val stamp: Stamp
 ) : java.io.Serializable {
     constructor(): this(0, "", "", Date(), ' ', listOf<OrderDetail>(), Stamp())
