@@ -2,6 +2,9 @@ package com.ssafy.cafe.model.dto;
 
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +15,8 @@ public class Order {
     private Integer id;
     private String userId;
     private String orderTable;
+    
+    @JsonFormat(pattern = "MMM dd, yyyy HH:mm:ss", timezone = "Asia/Seoul")
     private Date orderTime;
 
     private Character completed;

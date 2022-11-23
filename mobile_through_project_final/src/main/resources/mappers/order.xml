@@ -114,7 +114,7 @@
                join t_product p on d.product_id = p.id
 		where user_id=#{id}
 		group by o.o_id
-		order by o.o_id desc, d.d_id desc
+		order by o.order_time desc, o.o_id desc
 		limit 5
 	</select>
 	
@@ -135,7 +135,7 @@
                join t_product p on d.product_id = p.id
 		where user_id=#{id}
 		group by o.o_id
-		order by o.o_id desc, d.d_id desc
+		order by o.order_time desc, o.o_id desc
 	</select>
 
 	<!-- 관통 프로젝트 6단계에서 추가됨 -->
