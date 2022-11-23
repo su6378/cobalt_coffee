@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.cafe.model.dao.CartDao">
+	<select id="selectCartList" parameterType="string" resultType="CartDetail">
+		SELECT
+			c.id as cartId, 
+			c.user_id as userId, 
+			p.id as productId, 
+			c.quantity as productQty, 
+			p.type as productType, 
+			p.img as productImage, 
+			p.price as productPrice, 
+			(p.price * c.quantity) as totalPrice
+		FROM product p
+		JOIN t_cart c
+			ON p.id = c.productId
+		WHREE c.user_id = #{userId}
+		ORDER BY p.id
+	</select>
+	
+	<select id="select" parameterType="Cart" resultType="Cart">
+		SELECT * FROM t_cart
+		WHRE user_id = #{userId}
+		AND product_id = #{productId}
+	</select>
+	
+	<insert id="insert" parameterType="Cart">
+		INSERT INTO t_cart (user_id, product_id, quantity)
+		VALUES (#{userId}, #{productId}, #{quantity})
+	</insert>
+	
+	<update id="update" parameterType="Cart">
+		UPDATE t_cart SET
+		quantity =  #{quantity},
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM t_cart
+		WHREE id = #{id}
+	</delete>
+	
+	<delete id="deleteAll" parameterType="string">
+		DELETE FROM t_cart
+		WHREE userId = #{userId}
+	</delete>
+</mapper>

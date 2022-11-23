@@ -2,18 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.cafe.model.dao.CouponDao">
-	<select id="selectByUserId" parameterType="string" resultType="Coupon">
-		SELECT * FROM t_coupon
-		WHERE user_id = #{user_id}
+	<select id="selectByUserId" parameterType="string" resultType="CouponDetail">
+		SELECT
+			c.id as couponId, 
+			c.type_id as couponTypeId, 
+			t.name as couponName, 
+			t.disc_rate as discountRate, 
+			c.user_id as userId, 
+			c.is_use as isUse
+		FROM t_coupon c
+		JOIN t_coupon_type t
+			ON c.type_id = t.id
+		WHERE c.user_id = #{userId}
+		ORDER BY t.id
 	</select>
 	
 	<insert id="insert" parameterType="Coupon">
 		INSERT INTO t_coupon(
-			user_id, name, disc_rate, is_use
+			type_id, user_id, is_use
 		) VALUES (
+			#{typeId}, 
 			#{userId}, 
-			#{name}, 
-			#{discountRate}, 
 			1
 		)
 	</insert>

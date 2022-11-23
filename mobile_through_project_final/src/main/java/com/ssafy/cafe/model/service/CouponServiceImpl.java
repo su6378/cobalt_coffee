@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.cafe.model.dao.CouponDao;
 import com.ssafy.cafe.model.dto.Coupon;
+import com.ssafy.cafe.model.dto.CouponDetail;
 
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -16,7 +17,7 @@ public class CouponServiceImpl implements CouponService {
     CouponDao cDao;
     
     @Override
-    public List<Coupon> getCouponList(String userId) {
+    public List<CouponDetail> getCouponList(String userId) {
         return cDao.selectByUserId(userId);
     }
     

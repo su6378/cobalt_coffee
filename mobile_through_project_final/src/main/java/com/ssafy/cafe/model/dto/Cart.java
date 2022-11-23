@@ -6,18 +6,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Coupon {
+public class Cart {
     private Integer id;
-    private Integer typeId;
     private String userId;
-    private Boolean isUse;
+    private Integer productId;
+    private Integer quantity;
     
     @Builder
-    public Coupon(Integer id, Integer typeId, String userId, Boolean isUse) {
+    public Cart(Integer id, String userId, Integer productId, Integer quantity) {
         super();
         this.id = id;
-        this.typeId = typeId;
         this.userId = userId;
-        this.isUse = isUse;
+        this.productId = productId;
+        this.quantity = quantity;
     }
 }
