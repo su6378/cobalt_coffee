@@ -229,6 +229,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/couponPage_btn"
+                    android:background="?attr/selectableItemBackground"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="1">
