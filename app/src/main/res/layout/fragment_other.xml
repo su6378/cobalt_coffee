@@ -228,6 +228,7 @@
                     app:layout_constraintTop_toBottomOf="@id/other_tv2" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/couponPage_btn"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="1">

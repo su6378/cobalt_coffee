@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.stamp.StampActivity
 import com.ssafy.cobaltcoffee.config.ApplicationClass
+import com.ssafy.cobaltcoffee.coupon.CouponActivity
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.dto.User
@@ -109,43 +110,50 @@ class HomeActivity : AppCompatActivity() {
     //설정 페이지로 이동
     fun moveSettingPage() {
         val intent = Intent(this, SettingActivity::class.java)
-        intent.putExtra("user",userViewModel.currentUser)
+        intent.putExtra("user", userViewModel.currentUser)
         startActivity(intent)
     }
 
     //상세 페이지로 이동
-    fun detailPage(user : User){
+    fun detailPage(user: User) {
         val intent = Intent(this, ProductActivity::class.java)
         intent.putExtra("product", Product().apply {
             this.id = 3
         })
-        intent.putExtra("user",user)
+        intent.putExtra("user", user)
         startActivity(intent)
     }
 
     //장바구니 페이지로 이동
-    fun cartPage(user: User){
+    fun cartPage(user: User) {
         val intent = Intent(this, CartActivity::class.java)
-        intent.putExtra("user",user)
+        intent.putExtra("user", user)
         startActivity(intent)
     }
 
     //주문 상세 페이지로 이동
-    fun orderDetailPage(orderId : Int){
+    fun orderDetailPage(orderId: Int) {
         val intent = Intent(this, OrderDetailActivity::class.java)
-        intent.putExtra("orderId",orderId)
+        intent.putExtra("orderId", orderId)
         startActivity(intent)
     }
 
     //주문 내역 페이지로 이동
-    fun orderHistoryPage(){
+    fun orderHistoryPage() {
         val intent = Intent(this, TestActivity::class.java)
         startActivity(intent)
     }
 
     //스탬프 페이지로 이동
-    fun stampPage(user : User){
-        val intent = Intent(this,StampActivity::class.java)
+    fun stampPage(user: User) {
+        val intent = Intent(this, StampActivity::class.java)
+        intent.putExtra("user",user)
+        startActivity(intent)
+    }
+
+    //쿠폰 페이지로 이동
+    fun couponPage(user: User) {
+        val intent = Intent(this, CouponActivity::class.java)
         intent.putExtra("user",user)
         startActivity(intent)
     }

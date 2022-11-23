@@ -67,8 +67,13 @@ class OtherFragment : Fragment() {
             otherHistoryCl.setOnClickListener {
                 homeActivity.orderHistoryPage()
             }
+            //스탬프 페이지로 이동
             stampPageBtn.setOnClickListener {
                 homeActivity.stampPage(userViewModel.currentUser)
+            }
+            //쿠폰 페이지로 이동
+            couponPageBtn.setOnClickListener {
+                homeActivity.couponPage(userViewModel.currentUser)
             }
         }
 
