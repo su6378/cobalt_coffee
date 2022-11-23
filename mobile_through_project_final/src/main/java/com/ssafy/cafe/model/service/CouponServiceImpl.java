@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.cafe.model.dao.CouponDao;
 import com.ssafy.cafe.model.dto.Coupon;
 import com.ssafy.cafe.model.dto.CouponDetail;
+import com.ssafy.cafe.model.dto.CouponType;
 
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -22,9 +23,19 @@ public class CouponServiceImpl implements CouponService {
     }
     
     @Override
+    public Boolean check(String userId, Integer couponTypeId) {
+        Coupon coupon = new Coupon(0, couponTypeId, userId, false);
+        Coupon result = cDao.select(coupon);
+        
+        if (result == null) return false;
+        else return true;
+    }
+    
+    @Override
     @Transactional
-    public void addCoupon(Coupon coupon) {
+    public CouponType addCoupon(Coupon coupon) {
         cDao.insert(coupon);
+        return cDao.selectType(coupon.getTypeId());
     }
     
     @Override

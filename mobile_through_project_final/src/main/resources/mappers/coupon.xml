@@ -17,6 +17,19 @@
 		ORDER BY t.id
 	</select>
 	
+	<select id="select" parameterType="Coupon" resultType="Coupon">
+		SELECT *
+		FROM t_coupon
+		WHERE user_id = #{userId}
+		AND type_id = #{typeId}
+	</select>
+	
+	<select id="selectType" parameterType="int">
+		SELECT *
+		FROM t_coupon_type
+		WHERE id = #{couponTypeId}
+	</select>
+	
 	<insert id="insert" parameterType="Coupon">
 		INSERT INTO t_coupon(
 			type_id, user_id, is_use

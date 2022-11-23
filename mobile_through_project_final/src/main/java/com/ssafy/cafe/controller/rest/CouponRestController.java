@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.cafe.model.dto.Coupon;
 import com.ssafy.cafe.model.dto.CouponDetail;
+import com.ssafy.cafe.model.dto.CouponType;
 import com.ssafy.cafe.model.service.CouponService;
 
 import io.swagger.annotations.ApiOperation;
@@ -34,11 +35,16 @@ public class CouponRestController {
         return new ResponseEntity<List<CouponDetail>>(cService.getCouponList(userId), HttpStatus.OK);
     }
     
+    @GetMapping("/check")
+    @ApiOperation(value="사용자에게 쿠폰이 있는지 확인한다.", response = Boolean.class)
+    public Boolean check(String userId, Integer couponTypeId) {
+        return cService.check(userId, couponTypeId);
+    }
+    
     @PostMapping("/new")
-    @ApiOperation(value="사용자에게 쿠폰을 발급한다", response = Boolean.class)
-    public Boolean addCoupon(@RequestBody Coupon coupon) {
-        cService.addCoupon(coupon);
-        return true;
+    @ApiOperation(value="사용자에게 쿠폰을 발급한다", response = CouponType.class)
+    public CouponType addCoupon(@RequestBody Coupon coupon) {
+        return cService.addCoupon(coupon);
     }
     
     @PutMapping("/use/{couponId}")
