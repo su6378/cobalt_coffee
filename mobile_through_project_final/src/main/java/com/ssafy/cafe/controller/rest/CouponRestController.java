@@ -36,8 +36,8 @@ public class CouponRestController {
     }
     
     @GetMapping("/check")
-    @ApiOperation(value="사용자에게 쿠폰이 있는지 확인한다.", response = Boolean.class)
-    public Boolean check(String userId, Integer couponTypeId) {
+    @ApiOperation(value="사용자에게 쿠폰이 있는지 확인한다.", response = Integer.class)
+    public Integer check(String userId, Integer couponTypeId) {
         return cService.check(userId, couponTypeId);
     }
     
