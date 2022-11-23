@@ -19,7 +19,7 @@ public interface CouponService {
      * @param couponTypeId
      * @return
      */
-    Boolean check(String userId, Integer couponTypeId);
+    Integer check(String userId, Integer couponTypeId);
     
     /**
      * 사용자에게 쿠폰을 발급한다.

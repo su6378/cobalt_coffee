@@ -23,12 +23,12 @@ public class CouponServiceImpl implements CouponService {
     }
     
     @Override
-    public Boolean check(String userId, Integer couponTypeId) {
+    public Integer check(String userId, Integer couponTypeId) {
         Coupon coupon = new Coupon(0, couponTypeId, userId, false);
         Coupon result = cDao.select(coupon);
         
-        if (result == null) return false;
-        else return true;
+        if (result == null) return couponTypeId;
+        else return 0;
     }
     
     @Override

@@ -24,8 +24,11 @@
 		AND type_id = #{typeId}
 	</select>
 	
-	<select id="selectType" parameterType="int">
-		SELECT *
+	<select id="selectType" parameterType="int" resultType="CouponType">
+		SELECT
+			id,
+			name, 
+			disc_rate as discountRate
 		FROM t_coupon_type
 		WHERE id = #{couponTypeId}
 	</select>
@@ -36,7 +39,7 @@
 		) VALUES (
 			#{typeId}, 
 			#{userId}, 
-			1
+			0
 		)
 	</insert>
 	

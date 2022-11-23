@@ -63,7 +63,7 @@ class PayDoneActivity : AppCompatActivity() {
     inner class UserStampCallback : RetrofitCallback<Int> {
         override fun onSuccess(code: Int, result: Int) {
             val stampCnt = result
-            for (i in 1 .. (stampCnt / 10) + 1) {
+            for (i in 1 .. (stampCnt / 10)) {
                 CouponRepository.get().check(userId, i, CouponCheckCallback())
             }
         }
@@ -77,11 +77,10 @@ class PayDoneActivity : AppCompatActivity() {
         }
     }
 
-    inner class CouponCheckCallback : RetrofitCallback<Boolean> {
-        override fun onSuccess(code: Int, result: Boolean) {
-            val isCoupon: Boolean = result
-            if (!isCoupon) {
-                CouponRepository.get().addCoupon(Coupon().apply { }, CouponAddCallback())
+    inner class CouponCheckCallback : RetrofitCallback<Int> {
+        override fun onSuccess(code: Int, result: Int) {
+            if (result != 0) {
+                CouponRepository.get().addCoupon(Coupon(0, result, userId, false), CouponAddCallback())
             }
         }
 
