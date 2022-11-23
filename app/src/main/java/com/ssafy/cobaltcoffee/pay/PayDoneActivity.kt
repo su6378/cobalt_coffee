@@ -1,4 +1,4 @@
-package com.ssafy.cobaltcoffee.home.order
+package com.ssafy.cobaltcoffee.pay
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

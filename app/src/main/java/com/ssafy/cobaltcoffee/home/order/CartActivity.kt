@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +58,7 @@ class CartActivity : AppCompatActivity() {
     lateinit var mLastLocation: Location // 위치 값을 가지고 있는 객체
     internal lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
     private val REQUEST_PERMISSION_LOCATION = 10
+    var distance = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,8 +112,12 @@ class CartActivity : AppCompatActivity() {
             orderBtn.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 ) {
-
                     startLocationUpdates()
+                    if (distance > 1000) {
+                        showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
+                    }else{
+
+                    }
 //                    cartViewModel.clearCart(userViewModel.currentUser.id)
 //                    cartList.clear()
 //                    cartAdapter.cartList = cartList
@@ -228,10 +234,9 @@ class CartActivity : AppCompatActivity() {
     }
 
     // 시스템으로 부터 받은 위치정보를 화면에 갱신해주는 메소드
-    fun onLocationChanged(location: Location) {
+    fun onLocationChanged(location: Location){
         mLastLocation = location
-        Log.d(TAG, "onLocationChanged:매장과의 거리가 ${getDistance(mLastLocation.latitude, mLastLocation.longitude)}m 입니다. ")
-        Log.d(TAG, "onLocationChanged: ${mLastLocation.longitude} ${mLastLocation.latitude}")
+        distance = getDistance(mLastLocation.latitude, mLastLocation.longitude)
     }
 
     //현재 거리 구하는 함수
@@ -245,7 +250,7 @@ class CartActivity : AppCompatActivity() {
         return (6372.8 * 1000 * c).toInt()
     }
 
-    private fun showCartDialog(content: String) {
+    private fun showOrderDialog(content: String) {
         val dialog = CartDialog(this)
         dialog.setOnOKClickedListener {
 

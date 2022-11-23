@@ -20,7 +20,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".home.order.PayDoneActivity"
+            android:name=".pay.PayActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".pay.PayDoneActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
