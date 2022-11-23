@@ -63,13 +63,15 @@ class CartActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModels()
 
     private lateinit var cartViewModel: CartViewModel
-    private lateinit var orderDetailList : MutableList<OrderDetail>
 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     lateinit var mLastLocation: Location // 위치 값을 가지고 있는 객체
     internal lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
     private val REQUEST_PERMISSION_LOCATION = 10
     var distance = 0
+
+    var totalCount = 0
+    var totalPrice = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,26 +127,14 @@ class CartActivity : AppCompatActivity() {
                 ) {
                     if (cartList.isNotEmpty()){
                         startLocationUpdates()
-                        val intent = Intent(this@CartActivity,PayActivity::class.java)
-                        startActivity(intent)
+                        if (distance != 0){
+                            val intent = Intent(this@CartActivity,PayActivity::class.java)
+                            intent.putExtra("user",userViewModel.currentUser)
+                            startActivity(intent)
+                        }
                     }else{
                         showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
                     }
-
-//                    cartViewModel.clearCart(userViewModel.currentUser.id)
-//                    cartList.clear()
-//                    cartAdapter.cartList = cartList
-//                    cartAdapter.notifyDataSetChanged()
-//                    initBottom(0,0)
-//
-//                    binding.apply {
-//                        cartRv.apply {
-//                            layoutManager = LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
-//                            adapter = cartAdapter
-//                            //원래의 목록위치로 돌아오게함
-//                            adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//                        }
-//                    }
                 } else { //위치 서비스 동의하지 않은 경우 dialog 띄우기
                     showLocationDialog()
                 }
@@ -155,8 +145,6 @@ class CartActivity : AppCompatActivity() {
     private fun initAdapter(){
         //장바구니 상품가져오기
         cartList = mutableListOf()
-        var totalCount = 0
-        var totalPrice = 0
         cartViewModel.readAllData.observe(this@CartActivity) {
             if (!checkInsert){
                 for(cart in it){
@@ -250,13 +238,12 @@ class CartActivity : AppCompatActivity() {
     fun onLocationChanged(location: Location){
         mLastLocation = location
         distance = getDistance(mLastLocation.latitude, mLastLocation.longitude)
-        Log.d(TAG, "onLocationChanged: $distance")
         if (distance > 1000) {
             showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
         }else{
             val intent = Intent(this@CartActivity,PayActivity::class.java)
+            intent.putExtra("user",userViewModel.currentUser)
             startActivity(intent)
-//           makeOrder()
         }
     }
 
@@ -290,42 +277,5 @@ class CartActivity : AppCompatActivity() {
             )
         }
         dialog.show()
-    }
-
-    private fun makeOrder() {
-        // 주문 정보 생성
-        orderDetailList = mutableListOf()
-
-        for (cart in cartList) {
-            orderDetailList.add(OrderDetail(0,0,cart.productId,cart.quantity))
-        }
-
-        val order = Order()
-        order.userId = userViewModel.currentUser.id
-        order.orderTable = "cobalt_table"
-        order.details = orderDetailList
-        order.completed = 'N'
-
-        // 레트로핏 주문 넣기
-        OrderRepository.get().makeOrder(order,MakeOrderCallback())
-
-    }
-
-    inner class MakeOrderCallback: RetrofitCallback<Boolean> {
-        override fun onSuccess( code: Int, result: Boolean) {
-            if (result) {
-
-            }else{
-                Snackbar.make(binding.root,"회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
-            }
-        }
-
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "서버 통신오류")
-        }
-
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
     }
 }

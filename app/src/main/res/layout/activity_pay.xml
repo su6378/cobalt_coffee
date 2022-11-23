@@ -6,13 +6,138 @@
     android:layout_height="match_parent"
     tools:context=".pay.PayActivity">
 
-    <Button
-        android:id="@+id/test_btn1"
+    <include
+        android:id="@+id/pay_toolBar"
+        layout="@layout/layout_include_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/pay_userInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="구매자 정보"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        app:layout_constraintTop_toBottomOf="@id/pay_toolBar"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/pay_userName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:paddingLeft="10dp"
+        android:text="구매자 닉네임"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:background="@color/lineColor2"
+        app:layout_constraintTop_toBottomOf="@id/pay_userInfo"/>
+
+    <TextView
+        android:id="@+id/pay_userEmail"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:paddingLeft="10dp"
+        android:text="구매자 이메일"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:background="@color/lineColor2"
+        app:layout_constraintTop_toBottomOf="@id/pay_userName"/>
+
+    <TextView
+        android:id="@+id/pay_productInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="상품 정보"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        app:layout_constraintTop_toBottomOf="@id/pay_userEmail"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pay_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/lineColor3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/pay_cl"
+        app:layout_constraintTop_toBottomOf="@id/pay_productInfo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pay_cl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@id/pay_totalMoney"
+        android:layout_marginTop="10dp"
+        android:background="@color/lineColor2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="쿠폰 정보"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/view_refund"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="보기"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_medium"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/pay_totalMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총 금액"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:fontFamily="@font/quicksand_bold"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/pay_btn"
+        android:gravity="center"/>
+
+    <com.github.nikartm.button.FitButton
+        android:id="@+id/pay_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="결제"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:fb_text="결제하기"
+        app:fb_fontFamilyRes="@font/quicksand_medium"
+        app:fb_textSize="16sp"
+        app:fb_textColor="@color/white"
+        app:fb_backgroundColor="@color/cobalt"
+        android:padding="15dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
