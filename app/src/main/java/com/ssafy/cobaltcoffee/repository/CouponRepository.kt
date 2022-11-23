@@ -32,9 +32,9 @@ class CouponRepository(context: Context) {
         })
     }
 
-    fun check(userId: String, couponTypeId: Int, callback: RetrofitCallback<Boolean>)  {
-        RetrofitUtil.couponService.check(userId, couponTypeId).enqueue(object : Callback<Boolean> {
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+    fun check(userId: String, couponTypeId: Int, callback: RetrofitCallback<Int>)  {
+        RetrofitUtil.couponService.check(userId, couponTypeId).enqueue(object : Callback<Int> {
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 val res = response.body()
                 if (response.code() == 200) {
                     if (res != null) {
@@ -45,7 +45,7 @@ class CouponRepository(context: Context) {
                 }
             }
 
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+            override fun onFailure(call: Call<Int>, t: Throwable) {
                 callback.onError(t)
             }
         })

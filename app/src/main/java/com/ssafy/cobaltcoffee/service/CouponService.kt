@@ -18,7 +18,7 @@ interface CouponService {
 
     // 사용자에게 쿠폰이 있는지 확인
     @GET("/rest/coupon/check")
-    fun check(@Query("userId") userId: String, @Query("couponTypeId") couponTypeId: Int): Call<Boolean>
+    fun check(@Query("userId") userId: String, @Query("couponTypeId") couponTypeId: Int): Call<Int>
 
     // 사용자에게 쿠폰 발급
     @POST("/rest/coupon/new")
