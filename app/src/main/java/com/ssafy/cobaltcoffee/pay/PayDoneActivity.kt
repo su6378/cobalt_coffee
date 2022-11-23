@@ -81,8 +81,7 @@ class PayDoneActivity : AppCompatActivity() {
         override fun onSuccess(code: Int, result: Boolean) {
             val isCoupon: Boolean = result
             if (!isCoupon) {
-                CouponRepository.get().addCoupon(Coupon(), CouponAddCallback())
-
+                CouponRepository.get().addCoupon(Coupon().apply { }, CouponAddCallback())
             }
         }
 
