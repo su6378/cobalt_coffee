@@ -11,7 +11,7 @@ import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.dto.Product
 
-private const val TAG = "MenuAdapter_코발트"
+private const val TAG = "BestMenuAdapter_코발트"
 class BestMenuAdapter(var productList:List<Product>) :RecyclerView.Adapter<BestMenuAdapter.BestMenuHolder>(){
 
     inner class BestMenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

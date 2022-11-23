@@ -18,7 +18,7 @@ import com.ssafy.cobaltcoffee.response.OrderDetailResponse
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import java.util.Date
 
-private const val TAG = "MenuAdapter_코발트"
+private const val TAG = "OrderDetailAdapter_코발트"
 class OrderDetailAdapter(var orderDetailList:List<OrderDetailResponse>) :RecyclerView.Adapter<OrderDetailAdapter.OrderDetailHolder>(){
 
     inner class OrderDetailHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

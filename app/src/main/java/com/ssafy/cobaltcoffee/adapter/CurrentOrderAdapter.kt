@@ -16,7 +16,7 @@ import com.ssafy.cobaltcoffee.dto.UserOrderDetail
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import java.util.Date
 
-private const val TAG = "MenuAdapter_코발트"
+private const val TAG = "CurrentOrderAdapter_코발트"
 class CurrentOrderAdapter(var currentOrderList:List<LatestOrder>) :RecyclerView.Adapter<CurrentOrderAdapter.CurrentOrderHolder>(){
 
     inner class CurrentOrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -26,7 +26,6 @@ class CurrentOrderAdapter(var currentOrderList:List<LatestOrder>) :RecyclerView.
         val orderDate = itemView.findViewById<TextView>(R.id.co_orderDate)
 
         fun bindInfo(currentOrder : LatestOrder){
-            Log.d(TAG, "bindInfo: $currentOrder")
             if(currentOrder.orderCnt > 1){
                 menuList.text = "${currentOrder.productName} 외 ${currentOrder.orderCnt -1}건"  //외 x건
             }else{

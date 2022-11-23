@@ -108,4 +108,8 @@ dependencies {
     //BootPay
     implementation 'io.github.bootpay:android:4.2.3'
 
+    //   구글 map api 사용
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
 }
