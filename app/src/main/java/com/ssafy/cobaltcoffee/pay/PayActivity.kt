@@ -87,12 +87,7 @@ class PayActivity : AppCompatActivity() {
         totalCount = intent.getIntExtra("totalCount", 0)
 
         // 뷰모델 연결
-        cartViewModel = ViewModelProvider(
-            this,
-            CartViewModel.Factory(application)
-        ).get(CartViewModel::class.java)
-
-
+        cartViewModel = ViewModelProvider(this, CartViewModel.Factory(application)).get(CartViewModel::class.java)
 
         initAdapter()
 
@@ -174,12 +169,19 @@ class PayActivity : AppCompatActivity() {
 
             orderCouponAdapter.setItemClickListener(object : OrderCouponAdapter.ItemClickListener {
                 override fun onClick(view: View, position: Int, couponId: Int) {
-                    totalPrice = totalPriceOrigin - (totalPriceOrigin * couponList[position].discountRate / 100)
-                    totalPrice -= totalPrice % 100
-                    binding.payTotalMoney.text = CommonUtils.makeComma(totalPrice)
-                    binding.payCouponCl.visibility = View.GONE
-                    useCouponId = couponList[position].couponId
-                    discount = couponList[position].discountRate
+                    if (position == 0){
+                        totalPrice = totalPriceOrigin
+                        useCouponId = 0
+                        binding.payTotalMoney.text = CommonUtils.makeComma(totalPrice)
+                        binding.payCouponCl.visibility = View.GONE
+                    }else{
+                        totalPrice = totalPriceOrigin - (totalPriceOrigin * couponList[position].discountRate / 100)
+                        totalPrice -= totalPrice % 100
+                        binding.payTotalMoney.text = CommonUtils.makeComma(totalPrice)
+                        binding.payCouponCl.visibility = View.GONE
+                        useCouponId = couponList[position].couponId
+                        discount = couponList[position].discountRate
+                    }
                 }
             })
 
@@ -214,6 +216,7 @@ class PayActivity : AppCompatActivity() {
 
     inner class CouponListCallback : RetrofitCallback<List<CouponDetail>> {
         override fun onSuccess(code: Int, result: List<CouponDetail>) {
+            couponList.clear()
             couponList = result as MutableList<CouponDetail>
             couponList.add(0, CouponDetail(0, 0, "선택하지 않음", 0, "", false))
             initCouponAdater()
@@ -277,7 +280,7 @@ class PayActivity : AppCompatActivity() {
                 val intent = Intent(this@PayActivity, PayDoneActivity::class.java)
                 intent.putExtra("user", userViewModel.currentUser)
                 intent.putExtra("totalCount", totalCount)
-                intent.putExtra("totalPriceOrigin", totalPriceOrigin)
+                intent.putExtra("totalPrice", totalPrice)
                 startActivity(intent)
             } else {
                 Snackbar.make(binding.root, "쿠폰 사용에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
@@ -301,24 +304,26 @@ class PayActivity : AppCompatActivity() {
             .setOfferPeriod("구매일로부터 3개월") // 일시불, 2개월, 3개월 할부 허용, 할부는 최대 12개월까지 사용됨 (5만원 이상 구매시 할부허용 범위)
         val items: MutableList<BootItem> = ArrayList()
         var totalSalePrice = 0
-        Log.d(TAG, "PaymentTest: $useCouponId")
-        for (cart in cartList) {
-            if (useCouponId == 0){
-                val item = BootItem().setName(cart.productName).setId(cart.productId.toString()).setQty(cart.quantity).setPrice(cart.price.toDouble())
+        totalPrice = 0
+
+        if (useCouponId == 0){
+            for (cart in cartList){
+                val item = BootItem().setName(cart.productName).setId(cart.productId.toString()).setQty(cart.quantity).setPrice((cart.price.toDouble()))
                 items.add(item)
                 totalPrice += cart.totalPrice
-            }else{
+            }
+        }else{
+            for (cart in cartList){
                 var salePrice = cart.totalPrice - (cart.totalPrice * discount / 100)
                 salePrice -= salePrice % 100
-                val item = BootItem().setName(cart.productName).setId(cart.productId.toString()).setQty(cart.quantity).setPrice(salePrice.toDouble())
-                totalSalePrice += salePrice
+                val item = BootItem().setName(cart.productName).setId(cart.productId.toString()).setQty(1).setPrice(salePrice.toDouble())
+                totalPrice += salePrice
                 items.add(item)
             }
         }
-        Log.d(TAG, "PaymentTest: $totalPrice $totalSalePrice")
+
         val payload = Payload()
-        val orderCount =
-            if (cartList.size == 1) cartList[0].productName else "${cartList[0].productName}외 ${cartList.size - 1}건"
+        val orderCount = if (cartList.size == 1) cartList[0].productName else "${cartList[0].productName}외 ${cartList.size - 1}건"
         payload.setApplicationId(applicationId)
             .setOrderName(orderCount)
             .setPg("나이스페이")
@@ -368,10 +373,9 @@ class PayActivity : AppCompatActivity() {
                         val intent = Intent(this@PayActivity, PayDoneActivity::class.java)
                         intent.putExtra("user", userViewModel.currentUser)
                         intent.putExtra("totalCount", totalCount)
-                        intent.putExtra("totalPriceOrigin", totalPriceOrigin)
+                        intent.putExtra("totalPrice", totalPrice)
                         startActivity(intent)
                     }else{
-                        Log.d(TAG, "쿠폰번호가 있음: $useCouponId")
                         useCoupon(useCouponId)
                     }
                 }
