@@ -32,6 +32,25 @@ class CouponRepository(context: Context) {
         })
     }
 
+    fun getCouponListCanUse(userId: String, callback: RetrofitCallback<List<CouponDetail>>)  {
+        RetrofitUtil.couponService.getCouponListCanUse(userId).enqueue(object : Callback<List<CouponDetail>> {
+            override fun onResponse(call: Call<List<CouponDetail>>, response: Response<List<CouponDetail>>) {
+                val res = response.body()
+                if (response.code() == 200) {
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<List<CouponDetail>>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
+
     fun check(userId: String, couponTypeId: Int, callback: RetrofitCallback<Int>)  {
         RetrofitUtil.couponService.check(userId, couponTypeId).enqueue(object : Callback<Int> {
             override fun onResponse(call: Call<Int>, response: Response<Int>) {

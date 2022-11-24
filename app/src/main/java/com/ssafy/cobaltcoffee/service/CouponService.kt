@@ -13,8 +13,12 @@ import retrofit2.http.Query
 
 interface CouponService {
     // 사용자의 쿠폰 목록 반환
-    @GET("/rest/coupon/")
+    @GET("/rest/coupon")
     fun getCouponList(@Query("userId") userId: String): Call<List<CouponDetail>>
+
+    // 사용자의 사용 가능한 쿠폰 목록 반환
+    @GET("/rest/coupon/canuse")
+    fun getCouponListCanUse(@Query("userId") userId: String): Call<List<CouponDetail>>
 
     // 사용자에게 쿠폰이 있는지 확인
     @GET("/rest/coupon/check")

@@ -137,7 +137,7 @@ class OtherFragment : Fragment() {
 
     //사용자의 쿠폰 정보를 가져옴
     private fun initUserCoupon() {
-        CouponRepository.get().getCouponList(userViewModel.currentUser.id, CouponListCallback())
+        CouponRepository.get().getCouponListCanUse(userViewModel.currentUser.id, CouponListCallback())
     }
 
     //카운트숫자를 점점 증가시켜서 화면에 보여줌
@@ -178,10 +178,7 @@ class OtherFragment : Fragment() {
     inner class CouponListCallback: RetrofitCallback<List<CouponDetail>> {
         override fun onSuccess(code: Int, result: List<CouponDetail>) {
             val couponList = result as MutableList<CouponDetail>
-            var couponCnt = 0
-            couponList.forEach {
-                if (it.isUse) couponCnt++
-            }
+            var couponCnt = couponList.size
 
             CoroutineScope(Dispatchers.Main).launch{
                 countUpCoupon(couponCnt)
