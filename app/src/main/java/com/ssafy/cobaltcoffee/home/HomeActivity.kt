@@ -1,12 +1,14 @@
 package com.ssafy.cobaltcoffee.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
+import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
-import com.ssafy.cobaltcoffee.stamp.StampActivity
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.coupon.CouponActivity
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
@@ -17,6 +19,7 @@ import com.ssafy.cobaltcoffee.home.order.LatestOrderActivity
 import com.ssafy.cobaltcoffee.home.order.OrderDetailActivity
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.setting.SettingActivity
+import com.ssafy.cobaltcoffee.stamp.StampActivity
 import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
@@ -28,6 +31,8 @@ private const val TAG = "HomeActivity_코발트"
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val userViewModel : UserViewModel by viewModels()
+
+    private var backKeyPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +90,20 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        val snackbar = Snackbar
+            .make(binding.homeFrame, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Snackbar.LENGTH_SHORT)
+            .setAction("닫기", {
+
+            })
+
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis()
+            snackbar.show()
+            return
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            finish()
+        }
     }
 
     //자동로그인 체크 여부에 따른 유저 초기화
