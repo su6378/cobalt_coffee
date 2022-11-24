@@ -55,13 +55,21 @@ class PayDoneActivity : AppCompatActivity() {
             productPrice.text = CommonUtils.makeComma(totalPrice)
 
             closeBtn.setOnClickListener {
-                startActivity(Intent(this@PayDoneActivity, HomeActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-                finish()
+                finishPayDoneActivity()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        finishPayDoneActivity()
+    }
+
+    private fun finishPayDoneActivity() {
+        startActivity(Intent(this@PayDoneActivity, HomeActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        finish()
     }
 
     private fun couponCheck() {
