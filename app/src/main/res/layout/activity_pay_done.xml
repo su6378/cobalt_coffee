@@ -142,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:fontFamily="@font/quicksand_regular"
-                            android:text="2,000 원"
+                            android:text="0 원"
                             android:textSize="16sp" />
                     </LinearLayout>
 
