@@ -1,21 +1,20 @@
 package com.ssafy.cobaltcoffee.pay
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.google.android.gms.common.internal.service.Common
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityPayDoneBinding
 import com.ssafy.cobaltcoffee.dialog.CouponDialog
 import com.ssafy.cobaltcoffee.dto.Coupon
 import com.ssafy.cobaltcoffee.dto.CouponType
 import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.cobaltcoffee.home.order.ProductActivity
+import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.repository.CouponRepository
-import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
@@ -56,6 +55,10 @@ class PayDoneActivity : AppCompatActivity() {
             productPrice.text = CommonUtils.makeComma(totalPrice)
 
             closeBtn.setOnClickListener {
+                startActivity(Intent(this@PayDoneActivity, HomeActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
                 finish()
             }
         }

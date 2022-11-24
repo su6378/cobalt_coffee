@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/co_cv"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/co_cv2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardBackgroundColor="@color/menuBackground"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/co_img"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="236dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="13dp">
+
+                <TextView
+                    android:id="@+id/co_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/quicksand_semibold"
+                    android:gravity="center"
+                    android:paddingHorizontal="5dp"
+                    android:text="주문목록"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/co_cv2"
+                    tools:layout_editor_absoluteX="72dp" />
+
+                <TextView
+                    android:id="@+id/co_totalPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/quicksand_light"
+                    android:gravity="center"
+                    android:paddingHorizontal="5dp"
+                    android:text="총 금액"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/co_list" />
+
+                <TextView
+                    android:id="@+id/co_orderDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/quicksand_light"
+                    android:gravity="center"
+                    android:paddingHorizontal="5dp"
+                    android:text="주문 날짜"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/co_totalPrice" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

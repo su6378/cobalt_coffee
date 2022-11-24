@@ -67,7 +67,7 @@ class OtherFragment : Fragment() {
             }
             //주문내역 페이지로 이동
             otherHistoryCl.setOnClickListener {
-                homeActivity.orderHistoryPage()
+                homeActivity.orderHistoryPage(userViewModel.currentUser)
             }
             //스탬프 페이지로 이동
             stampPageBtn.setOnClickListener {
@@ -78,8 +78,6 @@ class OtherFragment : Fragment() {
                 homeActivity.couponPage(userViewModel.currentUser)
             }
         }
-
-
     }
 
     override fun onResume() {
@@ -178,7 +176,7 @@ class OtherFragment : Fragment() {
     inner class CouponListCallback: RetrofitCallback<List<CouponDetail>> {
         override fun onSuccess(code: Int, result: List<CouponDetail>) {
             val couponList = result as MutableList<CouponDetail>
-            var couponCnt = couponList.size
+            val couponCnt = couponList.size
 
             CoroutineScope(Dispatchers.Main).launch{
                 countUpCoupon(couponCnt)
