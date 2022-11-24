@@ -100,7 +100,7 @@
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/view_refund"
+            android:id="@+id/pay_coupon_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
@@ -126,6 +126,42 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/pay_btn"
         android:gravity="center"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pay_coupon_cl"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:background="@color/lineColor2"
+        android:layout_marginHorizontal="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pay_coupon_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/okBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            app:fb_backgroundColor="@color/cobalt"
+            app:fb_borderColor="@color/white"
+            app:fb_fontFamilyRes="@font/jejugothic"
+            app:fb_rippleColor="@color/white"
+            app:fb_shape="rectangle"
+            app:fb_text="확인"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="16sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pay_coupon_rv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.github.nikartm.button.FitButton
         android:id="@+id/pay_btn"

@@ -34,15 +34,9 @@ import com.ssafy.cobaltcoffee.database.CartDto
 import com.ssafy.cobaltcoffee.databinding.ActivityCartBinding
 import com.ssafy.cobaltcoffee.dialog.CartDialog
 import com.ssafy.cobaltcoffee.dialog.LocationDialog
-import com.ssafy.cobaltcoffee.dto.LatestOrder
-import com.ssafy.cobaltcoffee.dto.Order
-import com.ssafy.cobaltcoffee.dto.OrderDetail
-import com.ssafy.cobaltcoffee.dto.User
+import com.ssafy.cobaltcoffee.dto.*
 import com.ssafy.cobaltcoffee.pay.PayActivity
-import com.ssafy.cobaltcoffee.repository.CartRepository
-import com.ssafy.cobaltcoffee.repository.OrderRepository
-import com.ssafy.cobaltcoffee.repository.ProductRepository
-import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.cobaltcoffee.repository.*
 import com.ssafy.cobaltcoffee.service.OrderService
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
@@ -125,16 +119,19 @@ class CartActivity : AppCompatActivity() {
             orderBtn.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    if (cartList.isNotEmpty()){
-                        startLocationUpdates()
-                        if (distance != 0){
-                            val intent = Intent(this@CartActivity,PayActivity::class.java)
-                            intent.putExtra("user",userViewModel.currentUser)
-                            startActivity(intent)
-                        }
-                    }else{
-                        showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
-                    }
+                    val intent = Intent(this@CartActivity,PayActivity::class.java)
+                    intent.putExtra("user",userViewModel.currentUser)
+                    startActivity(intent)
+//                    if (cartList.isNotEmpty()){
+//                        startLocationUpdates()
+//                        if (distance != 0){
+//                            val intent = Intent(this@CartActivity,PayActivity::class.java)
+//                            intent.putExtra("user",userViewModel.currentUser)
+//                            startActivity(intent)
+//                        }
+//                    }else{
+//                        showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
+//                    }
                 } else { //위치 서비스 동의하지 않은 경우 dialog 띄우기
                     showLocationDialog()
                 }
