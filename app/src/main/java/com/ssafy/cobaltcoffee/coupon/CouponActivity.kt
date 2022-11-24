@@ -37,8 +37,6 @@ class CouponActivity : AppCompatActivity() {
         userViewModel.currentUser = intent.getSerializableExtra("user") as User
 
         initTb()
-
-        Log.d(TAG, "init: ${userViewModel.currentUser.id}")
         CouponRepository.get().getCouponList(userViewModel.currentUser.id, CouponListCallback())
 
         binding.apply{

@@ -15,8 +15,10 @@ import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.databinding.FragmentOtherBinding
 import com.ssafy.cobaltcoffee.dialog.LogoutDialog
+import com.ssafy.cobaltcoffee.dto.CouponDetail
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.dto.UserLevel
+import com.ssafy.cobaltcoffee.repository.CouponRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
@@ -97,6 +99,7 @@ class OtherFragment : Fragment() {
     private fun init() {
         getUserInfo()
         initUser()
+        initUserCoupon()
     }
 
     //sp에 저장 되어있는 로그인 유저의 id로 retrofit userinfo 실행
@@ -126,32 +129,34 @@ class OtherFragment : Fragment() {
             if(count == 0) otherStampCount.text = "0"
             else{
                 CoroutineScope(Dispatchers.Main).launch{
-                    countUp(count,"stamp")
+                    countUpStamp(count)
                 }
             }
         }
     }
 
-    //카운트숫자를 점점 증가시켜서 화면에 보여줌
-    private suspend fun countUp(count : Int, key : String) {
-        var current = 0
-        when(key){
-            "stamp" -> {
-                while (current < count) {
-                    current++
-                    binding.otherStampCount.text = current.toString()
-                    delay(100)
-                }
-            }
-            "coupon" ->{
-                while (current <= count) {
-                    current++
-//                    binding.otherCouponCount.text = userViewModel.currentUser.stamps.toString()
-                    delay(100)
-                }
-            }
-        }
+    //사용자의 쿠폰 정보를 가져옴
+    private fun initUserCoupon() {
+        CouponRepository.get().getCouponList(userViewModel.currentUser.id, CouponListCallback())
+    }
 
+    //카운트숫자를 점점 증가시켜서 화면에 보여줌
+    private suspend fun countUpStamp(count: Int) {
+        var current = 0
+        while (current < count) {
+            current++
+            binding.otherStampCount.text = current.toString()
+            delay(100)
+        }
+    }
+
+    private suspend fun countUpCoupon(count: Int) {
+        var current = 0
+        while (current < count) {
+            current++
+            binding.otherCouponCount.text = current.toString()
+            delay(100)
+        }
     }
 
     inner class GetUserInfoCallback: RetrofitCallback<HashMap<String, Any>> {
@@ -163,6 +168,28 @@ class OtherFragment : Fragment() {
 
         override fun onError(t: Throwable) {
             Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+
+    inner class CouponListCallback: RetrofitCallback<List<CouponDetail>> {
+        override fun onSuccess(code: Int, result: List<CouponDetail>) {
+            val couponList = result as MutableList<CouponDetail>
+            var couponCnt = 0
+            couponList.forEach {
+                if (it.isUse) couponCnt++
+            }
+
+            CoroutineScope(Dispatchers.Main).launch{
+                countUpCoupon(couponCnt)
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "쿠폰 정보 불러오는 중 통신오류")
         }
 
         override fun onFailure(code: Int) {
