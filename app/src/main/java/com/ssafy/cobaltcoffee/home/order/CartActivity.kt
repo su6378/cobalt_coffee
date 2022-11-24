@@ -119,19 +119,16 @@ class CartActivity : AppCompatActivity() {
             orderBtn.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@CartActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    val intent = Intent(this@CartActivity,PayActivity::class.java)
-                    intent.putExtra("user",userViewModel.currentUser)
-                    startActivity(intent)
-//                    if (cartList.isNotEmpty()){
-//                        startLocationUpdates()
-//                        if (distance != 0){
-//                            val intent = Intent(this@CartActivity,PayActivity::class.java)
-//                            intent.putExtra("user",userViewModel.currentUser)
-//                            startActivity(intent)
-//                        }
-//                    }else{
-//                        showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
-//                    }
+                    if (cartList.isNotEmpty()){
+                        startLocationUpdates()
+                        if (distance != 0){
+                            val intent = Intent(this@CartActivity,PayActivity::class.java)
+                            intent.putExtra("user",userViewModel.currentUser)
+                            startActivity(intent)
+                        }
+                    }else{
+                        showOrderDialog("장바구니에 담겨져 있는 상품이 없습니다.")
+                    }
                 } else { //위치 서비스 동의하지 않은 경우 dialog 띄우기
                     showLocationDialog()
                 }
