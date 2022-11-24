@@ -14,8 +14,8 @@ import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.util.CommonUtils
 
 private const val TAG = "LatestOrderAdapter_코발트"
-class LatestOrderAdapter(val context: Context, var latestOrderList: List<LatestOrder>): RecyclerView.Adapter<LatestOrderAdapter.LatestOrderHolder>(){
-    inner class LatestOrderHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class OrderHistoryAdapter(val context: Context, var latestOrderList: List<LatestOrder>): RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryHolder>(){
+    inner class OrderHistoryHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val menuList = itemView.findViewById<TextView>(R.id.co_list)
         val menuImage = itemView.findViewById<ImageView>(R.id.co_img)
         val totalPrice = itemView.findViewById<TextView>(R.id.co_totalPrice)
@@ -41,12 +41,12 @@ class LatestOrderAdapter(val context: Context, var latestOrderList: List<LatestO
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LatestOrderHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHistoryHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_latest_order, parent, false)
-        return LatestOrderHolder(view)
+        return OrderHistoryHolder(view)
     }
 
-    override fun onBindViewHolder(holder: LatestOrderHolder, position: Int) {
+    override fun onBindViewHolder(holder: OrderHistoryHolder, position: Int) {
         holder.bindInfo(latestOrderList[position])
     }
 

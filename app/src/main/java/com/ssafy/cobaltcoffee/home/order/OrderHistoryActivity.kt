@@ -3,13 +3,14 @@ package com.ssafy.cobaltcoffee.home.order
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.cobaltcoffee.R
-import com.ssafy.cobaltcoffee.adapter.LatestOrderAdapter
-import com.ssafy.cobaltcoffee.databinding.ActivityLatestOrderBinding
+import com.ssafy.cobaltcoffee.adapter.OrderHistoryAdapter
+import com.ssafy.cobaltcoffee.databinding.ActivityOrderHistoryBinding
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.HomeActivity
@@ -18,17 +19,17 @@ import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
 private const val TAG = "LatestOrderActivity_코발트"
-class LatestOrderActivity : AppCompatActivity() {
+class OrderHistoryActivity : AppCompatActivity() {
     private lateinit var homeActivity: HomeActivity
-    private lateinit var binding: ActivityLatestOrderBinding
-    private lateinit var latestOrderAdapter: LatestOrderAdapter
+    private lateinit var binding: ActivityOrderHistoryBinding
+    private lateinit var orderHistoryAdapter: OrderHistoryAdapter
     private var latestOrderList: MutableList<LatestOrder> = mutableListOf()
 
     private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLatestOrderBinding.inflate(layoutInflater)
+        binding = ActivityOrderHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initTb()
@@ -52,6 +53,16 @@ class LatestOrderActivity : AppCompatActivity() {
         }
     }
 
+    //뒤로가기 버튼 클릭 시
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun init() {
         //유저 정보 갱신
         getUserInfo()
@@ -67,17 +78,17 @@ class LatestOrderActivity : AppCompatActivity() {
         getCurrentOrder()
 
         binding.apply {
-            latestOrderAdapter = LatestOrderAdapter(this@LatestOrderActivity, latestOrderList)
-            latestOrderAdapter.setItemClickListener(object :
-                LatestOrderAdapter.ItemClickListener {
+            orderHistoryAdapter = OrderHistoryAdapter(this@OrderHistoryActivity, latestOrderList)
+            orderHistoryAdapter.setItemClickListener(object :
+                OrderHistoryAdapter.ItemClickListener {
                 override fun onClick(view: View, position: Int, orderId: Int) {
                     homeActivity.orderDetailPage(orderId)
                 }
             })
 
             recyclerView.apply {
-                layoutManager = LinearLayoutManager(this@LatestOrderActivity, LinearLayoutManager.VERTICAL, false)
-                adapter = latestOrderAdapter
+                layoutManager = LinearLayoutManager(this@OrderHistoryActivity, LinearLayoutManager.VERTICAL, false)
+                adapter = orderHistoryAdapter
                 adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         }
@@ -91,8 +102,8 @@ class LatestOrderActivity : AppCompatActivity() {
     inner class CurrentOrderListCallback : RetrofitCallback<List<LatestOrder>> {
         override fun onSuccess(code: Int, result: List<LatestOrder>) {
             latestOrderList = result as MutableList<LatestOrder>
-            latestOrderAdapter.latestOrderList = latestOrderList
-            latestOrderAdapter.notifyDataSetChanged()
+            orderHistoryAdapter.latestOrderList = latestOrderList
+            orderHistoryAdapter.notifyDataSetChanged()
         }
 
         override fun onError(t: Throwable) {

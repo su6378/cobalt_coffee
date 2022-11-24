@@ -14,10 +14,7 @@ import com.ssafy.cobaltcoffee.coupon.CouponActivity
 import com.ssafy.cobaltcoffee.databinding.ActivityHomeBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.cobaltcoffee.home.order.CartActivity
-import com.ssafy.cobaltcoffee.home.order.LatestOrderActivity
-import com.ssafy.cobaltcoffee.home.order.OrderDetailActivity
-import com.ssafy.cobaltcoffee.home.order.ProductActivity
+import com.ssafy.cobaltcoffee.home.order.*
 import com.ssafy.cobaltcoffee.setting.SettingActivity
 import com.ssafy.cobaltcoffee.stamp.StampActivity
 import com.ssafy.cobaltcoffee.start.StartActivity
@@ -159,7 +156,7 @@ class HomeActivity : AppCompatActivity() {
 
     //주문 내역 페이지로 이동
     fun orderHistoryPage(user: User) {
-        val intent = Intent(this, LatestOrderActivity::class.java)
+        val intent = Intent(this, OrderHistoryActivity::class.java)
         intent.putExtra("user",user)
         startActivity(intent)
     }
