@@ -53,7 +53,6 @@ class OrderDetailActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
-                overridePendingTransition(0, 0)
             }
         }
         return super.onOptionsItemSelected(item)

@@ -1,5 +1,6 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,14 +14,12 @@ import com.ssafy.cobaltcoffee.adapter.OrderHistoryAdapter
 import com.ssafy.cobaltcoffee.databinding.ActivityOrderHistoryBinding
 import com.ssafy.cobaltcoffee.dto.LatestOrder
 import com.ssafy.cobaltcoffee.dto.User
-import com.ssafy.cobaltcoffee.home.HomeActivity
 import com.ssafy.cobaltcoffee.repository.OrderRepository
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
 private const val TAG = "LatestOrderActivity_코발트"
 class OrderHistoryActivity : AppCompatActivity() {
-    private lateinit var homeActivity: HomeActivity
     private lateinit var binding: ActivityOrderHistoryBinding
     private lateinit var orderHistoryAdapter: OrderHistoryAdapter
     private var latestOrderList: MutableList<LatestOrder> = mutableListOf()
@@ -82,7 +81,9 @@ class OrderHistoryActivity : AppCompatActivity() {
             orderHistoryAdapter.setItemClickListener(object :
                 OrderHistoryAdapter.ItemClickListener {
                 override fun onClick(view: View, position: Int, orderId: Int) {
-                    homeActivity.orderDetailPage(orderId)
+                    val intent = Intent(this@OrderHistoryActivity, OrderDetailActivity::class.java)
+                    intent.putExtra("orderId", orderId)
+                    startActivity(intent)
                 }
             })
 
