@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nikartm.button.FitButton
 import com.ssafy.cobaltcoffee.R
@@ -21,13 +22,13 @@ class CouponAdapter(val context: Context, var couponList: List<CouponDetail>): R
         fun bindInfo(item: CouponDetail) {
             when (item.isUse) {
                 false -> {
-                    couponUse.setBorderColor(R.color.cobalt)
-                    couponUseTv.setTextColor(R.color.cobalt)
+                    couponUse.setBorderColor(ContextCompat.getColor(context!!, R.color.cobalt))
+                    couponUseTv.setTextColor(ContextCompat.getColor(context!!, R.color.cobalt))
                     couponUseTv.text = "사용가능"
                 }
                 true -> {
-                    couponUse.setBorderColor(R.color.darkGray)
-                    couponUseTv.setTextColor(R.color.darkGray)
+                    couponUse.setBorderColor(ContextCompat.getColor(context!!, R.color.darkGray))
+                    couponUseTv.setTextColor(ContextCompat.getColor(context!!, R.color.darkGray))
                     couponUseTv.text = "사용완료"
                 }
             }
