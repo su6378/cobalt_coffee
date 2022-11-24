@@ -3,25 +3,31 @@ package com.ssafy.cobaltcoffee.pay
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.google.android.gms.common.internal.service.Common
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.ActivityPayDoneBinding
 import com.ssafy.cobaltcoffee.dialog.CouponDialog
 import com.ssafy.cobaltcoffee.dto.Coupon
 import com.ssafy.cobaltcoffee.dto.CouponType
+import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.repository.CouponRepository
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
 import com.ssafy.cobaltcoffee.util.CommonUtils
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
+import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 import kotlinx.coroutines.*
 
 private const val TAG = "PayDoneActivity_코발트"
 class PayDoneActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPayDoneBinding
-    private var userId: String = "test123@naver.com"
+    private val userViewModel : UserViewModel by viewModels()
+
+    private var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +38,12 @@ class PayDoneActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        userViewModel.currentUser = intent.getSerializableExtra("user") as User
+        userId = userViewModel.currentUser.id
+
+        val totalCount = intent.getIntExtra("totalCount", 0)
+        val totalPrice = intent.getIntExtra("totalPrice", 0)
+
         couponCheck()
         
         binding.apply {
@@ -39,6 +51,9 @@ class PayDoneActivity : AppCompatActivity() {
                 .load(R.drawable.coffee_banner)
                 .transform(CenterCrop())
                 .into(imageView)
+
+            productQty.text = "${totalCount} 개"
+            productPrice.text = CommonUtils.makeComma(totalPrice)
 
             closeBtn.setOnClickListener {
                 finish()
@@ -50,14 +65,6 @@ class PayDoneActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             UserRepository.get().getStamp(userId, UserStampCallback())
         }
-    }
-
-    private fun showCouponDialog(content: String) {
-        val dialog = CouponDialog(this)
-        dialog.setOnOKClickedListener {
-
-        }
-        dialog.show(content)
     }
 
     inner class UserStampCallback : RetrofitCallback<Int> {
