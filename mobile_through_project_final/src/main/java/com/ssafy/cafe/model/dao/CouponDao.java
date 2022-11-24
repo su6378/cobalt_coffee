@@ -9,6 +9,8 @@ import com.ssafy.cafe.model.dto.CouponType;
 public interface CouponDao {
     List<CouponDetail> selectByUserId(String userId);
     
+    List<CouponDetail> selectByUserIdCanUse(String userId);
+    
     Coupon select(Coupon coupon);
     
     CouponType selectType(Integer couponTypeId);

@@ -17,6 +17,22 @@
 		ORDER BY t.id
 	</select>
 	
+	<select id="selectByUserIdCanUse" parameterType="string" resultType="CouponDetail">
+		SELECT
+			c.id as couponId, 
+			c.type_id as couponTypeId, 
+			t.name as couponName, 
+			t.disc_rate as discountRate, 
+			c.user_id as userId, 
+			c.is_use as isUse
+		FROM t_coupon c
+		JOIN t_coupon_type t
+			ON c.type_id = t.id
+		WHERE c.user_id = #{userId}
+		AND c.is_use = 0
+		ORDER BY t.id
+	</select>
+	
 	<select id="select" parameterType="Coupon" resultType="Coupon">
 		SELECT *
 		FROM t_coupon

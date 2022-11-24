@@ -23,6 +23,11 @@ public class CouponServiceImpl implements CouponService {
     }
     
     @Override
+    public List<CouponDetail> getCouponListCanUse(String userId) {
+        return cDao.selectByUserIdCanUse(userId);
+    }
+    
+    @Override
     public Integer check(String userId, Integer couponTypeId) {
         Coupon coupon = new Coupon(0, couponTypeId, userId, false);
         Coupon result = cDao.select(coupon);

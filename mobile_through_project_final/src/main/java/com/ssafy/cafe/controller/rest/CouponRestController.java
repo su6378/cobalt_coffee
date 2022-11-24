@@ -29,10 +29,16 @@ public class CouponRestController {
     @Autowired
     CouponService cService;
     
-    @GetMapping("/")
+    @GetMapping
     @ApiOperation(value="사용자의 쿠폰 목록을 반환한다.", response = List.class)
     public ResponseEntity<List<CouponDetail>> getCouponList(String userId){
         return new ResponseEntity<List<CouponDetail>>(cService.getCouponList(userId), HttpStatus.OK);
+    }
+    
+    @GetMapping("/canuse")
+    @ApiOperation(value="사용자의 사용 가능한 쿠폰 목록을 반환한다.", response = List.class)
+    public ResponseEntity<List<CouponDetail>> getCouponListCanUse(String userId){
+        return new ResponseEntity<List<CouponDetail>>(cService.getCouponListCanUse(userId), HttpStatus.OK);
     }
     
     @GetMapping("/check")

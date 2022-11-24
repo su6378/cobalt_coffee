@@ -14,6 +14,12 @@ public interface CouponService {
     List<CouponDetail> getCouponList(String userId);
     
     /**
+     * 사용자의 사용 가능한 쿠폰 목록을 반환한다.
+     * @param userId
+     */
+    List<CouponDetail> getCouponListCanUse(String userId);
+    
+    /**
      * 사용자에게 쿠폰이 있는지 확인한다.
      * @param userId
      * @param couponTypeId
