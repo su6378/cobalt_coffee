@@ -238,12 +238,14 @@ class CartActivity : AppCompatActivity() {
     fun onLocationChanged(location: Location){
         mLastLocation = location
         distance = getDistance(mLastLocation.latitude, mLastLocation.longitude)
-        if (distance > 1000) {
-            showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
-        }else{
+        if (distance == 0){
+            showOrderDialog("현재 위치에서 주문가능한 매장을 찾고 있습니다. 잠시만 기다려주세요.")
+        } else if (distance <= 1000) {
             val intent = Intent(this@CartActivity,PayActivity::class.java)
             intent.putExtra("user",userViewModel.currentUser)
             startActivity(intent)
+        }else{
+            showOrderDialog("1km 이내에 주문 가능한 매장이 없습니다.")
         }
     }
 

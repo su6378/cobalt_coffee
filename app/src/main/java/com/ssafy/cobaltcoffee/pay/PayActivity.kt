@@ -182,18 +182,18 @@ class PayActivity : AppCompatActivity() {
         val extra = BootExtra()
             .setCardQuota("0,2,3").setOfferPeriod("구매일로부터 3개월") // 일시불, 2개월, 3개월 할부 허용, 할부는 최대 12개월까지 사용됨 (5만원 이상 구매시 할부허용 범위)
         val items: MutableList<BootItem> = ArrayList()
-        val item1 = BootItem().setName("마우's 스").setId("ITEM_CODE_MOUSE").setQty(1).setPrice(500.0)
-        val item2 = BootItem().setName("키보드").setId("ITEM_KEYBOARD_MOUSE").setQty(1).setPrice(500.0)
-        items.add(item1)
-        items.add(item2)
+        for (cart in cartList){
+            val item = BootItem().setName(cart.productName).setId(cart.productId.toString()).setQty(cart.quantity).setPrice(cart.price.toDouble())
+            items.add(item)
+        }
         val payload = Payload()
-
+        val orderCount = if (cartList.size == 1) cartList[0].productName else "${cartList[0].productName}외 ${items.size-1}건"
         payload.setApplicationId(applicationId)
-            .setOrderName("부트페이 결제테스트")
+            .setOrderName(orderCount)
             .setPg("나이스페이")
-            .setMethod("카드")
+            .setMethods(mutableListOf("카드","카카오페이","페이코"))
             .setOrderId("1234")
-            .setPrice(1000.0)
+            .setPrice(totalPrice.toDouble())
             .setUser(getBootUser())
             .setExtra(extra).items = items
 
@@ -242,15 +242,15 @@ class PayActivity : AppCompatActivity() {
     }
 
     fun getBootUser(): BootUser? {
-        val userId = "1234114ss121"
+        val userId = userViewModel.currentUser.id
         val user = BootUser()
         user.id = userId
-        user.area = "서울"
+        user.area = "구미"
         user.gender = 1 //1: 남자, 0: 여자
-        user.email = "test1234@gmail.com"
+        user.email = userId
         user.phone = "010-1234-4567"
         user.birth = "1988-06-10"
-        user.username = "홍길동"
+        user.username = userViewModel.currentUser.name
         return user
     }
 }
