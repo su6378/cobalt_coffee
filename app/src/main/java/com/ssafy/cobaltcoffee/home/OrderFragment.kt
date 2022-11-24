@@ -6,6 +6,8 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.bumptech.glide.Glide.init
+import com.forms.sti.progresslitieigb.ProgressLoadingIGB
+import com.forms.sti.progresslitieigb.finishLoadingIGB
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
@@ -95,6 +99,15 @@ class OrderFragment : Fragment() {
     }
 
     private fun init() {
+
+        //로딩창 생성 Lottie
+        ProgressLoadingIGB.startLoadingIGB(requireContext()){
+            message = " "
+            srcLottieJson = R.raw.loading_home
+            hight = 800 // Optional
+            width = 800 // Optional
+            sizeTextMessage = 14f
+        }
 
         //유저 정보 갱신
         getUserInfo()
@@ -168,6 +181,10 @@ class OrderFragment : Fragment() {
             currentOrderList = result as MutableList<LatestOrder>
             currentOrderAdapter.currentOrderList = currentOrderList
             currentOrderAdapter.notifyDataSetChanged()
+            //lottie animation 종료
+            Handler(Looper.getMainLooper()).postDelayed({
+                homeActivity.finishLoadingIGB()
+            },500L) //1초 동안 지속
         }
 
         override fun onError(t: Throwable) {

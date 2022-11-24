@@ -2,11 +2,16 @@ package com.ssafy.cobaltcoffee.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
+import com.forms.sti.progresslitieigb.ProgressLoadingIGB
+import com.forms.sti.progresslitieigb.finishLoadingIGB
 import com.google.android.material.snackbar.Snackbar
 import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.config.ApplicationClass
@@ -35,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         init()
     }
 

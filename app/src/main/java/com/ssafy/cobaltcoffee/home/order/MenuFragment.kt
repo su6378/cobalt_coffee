@@ -1,7 +1,10 @@
 package com.ssafy.cobaltcoffee.home.order
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +14,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.forms.sti.progresslitieigb.ProgressLoadingIGB
+import com.forms.sti.progresslitieigb.finishLoadingIGB
+import com.ssafy.cobaltcoffee.R
 import com.ssafy.cobaltcoffee.databinding.FragmentMenuBinding
 import com.ssafy.cobaltcoffee.dto.Product
 import com.ssafy.cobaltcoffee.home.HomeActivity
@@ -20,7 +26,7 @@ import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
 private const val TAG = "MenuFragment_코발트"
 class MenuFragment(productType: Int) : Fragment() {
-    private lateinit var homeActivity: HomeActivity
+    private lateinit var productListActivity: ProductListActivity
     private lateinit var menuFragment: MenuFragment
     private lateinit var binding: FragmentMenuBinding
 
@@ -31,9 +37,9 @@ class MenuFragment(productType: Int) : Fragment() {
 
     private val userViewModel: UserViewModel by activityViewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        productListActivity = context as ProductListActivity
     }
 
     override fun onCreateView(
@@ -46,6 +52,16 @@ class MenuFragment(productType: Int) : Fragment() {
     }
 
     private fun init() {
+
+        //로딩창 생성 Lottie
+        ProgressLoadingIGB.startLoadingIGB(requireContext()){
+            message = " "
+            srcLottieJson = R.raw.loading_home
+            hight = 800 // Optional
+            width = 800 // Optional
+            sizeTextMessage = 14f
+        }
+
         when (productType) {
             0 -> ProductRepository.get().getNewProductList(MenuListCallback())
             1 -> ProductRepository.get().getBestProductList(MenuListCallback())
@@ -79,6 +95,10 @@ class MenuFragment(productType: Int) : Fragment() {
             productList = result as MutableList<Product>
             productAdapter.products = productList
             productAdapter.notifyDataSetChanged()
+            //lottie animation 종료
+            Handler(Looper.getMainLooper()).postDelayed({
+                productListActivity.finishLoadingIGB()
+            },500L) //1초 동안 지속
         }
 
         override fun onError(t: Throwable) {

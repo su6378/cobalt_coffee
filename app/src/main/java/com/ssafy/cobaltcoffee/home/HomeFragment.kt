@@ -3,6 +3,8 @@ package com.ssafy.cobaltcoffee.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +18,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.forms.sti.progresslitieigb.ProgressLoadingIGB
+import com.forms.sti.progresslitieigb.finishLoadingIGB
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ssafy.cobaltcoffee.R
@@ -27,6 +31,7 @@ import com.ssafy.cobaltcoffee.dto.User
 import com.ssafy.cobaltcoffee.home.order.ProductActivity
 import com.ssafy.cobaltcoffee.repository.ProductRepository
 import com.ssafy.cobaltcoffee.repository.UserRepository
+import com.ssafy.cobaltcoffee.start.StartActivity
 import com.ssafy.cobaltcoffee.util.RetrofitCallback
 import com.ssafy.cobaltcoffee.viewmodel.UserViewModel
 
@@ -55,6 +60,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //로딩창 생성 Lottie
+        ProgressLoadingIGB.startLoadingIGB(requireContext()){
+            message = " "
+            srcLottieJson = R.raw.loading_home
+            hight = 800 // Optional
+            width = 800 // Optional
+            sizeTextMessage = 14f
+        }
+
         init()
 
         binding.homeBanner.setOnClickListener { //흑임자 라떼 커피 메뉴 상세 페이지로 이동
@@ -95,6 +110,7 @@ class HomeFragment : Fragment() {
                 adapter = bestMenuAdapter
                 //원래의 목록위치로 돌아오게함
                 adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
             }
         }
 
@@ -144,6 +160,10 @@ class HomeFragment : Fragment() {
             bestMenuList = result as MutableList<Product>
             bestMenuAdapter.productList = bestMenuList
             bestMenuAdapter.notifyDataSetChanged()
+            //lottie animation 종료
+            Handler(Looper.getMainLooper()).postDelayed({
+                homeActivity.finishLoadingIGB()
+            },500L) //1초 동안 지속
         }
 
         override fun onError(t: Throwable) {
