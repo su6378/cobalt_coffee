@@ -5,19 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.github.nikartm.button.FitButton
 import com.ssafy.cobaltcoffee.R
-import com.ssafy.cobaltcoffee.config.ApplicationClass
 import com.ssafy.cobaltcoffee.dto.LatestOrder
-import com.ssafy.cobaltcoffee.dto.OrderDetail
-import com.ssafy.cobaltcoffee.dto.Product
-import com.ssafy.cobaltcoffee.repository.OrderRepository
-import com.ssafy.cobaltcoffee.response.OrderDetailResponse
 import com.ssafy.cobaltcoffee.util.CommonUtils
 
 private const val TAG = "StampHistoryAdapter_코발트"
@@ -25,7 +16,7 @@ class StampHistoryAdapter(var orderList:List<Pair<LatestOrder,Int>>,val context:
 
     inner class StampHistoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val stampCount = itemView.findViewById<TextView>(R.id.stampHistory_stampCount)
-        val stampDate = itemView.findViewById<TextView>(R.id.stampHistory_date)
+        val stampDate = itemView.findViewById<TextView>(R.id.coupon_name)
         
         fun bindInfo(order : Pair<LatestOrder,Int>){
 

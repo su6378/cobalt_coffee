@@ -6,7 +6,7 @@
     android:padding="10dp">
 
     <com.github.nikartm.button.FitButton
-        android:id="@+id/stampHistory_fb"
+        android:id="@+id/coupon_fb"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="10dp"
@@ -58,11 +58,11 @@
     <View
         android:layout_width="1dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="@id/stampHistory_fb"
-        app:layout_constraintRight_toRightOf="@id/stampHistory_fb"
+        app:layout_constraintLeft_toLeftOf="@id/coupon_fb"
+        app:layout_constraintRight_toRightOf="@id/coupon_fb"
         android:background="@color/lineColor2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stampHistory_fb" />
+        app:layout_constraintTop_toBottomOf="@id/coupon_fb" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/stampHistory_cv2"
@@ -71,8 +71,8 @@
         android:layout_marginLeft="10dp"
         app:cardBackgroundColor="@color/cobalt"
         app:cardCornerRadius="1dp"
-        app:layout_constraintLeft_toRightOf="@id/stampHistory_fb"
-        app:layout_constraintTop_toTopOf="@id/stampHistory_fb">
+        app:layout_constraintLeft_toRightOf="@id/coupon_fb"
+        app:layout_constraintTop_toTopOf="@id/coupon_fb">
 
         <TextView
             android:id="@+id/stampHistory_tv"
@@ -87,7 +87,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
-        android:id="@+id/stampHistory_date"
+        android:id="@+id/coupon_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_medium"
@@ -98,14 +98,14 @@
         android:textSize="10sp" />
 
     <TextView
-        android:id="@+id/stampHistory_tv2"
+        android:id="@+id/coupon_disc_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_medium"
         android:paddingHorizontal="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/stampHistory_cv2"
-        app:layout_constraintLeft_toRightOf="@id/stampHistory_fb"
+        app:layout_constraintLeft_toRightOf="@id/coupon_fb"
         android:text="싸피 구미 캠퍼스점"
         android:textColor="@color/black"
         android:textSize="10sp" />

@@ -1,6 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <com.github.nikartm.button.FitButton
+        android:id="@+id/coupon_fb"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="10dp"
+        app:fb_borderColor="@color/cobalt"
+        app:fb_borderWidth="1dp"
+        app:fb_cornerRadius="60dp"
+        app:fb_fontFamilyRes="@font/jejugothic"
+        app:fb_rippleColor="@color/white"
+        app:fb_shape="rectangle"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <TextView
+            android:id="@+id/stampHistory_stampCount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="사용가능"
+            android:textColor="@color/cobalt"
+            android:gravity="center"
+            android:fontFamily="@font/jejugothic"
+            android:textSize="12sp"/>
+
+    </com.github.nikartm.button.FitButton>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/coupon_fb"
+        app:layout_constraintRight_toRightOf="@id/coupon_fb"
+        android:background="@color/lineColor2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coupon_fb" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/stampHistory_cv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:cardBackgroundColor="@color/cobalt"
+        app:cardCornerRadius="1dp"
+        app:layout_constraintLeft_toRightOf="@id/coupon_fb"
+        app:layout_constraintTop_toTopOf="@id/coupon_fb">
+
+        <TextView
+            android:id="@+id/stampHistory_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_medium"
+            android:paddingHorizontal="5dp"
+            android:text="쿠폰"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/coupon_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_medium"
+        android:paddingHorizontal="5dp"
+        android:text="(쿠폰명)"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@id/stampHistory_cv2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/coupon_disc_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="(할인율)"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/coupon_fb"
+        app:layout_constraintTop_toBottomOf="@id/stampHistory_cv2"
+        app:layout_constraintVertical_bias="1.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
