@@ -1,92 +1,195 @@
-# pjt_final
+# 코발트 커피
+<div align="left">
+<img width="300" src="img/ic_logo.png">
+</div>
 
+<br/>
 
+## 프로젝트 소개
+**코발트 커피** 프로젝트는 Android Mobile Application 프로젝트로, 가상의 카페앱 제작의뢰를 상정하여 어떤 기능이 필요할지 요구사항을 추려내고, 해당 요구사항에 따라 기능을 구현한 **개발진의 역량향상** 프로젝트입니다.
 
-## Getting started
+코발트 블루 색상에서 테마색을 착안하였고, 주로 **스타벅스** 및 **이디야 커피** 애플리케이션의 UI 구성 및 기능을 클론코딩하고자 하였습니다.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- 2022.11.25. 삼성청년소프트웨어아카데미(SSAFY) 8기 Mobile 트랙 1학기 관통프로젝트 최우수
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<br/>
 
-## Add your files
+## 목차
+- [참여자](#참여자)
+- [발표자료](#발표자료)
+- [기간](#기간)
+- [기능구현](#기능구현)
+- [스크린샷](#스크린샷)
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+<br/>
 
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/rigizer/pjt_final.git
-git branch -M master
-git push -uf origin master
-```
+## 참여자
 
-## Integrate with your tools
+| 조수연([@su6378](https://github.com/su6378)) | 한재용([@rigizer](https://github.com/rigizer)) |
+|:----:|:----:|
+|<img width="200" src="img/sy_jo.png">|<img width="200" src="img/jy_han.png">|
 
-- [ ] [Set up project integrations](https://lab.ssafy.com/rigizer/pjt_final/-/settings/integrations)
+<br/>
 
-## Collaborate with your team
+# 발표자료
+[다운로드](ppt/221125_8기_구미_6반_관통PJT_한재용_조수연.pptx) (*.pptx)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+<br/>
 
-## Test and Deploy
+## 기간
+2022.11.17. ~ 2022.11.25.
+에반
+<br/>
 
-Use the built-in continuous integration in GitLab.
+# 사용 기술스택
+- Android
+  - Android Studio
+  - Kotlin
+  - AndroidX ROOM
+  - SQLite
+  - 부트페이 API
+- Back-end
+  - AWS Lightsail
+  - Java
+  - Spring Boot
+  - MariaDB
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## 기능구현
+- 스플래시
+    - Lottie 이용한 로딩화면 구현
+- 안드로이드 커스텀 폰트 적용
+- FitButton 이용한 커스텀 버튼 구현
+- Retrofit 이용하여 AWS Lightsail의 MariaDB와 RestAPI 통신
+- CollapsingToolbarLayout 사용하여 레이아웃 애니메이션 적용
+- SliderShow 라이브러리 사용하여 배너광고 애니메이션 적용
+- SharedPreference, Room 등 라이브러리 활용
+- SwitchButton 라이브러리 활용하여 토글버튼 구현
 
-***
+<br/>
 
-# Editing this README
+## 스크린샷
+<h5>스플래시</h5>
+<hr>
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- Handler 이용하여 overridePendingTransition 애니메이션 적용
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+![image](./img/코발트커피_스플래시.gif)
+<br/>
 
-## Name
-Choose a self-explaining name for your project.
+<h5>로그인</h5>
+<hr>
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+- 정규표현식 패턴 사용
+- 자동로그인 구현 (SharedPreference 사용)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+| 자동로그인 ON | 자동로그인 OFF | 계정정보 불일치 |
+|:----:|:----:|:----:|
+|![image](./img/코발트커피_자동로그인_ON.gif)|![image](./img/코발트커피_자동로그인_OFF.gif)|![image](./img/코발트커피_로그인_계정정보불일치.gif)|
+<br/>
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+<h5>회원가입</h5>
+<hr>
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+- 정규표현식 패턴 사용
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+| 이메일 중복확인 | 비밀번호 확인 |
+|:----:|:----:|
+|![image](./img/코발트커피_회원가입_아이디.gif)|![image](./img/코발트커피_회원가입_비밀번호.gif)|
+<br/>
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+<h5>홈</h5>
+<hr>
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+- Lottie 라이브러리 사용
+- CollapsingToolbarLayout 사용
+- SliderShow 라이브러리 사용
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+| CollapsingToolbarLayout | 첫 번째 배너 |
+|:----:|:----:|
+|![image](./img/코발트커피_홈.gif)|![image](./img/코발트커피_홈_첫번째배너.gif)|
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+| 수평 슬라이더 메뉴 | 하단 배너 | 뒤로가기 버튼 |
+|:----:|:----:|:----:|
+|![image](./img/코발트커피_홈_수평슬라이더메뉴.gif)|![image](./img/코발트커피_홈_하단배너.gif)|![image](./img/코발트커피_홈_뒤로가기.gif)|
+<br/>
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+<h5>주문</h5>
+<hr>
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- 배너광고 무한스크롤, 자동스크롤 지원
+- FitButton 라이브러리 사용
 
-## License
-For open source projects, say how it is licensed.
+| 주문 전 | 최근 주문 내역 |
+|:----:|:----:|
+|![image](./img/코발트커피_주문.gif)|![image](./img/코발트커피_주문_최근주문내역.gif)|
+<br/>
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+<h5>메뉴</h5>
+<hr>
+
+- RecyclerView, Retrofit 이용하여 메뉴정보 조회
+
+| 싱품목록 | 상품 상세정보 |
+|:----:|:----:|
+|![image](./img/코발트커피_주문_메뉴.gif)|![image](./img/코발트커피_주문_메뉴상세정보.gif)|
+<br/>
+
+<h5>장바구니</h5>
+<hr>
+
+- Android Room 이용하여 SQLite 접근
+- Retrofit 이용하여 상품정보 조회
+
+| 주문 | 주문불가 |
+|:----:|:----:|
+|![image](./img/코발트커피_주문_장바구니담기.gif)|![image](./img/코발트커피_주문_주문불가.gif)|
+<br/>
+
+<h5>결제</h5>
+<hr>
+
+- 부트페이 API 사용하여 결제기능 구현
+- 신용/체크카드, 카카오페이, 페이코 결제 지원
+- 장바구니 연동
+- 결제 완료시 FLAG_ACTIVITY_CLEAR_TASK, FLAG_ACTIVITY_NEW_TASK 플래그 정보에 의한 태스크 스택 적용
+
+| 쿠폰사용 | 신용/체크카드 결제 |
+|:----:|:----:|
+|![image](./img/코발트커피_주문_쿠폰사용.gif)|![image](./img/코발트커피_주문_신용카드결제.gif)|
+
+| 카카오페이 결제 | 결제완료 |
+|:----:|:----:|
+|![image](./img/코발트커피_결제_카카오페이.gif)|![image](./img/코발트커피_결제완료.gif)|
+<br/>
+
+<h5>기타</h5>
+<hr>
+
+- 쿠폰/스탬프 개수 올라가는 애니메이션 구현
+  - CoroutineScope, Dispatcher.IO, suspend
+- 로그아웃 기능 구현
+  - SharedPreference에 있는 사용자 정보 삭제
+
+| 사용자 정보 | 스탬프 |
+|:----:|:----:|
+|![image](./img/코발트커피_기타_스탬프쿠폰.gif)|![image](./img/코발트커피_기타_스탬프발급_적립내역.gif)|
+
+| 쿠폰 | 주문내역 |
+|:----:|:----:|
+|![image](./img/코발트커피_쿠폰.gif)|![image](./img/코발트커피_기타_주문내역.gif)|
+<br/>
+
+<h5>설정</h5>
+<hr>
+
+- Retrofit 이용하여 사용자 테이블 정보수정
+- 토글 가능한 버튼 UI 구현 (SwitchButton)
+
+| 설정 | 닉네임 변경 | 비밀번호 변경 |
+|:----:|:----:|:----:|
+|![image](./img/코발트커피_설정.gif)|![image](./img/코발트커피_설정_닉네임변경.gif)|![image](./img/코발트커피_설정_비밀번호변경.gif)|
+
+| 푸쉬 알림 | 위치 권한 | 마케팅 활용 정보동의 |
+|:----:|:----:|:----:|
+|![image](./img/코발트커피_설정_푸쉬알림설정.gif)|![image](./img/코발트커피_설정_위치권한설정.gif)|![image](./img/코발트커피_설정_마케팅활용동의설정.gif)|
+<br/>
